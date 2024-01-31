@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CumPiNion</string>
+    <!--Main Activity-->
+    <string name="notSmoked">Didn't smoke</string>
+    <string name="thought">Thought about it</string>
+    <string name="smoked">Smoked</string>
+
+
+</resources>
