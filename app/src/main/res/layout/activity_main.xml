@@ -9,15 +9,15 @@
 
     <ImageView
         android:id="@+id/ivBottomShape"
-        android:layout_width="457dp"
-        android:layout_height="338dp"
+        android:layout_width="446dp"
+        android:layout_height="319dp"
         android:layout_marginTop="7dp"
-        android:scaleType="fitEnd"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtMerit"
-        app:layout_constraintVertical_bias="0.947"
+        app:layout_constraintVertical_bias="0.957"
         app:srcCompat="@drawable/transparentwave" />
 
     <ImageView
@@ -242,10 +242,10 @@
         android:layout_marginTop="288dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ivHome"
         app:layout_constraintTop_toTopOf="@+id/ivBottomShape"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/baseline_calendar_month_24" />
 
     <ImageView
