@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/ivBottomShape"
-        android:layout_width="446dp"
-        android:layout_height="319dp"
+        android:layout_width="439dp"
+        android:layout_height="263dp"
         android:layout_marginTop="7dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -246,7 +246,7 @@
         app:layout_constraintStart_toEndOf="@+id/ivHome"
         app:layout_constraintTop_toTopOf="@+id/ivBottomShape"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/baseline_calendar_month_24" />
+        app:srcCompat="@drawable/ic_calendar" />
 
     <ImageView
         android:id="@+id/ivSocial"
@@ -258,7 +258,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivBottomShape"
         app:layout_constraintVertical_bias="0.969"
-        app:srcCompat="@drawable/baseline_group_24" />
+        app:srcCompat="@drawable/ic_peoples" />
 
     <ImageView
         android:id="@+id/ivHome"
@@ -269,10 +269,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivBottomShape"
-        app:srcCompat="@drawable/baseline_gamepad_24" />
+        app:srcCompat="@drawable/ic_home" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/iv_hamburger"
         android:layout_width="65dp"
         android:layout_height="51dp"
         android:layout_marginBottom="9dp"
@@ -283,6 +283,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/baseline_menu_24" />
+        app:srcCompat="@drawable/ic_hamburger" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
