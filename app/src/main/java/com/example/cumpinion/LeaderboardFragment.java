@@ -1,12 +1,23 @@
 package com.example.cumpinion;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.cumpinion.ui.main.HomeActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import classes.AdapterListe;
+import classes.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +25,11 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment {
+    //========== Variables declaration ==========
+    List<User> liste = new ArrayList<>();
+    RecyclerView rv;
+    AdapterListe adapterListe;
+    Context context;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,12 +69,32 @@ public class LeaderboardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        rv = view.findViewById(R.id.rvLeaderBoard);
+        rv.setHasFixedSize(true);
+
+        //rv.setLayoutManager(new LinearLayoutManager( this.getContext() , LinearLayoutManager.VERTICAL, false));
+        rv.setLayoutManager(
+                new LinearLayoutManager(getContext()));
+
+        liste.add(new User("Aidoun", "Lyes", "lyesaid29@gmail.com", "12345","laidoun"));
+        liste.add(new User("Fanny", "Hamel", "lyesaid29@gmail.com", "12345","fhamel"));
+        liste.add(new User("Thomas", "Des Ruisseaux", "lyesaid29@gmail.com", "12345","truisseaux"));
+        liste.add(new User("Cedric", "Leao-Belzil", "lyesaid29@gmail.com", "12345","cbelzil"));
+
+        adapterListe = new AdapterListe(liste);
+        rv.setAdapter(adapterListe);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        return view;
+
+
     }
 }
