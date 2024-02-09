@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,10 @@ public class HistoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    //MES AFFAIRES A MOI LA (THOMAS)
+    CalendarView cView;
+
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -49,6 +57,8 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -59,6 +69,36 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view =  inflater.inflate(R.layout.fragment_history, container, false);
+        cView = view.findViewById(R.id.vCalen);
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.add(Calendar.DATE, 1);
+
+
+        calendar.set(2023, 12,12);
+
+
+
+        Toast.makeText(getContext(), "Wow", Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+        return view;
     }
+
+    private void highlightDate(int year, int month, int dayOfMonth, CalendarView cv) {
+        long selectedDateMillis = getDateInMillis(year, month, dayOfMonth);
+        cv.setDate(selectedDateMillis); // Set the selected date again to ensure it's highlighted
+    }
+
+    private long getDateInMillis(int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, dayOfMonth);
+        return calendar.getTimeInMillis();
+    }
+
 }
