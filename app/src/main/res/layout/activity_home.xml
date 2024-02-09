@@ -5,22 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.main.MainActivity">
+
+    android:weightSum="10"
+    tools:context=".ui.main.HomeActivity">
+
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="780dp">
+        android:layout_height="780dp"
+        android:layout_weight="9">
 
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:labelVisibilityMode="unlabeled"
+        android:layout_height="100dp"
+        android:layout_weight="1"
         android:background="@color/purple"
         android:fadingEdge="horizontal"
-        app:menu="@menu/bottom_navmenu"/>
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_navmenu" />
 
 </LinearLayout>
