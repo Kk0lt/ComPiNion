@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cumpinion.ui.main.HomeActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
