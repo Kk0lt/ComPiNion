@@ -3,12 +3,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context=".LeaderboardFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rg_selectBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/purpleborder"
+            android:checkedButton="@id/rbAll"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <RadioButton
+                android:id="@+id/rbAll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:fontFamily="@font/lexend"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="All"
+                android:textColor="@drawable/radio_button_text_color_selector"
+                android:textSize="24sp" />
+
+            <RadioButton
+                android:id="@+id/rbFriends"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_selector"
+                android:button="@null"
+                android:fontFamily="@font/lexend"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Friends"
+                android:textColor="@drawable/radio_button_text_color_selector"
+                android:textSize="24sp" />
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLeaderBoard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </FrameLayout>

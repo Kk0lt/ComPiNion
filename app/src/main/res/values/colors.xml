@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#4D1478</color>
+    <color name="pink">#FFDEC9E1</color>
+    <color name="orange">#FFF1B176</color>
+    <color name="turquoise">#6CD2E2</color>
 </resources>

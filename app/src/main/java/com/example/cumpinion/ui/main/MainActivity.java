@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 
@@ -15,7 +14,7 @@ import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
 import com.example.cumpinion.databinding.ActivityHomeBinding;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
      ActivityHomeBinding binding;
     @Override
