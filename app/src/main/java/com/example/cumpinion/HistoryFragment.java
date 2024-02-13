@@ -3,6 +3,7 @@ package com.example.cumpinion;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,12 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import classes.AdapterStreak;
+import classes.Streak;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,20 +37,17 @@ public class HistoryFragment extends Fragment {
     //MES AFFAIRES A MOI LA (THOMAS)
     CalendarView cView;
 
+    RecyclerView rc;
+
+    AdapterStreak adapS;
+
+    List<Streak> liste = new ArrayList<>();
+
 
     public HistoryFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HistoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HistoryFragment newInstance(String param1, String param2) {
         HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
@@ -71,19 +74,16 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_history, container, false);
         cView = view.findViewById(R.id.vCalen);
+        rc = view.findViewById(R.id.rvView);
         Calendar calendar = Calendar.getInstance();
+        adapS = new AdapterStreak(liste);
+        rc.setAdapter(adapS);
 
         calendar.add(Calendar.DATE, 1);
 
-
         calendar.set(2023, 12,12);
 
-
-
         Toast.makeText(getContext(), "Wow", Toast.LENGTH_LONG).show();
-
-
-
 
 
 
