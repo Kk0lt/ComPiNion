@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">CumPiNion</string>
     <!--Main Activity-->
-    <string name="notSmoked">Didn\'t smoke</string>
-    <string name="thought">Thought about it</string>
-    <string name="smoked">Smoked</string>
+    <string name="frserie">Série :</string>
+    <string name="engserie">Streak :</string>
+    <string name="frmerite">Points de mérite :</string>
+    <string name="engmerite">Merit points :</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
