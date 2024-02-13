@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import classes.User;
 public class LeaderboardFragment extends Fragment {
     //========== Variables declaration ==========
     List<User> liste = new ArrayList<>();
+    List<User> listeFriends = new ArrayList<>();
     RecyclerView rv;
     AdapterListe adapterListe;
     Context context;
@@ -87,12 +90,27 @@ public class LeaderboardFragment extends Fragment {
         liste.add(new User("Thomas", "Des Ruisseaux", "lyesaid29@gmail.com", "12345","truisseaux"));
         liste.add(new User("Cedric", "Leao-Belzil", "lyesaid29@gmail.com", "12345","cbelzil"));
 
+        listeFriends.add(new User("fabrice", "dehoule", "lyesaid29@gmail.com", "12345","cbelzil"));
+
+        //Affichage par défaut
         adapterListe = new AdapterListe(liste);
         rv.setAdapter(adapterListe);
+        //changement de selection
+        changeSelectedRadio(view);
 
-        // Inflate the layout for this fragment
         return view;
+    }
 
-
+    private void changeSelectedRadio(View view) {
+        // Écouteur pour la sélection
+        RadioGroup radioGroup = view.findViewById(R.id.rg_selectBoard);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbFriends) {
+                adapterListe = new AdapterListe(listeFriends);
+            } else {
+                adapterListe = new AdapterListe(liste);
+            }
+            rv.setAdapter(adapterListe);
+        });
     }
 }
