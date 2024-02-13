@@ -51,8 +51,8 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/bigbordercircle"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bordercircle"
             android:elevation="3dp"
             android:foregroundGravity="center"
             android:padding="50dp"
@@ -70,7 +70,6 @@
             android:layout_width="295dp"
             android:layout_height="88dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="20dp"
             android:fontFamily="@font/bungee"
             android:gravity="center"
             android:text="Nom Du Perso"
@@ -84,49 +83,86 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.121" />
 
-        <TextView
-            android:id="@+id/txtLevel"
-            android:layout_width="295dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="23dp"
-            android:fontFamily="@font/lexend"
-            android:foregroundGravity="center"
-            android:text="@string/frserie"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txtXP"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivCharacter" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txtMerit"
-            android:layout_width="295dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/lexend"
-            android:text="@string/frmerite"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/xpBar2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.558"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/xpBar" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/amaranth"
+                        android:text="@string/frserie"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/feuSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_fire"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textSize="96sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/amaranth"
+                        android:text="@string/frmerite"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/feuSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_star"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textSize="96sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btnSmoked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@android:color/transparent"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/turquoise"
             android:elevation="3dp"
             android:fontFamily="@font/lexend"
             android:foregroundGravity="center"
