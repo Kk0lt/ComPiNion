@@ -1,16 +1,32 @@
 package classes;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
-    String nom, prenom, email, password, pseudo;
+    @SerializedName("id")
+    int id;
+    @SerializedName("nom")
+    String nom;
+    @SerializedName("prenom")
+    String prenom;
+    @SerializedName("email")
+    String email;
+    @SerializedName("password")
+    String password;
+    @SerializedName("Pseudo")
+    String pseudo;
 
-    public User(String nom, String prenom, String email, String password, String pseudo) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.pseudo = pseudo;
     }
+
+    public int getId() { return id; }
 
     public String getNom() {
         return nom;
@@ -51,4 +67,5 @@ public class User {
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
+
 }

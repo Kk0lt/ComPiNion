@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="5dp"
-        android:background="@drawable/purpleborder"
+        android:background="@drawable/bordercircle"
         android:backgroundTint="#344D1478"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/lexend"
-                android:gravity="center_vertical"
+                android:gravity="center_hori"
                 android:text="experience"
                 android:textAlignment="center"
                 android:textSize="16sp" />
