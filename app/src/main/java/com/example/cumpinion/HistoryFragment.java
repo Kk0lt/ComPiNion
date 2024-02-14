@@ -3,6 +3,8 @@ package com.example.cumpinion;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -11,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import com.example.cumpinion.ui.main.MainActivity;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -75,8 +80,21 @@ public class HistoryFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_history, container, false);
         cView = view.findViewById(R.id.vCalen);
         rc = view.findViewById(R.id.rvView);
+        rc.setHasFixedSize(true);
+        rc.setLayoutManager(
+                new LinearLayoutManager(getContext()));
         Calendar calendar = Calendar.getInstance();
+
+        java.sql.Date sqlDateDeb = new java.sql.Date(System.currentTimeMillis());
+        java.sql.Date sqlDateFin = new java.sql.Date(System.currentTimeMillis());
+        Streak S = new Streak(sqlDateDeb,sqlDateFin, 3, 3);
+        liste.add(S);
         adapS = new AdapterStreak(liste);
+
+
+
+
+
         rc.setAdapter(adapS);
 
         calendar.add(Calendar.DATE, 1);
