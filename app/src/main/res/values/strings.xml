@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">CumPiNion</string>
     <!--Main Activity-->
+
     <string name="frserie">Série</string>
     <string name="engserie">Streak</string>
     <string name="frmerite">Mérite</string>
     <string name="engmerite">Merit points</string>
+
+    <string name="notSmoked">Didn\'t smoke</string>
+    <string name="thought">Thought about it</string>
+    <string name="smoked">Smoked</string>
+    <string name="PastStreak">Past Streak</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
