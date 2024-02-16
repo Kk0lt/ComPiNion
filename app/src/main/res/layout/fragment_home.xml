@@ -129,7 +129,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvSerie"
+                        android:id="@+id/tvSerie2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -139,7 +139,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/feuSerie"
+                        android:id="@+id/feuSerie2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

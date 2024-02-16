@@ -1,0 +1,25 @@
+<!-- res/drawable/button_background.xml -->
+<!-- res/drawable/button_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- État lorsque le bouton est pressé -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/button_pressed_color" /> <!-- Couleur de fond lorsqu'il est pressé -->
+            <corners android:radius="8dp" /> <!-- Rayon des coins arrondis -->
+            <stroke
+                android:width="2dp"
+                android:color="@color/button_border_color" />
+        </shape>
+    </item>
+    <!-- État par défaut -->
+    <item>
+        <shape>
+            <solid android:color="@color/button_default_color" />
+            <corners android:radius="8dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/button_border_color" />
+        </shape>
+    </item>
+</selector>
+

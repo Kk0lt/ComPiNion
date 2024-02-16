@@ -6,4 +6,7 @@
     <color name="pink">#2597d0</color>
     <color name="orange">#FFF1B176</color>
     <color name="turquoise">#4ed9e9</color>
+    <color name="button_default_color">#FFFFFF</color> <!-- Blanc par défaut -->
+    <color name="button_pressed_color">#CCCCCC</color> <!-- Gris lorsqu'il est pressé -->
+    <color name="button_border_color">#000000</color> <!-- Bordure noire -->
 </resources>
