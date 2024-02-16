@@ -85,12 +85,12 @@ public class LeaderboardFragment extends Fragment {
         rv.setLayoutManager(
                 new LinearLayoutManager(getContext()));
 
-        liste.add(new User("Aidoun", "Lyes", "lyesaid29@gmail.com", "12345","laidoun"));
-        liste.add(new User("Fanny", "Hamel", "lyesaid29@gmail.com", "12345","fhamel"));
-        liste.add(new User("Thomas", "Des Ruisseaux", "lyesaid29@gmail.com", "12345","truisseaux"));
-        liste.add(new User("Cedric", "Leao-Belzil", "lyesaid29@gmail.com", "12345","cbelzil"));
+        liste.add(new User(3,"Aidoun", "Lyes", "lyesaid29@gmail.com", "12345","laidoun"));
+        liste.add(new User(2,"Fanny", "Hamel", "lyesaid29@gmail.com", "12345","fhamel"));
+        liste.add(new User(1,"Thomas", "Des Ruisseaux", "lyesaid29@gmail.com", "12345","truisseaux"));
+        liste.add(new User(4,"Cedric", "Leao-Belzil", "lyesaid29@gmail.com", "12345","cbelzil"));
 
-        listeFriends.add(new User("fabrice", "dehoule", "lyesaid29@gmail.com", "12345","cbelzil"));
+        listeFriends.add(new User(5,"fabrice", "dehoule", "lyesaid29@gmail.com", "12345","cbelzil"));
 
         //Affichage par défaut
         adapterListe = new AdapterListe(liste);
