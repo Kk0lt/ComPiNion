@@ -129,8 +129,8 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tvSerie"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvSerie3"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
@@ -139,8 +139,8 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/feuSerie"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/feuSerie3"
+                        android:layout_width="145dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
@@ -151,6 +151,7 @@
                         android:gravity="center_horizontal"
                         android:text="X"
                         android:textSize="96sp" />
+
                 </LinearLayout>
 
             </LinearLayout>

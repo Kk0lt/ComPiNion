@@ -17,7 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.AdapterListe;
+import classes.RetrofitInstance;
 import classes.User;
+import interfaces.InterfaceServeur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,12 +30,15 @@ import classes.User;
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment {
+
     //========== Variables declaration ==========
     List<User> liste = new ArrayList<>();
     List<User> listeFriends = new ArrayList<>();
     RecyclerView rv;
     AdapterListe adapterListe;
     Context context;
+
+    InterfaceServeur interfaceServeur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,12 +93,24 @@ public class LeaderboardFragment extends Fragment {
         rv.setLayoutManager(
                 new LinearLayoutManager(getContext()));
 
-        liste.add(new User("Aidoun", "Lyes", "lyesaid29@gmail.com", "12345","laidoun"));
-        liste.add(new User("Fanny", "Hamel", "lyesaid29@gmail.com", "12345","fhamel"));
-        liste.add(new User("Thomas", "Des Ruisseaux", "lyesaid29@gmail.com", "12345","truisseaux"));
-        liste.add(new User("Cedric", "Leao-Belzil", "lyesaid29@gmail.com", "12345","cbelzil"));
+        Call<List<User>> call = interfaceServeur.getUsers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    for (User u: response.body()) {
+                        liste.add(u);
+                    }
+                } else {
 
-        listeFriends.add(new User("fabrice", "dehoule", "lyesaid29@gmail.com", "12345","cbelzil"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
 
         //Affichage par défaut
         adapterListe = new AdapterListe(liste);

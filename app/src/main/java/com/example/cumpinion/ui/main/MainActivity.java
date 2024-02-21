@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-
 import com.example.cumpinion.HistoryFragment;
 import com.example.cumpinion.HomeFragment;
 import com.example.cumpinion.LeaderboardFragment;
@@ -16,7 +15,7 @@ import com.example.cumpinion.databinding.ActivityHomeBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-     ActivityHomeBinding binding;
+    ActivityHomeBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
