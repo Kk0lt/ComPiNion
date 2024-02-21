@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CumPiNion</string>
+    <string name="app_name">ComPiNion</string>
     <!--Main Activity-->
     <string name="frserie">Série</string>
     <string name="engserie">Streak</string>
