@@ -33,7 +33,7 @@ public interface InterfaceServeur {
     Call<User> getUser(@Path("id") int userId);
 
     //Get all users
-    @GET("compinion/{id}/leaderboard")
+    @GET("compinion/{id}")
     Call<List<User>> getUsers();
 
     //Modification utilisateur
