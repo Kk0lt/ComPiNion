@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightTurquoise"
     android:orientation="vertical"
-    android:paddingHorizontal="10dp"
-    android:paddingVertical="40dp"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="50dp"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -18,7 +19,7 @@
             android:id="@+id/ivIcon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="14dp"
             android:src="@tools:sample/avatars" />
 
         <LinearLayout
@@ -41,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/connectez_vous"
                 android:textColor="@color/black"
-                android:textSize="34dp" />
+                android:textSize="28dp" />
 
         </LinearLayout>
 
