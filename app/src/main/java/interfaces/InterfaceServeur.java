@@ -29,19 +29,19 @@ public interface InterfaceServeur {
     Call<Void> register(@Body RequestBody requestBody);
 
     //Check logged User
-    @GET("compinion/{id}")
+    @GET("user")
     Call<User> getUser(@Path("id") int userId);
 
     //Get all users
-    @GET("compinion/{id}")
+    @GET("users")
     Call<List<User>> getUsers();
 
     //Modification utilisateur
-    @PATCH("compinion/{id}/modification")
+    @PATCH("update")
     Call<Void> updateUser(@Path("id") int userId, @Body RequestBody requestBody);
 
     //Suppression utilisateur
-    @DELETE("compinion/{id}/suppression")
+    @DELETE("destroy")
     Call<Void> deleteUser(@Path("id") int userId);
 
 }

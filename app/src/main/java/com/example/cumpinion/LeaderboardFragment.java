@@ -7,12 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,13 +105,13 @@ public class LeaderboardFragment extends Fragment {
                         liste.add(u);
                     }
                 } else {
-
+                    Log.d("isNotSuccessful", "Fuck");
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-
+                Log.d("onFailure", "You");
             }
         });
 
