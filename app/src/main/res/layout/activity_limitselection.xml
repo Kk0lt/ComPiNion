@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="147dp"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
         android:tint="@color/turquoise"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
@@ -24,7 +23,6 @@
         android:layout_gravity="bottom|left"
         android:rotation="180"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
         android:tint="@color/turquoise"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
@@ -58,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 android:tint="@color/turquoise"
                 app:srcCompat="@drawable/ic_1" />
 
@@ -67,7 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 android:tint="@color/turquoise"
                 app:srcCompat="@drawable/ic_2" />
 
@@ -76,7 +72,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
                 android:tint="@color/turquoise"
                 app:srcCompat="@drawable/ic_3" />
 

@@ -14,7 +14,6 @@
         android:layout_height="147dp"
         android:layout_gravity="right|top"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
         android:tint="@color/turquoise"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
@@ -58,7 +57,6 @@
         android:layout_gravity="bottom|left"
         android:rotation="180"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
         android:tint="@color/turquoise"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
