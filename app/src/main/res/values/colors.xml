@@ -3,7 +3,9 @@
     <color name="black">#121212</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#4D1478</color>
-    <color name="pink">#2597d0</color>
+    <color name="blue">#2597d0</color>
     <color name="orange">#FFF1B176</color>
-    <color name="turquoise">#4ed9e9</color>
+    <color name="turquoise">#4793e3</color>
+    <color name="lightTurquoise">#CDE0F4</color>
+
 </resources>
