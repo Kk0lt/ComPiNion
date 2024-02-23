@@ -111,7 +111,7 @@ public class LeaderboardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d("onFailure", "You");
+                Log.d("onFailure", t.getMessage());
             }
         });
 
