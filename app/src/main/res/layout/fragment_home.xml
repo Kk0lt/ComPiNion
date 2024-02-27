@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/ivUpCorner"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="243dp"
         android:layout_gravity="top|left"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/darkModeSwitch"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/halfcircle"
-        app:tint="@color/turquoise" />
+        app:tint="@color/hardBlue" />
 
     <ImageView
         android:id="@+id/iv_hamburger"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_hamburger"
-        app:tint="@color/black" />
+        app:tint="@color/white" />
 
     <LinearLayout
         android:id="@+id/allStats_layout"
@@ -48,10 +48,10 @@
 
         <ImageView
             android:id="@+id/ivCharacter"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="253dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/bordercircle"
             android:elevation="3dp"
             android:foregroundGravity="center"
@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtCharacter"
             app:layout_constraintVertical_bias="0.131"
-            app:srcCompat="@drawable/test" />
+            app:srcCompat="@drawable/ch_rabbit" />
 
         <TextView
             android:id="@+id/txtCharacter"
@@ -74,7 +74,7 @@
             android:gravity="center"
             android:text="Nom Du Perso"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/hardBlue"
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/amaranth"
                         android:text="@string/frserie"
-                        android:textSize="20sp" />
+                        android:textSize="34sp" />
 
                     <TextView
                         android:id="@+id/feuSerie"
@@ -115,10 +115,11 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_fire"
-                        android:backgroundTint="@color/turquoise"
+                        android:backgroundTint="@color/hardBlue"
                         android:fontFamily="@font/amaranth"
                         android:gravity="center_horizontal"
                         android:text="X"
+                        android:textColor="@color/white"
                         android:textSize="96sp" />
                 </LinearLayout>
 
@@ -135,8 +136,9 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:fontFamily="@font/amaranth"
+                        android:gravity="center"
                         android:text="@string/frmerite"
-                        android:textSize="20sp" />
+                        android:textSize="34sp" />
 
                     <TextView
                         android:id="@+id/feuSerie3"
@@ -146,10 +148,11 @@
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_star"
-                        android:backgroundTint="@color/turquoise"
+                        android:backgroundTint="@color/hardBlue"
                         android:fontFamily="@font/amaranth"
                         android:gravity="center_horizontal"
                         android:text="X"
+                        android:textColor="@color/white"
                         android:textSize="96sp" />
 
                 </LinearLayout>
@@ -163,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/turquoise"
+            android:backgroundTint="@color/hardBlue"
             android:elevation="3dp"
             android:fontFamily="@font/lexend"
             android:foregroundGravity="center"
@@ -175,7 +178,7 @@
             app:icon="@drawable/ic_clope"
             app:iconPadding="0dp"
             app:iconSize="50dp"
-            app:iconTint="@color/black"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -185,10 +188,4 @@
             app:strokeWidth="4dp" />
 
     </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/my_drawer_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/navigation_menu" />
 </FrameLayout>
