@@ -20,22 +20,32 @@
         app:srcCompat="@drawable/halfcircle"
         app:tint="@color/hardBlue" />
 
-    <ImageView
-        android:id="@+id/iv_hamburger"
-        android:layout_width="65dp"
-        android:layout_height="51dp"
-        android:layout_gravity="top|left"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/darkModeSwitch"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_hamburger"
-        app:tint="@color/white" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:src="@drawable/ic_cogwheel"
+            app:backgroundTint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_profil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:src="@drawable/ic_person"
+            app:backgroundTint="@color/lightTurquoise" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/allStats_layout"
@@ -48,8 +58,8 @@
 
         <ImageView
             android:id="@+id/ivCharacter"
-            android:layout_width="250dp"
-            android:layout_height="253dp"
+            android:layout_width="259dp"
+            android:layout_height="258dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bordercircle"
@@ -165,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:backgroundTint="@color/hardBlue"
             android:elevation="3dp"
             android:fontFamily="@font/lexend"
@@ -188,4 +198,5 @@
             app:strokeWidth="4dp" />
 
     </LinearLayout>
+
 </FrameLayout>

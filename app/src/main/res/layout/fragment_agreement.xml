@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#CDE0F4"
     android:orientation="vertical"
-    tools:context=".AgreementActivity">
+    tools:context=".loginFragments.agreementFragment">
 
     <ImageView
         android:id="@+id/imageView3"
