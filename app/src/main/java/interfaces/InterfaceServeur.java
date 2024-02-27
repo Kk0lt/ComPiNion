@@ -16,32 +16,32 @@ import retrofit2.http.Query;
 
 public interface InterfaceServeur {
 
-    //Login
-    @POST("login")
-    Call<Void> login(@Body RequestBody requestBody);
-
-    //Logout
-    @POST("logout")
-    Call<Void> logout();
-
-    //Register
+    // Création de compte
     @POST("register")
     Call<Void> register(@Body RequestBody requestBody);
 
-    //Check logged User
-    @GET("user")
-    Call<User> getUser(@Path("id") int userId);
+    // Login
+    @POST("login")
+    Call<Void> login(@Body RequestBody requestBody);
 
-    //Get all users
+    // Usager logged in
+    @GET("user/{id}")
+    Call<User> user(@Path("id") int id);
+
+    // Tous les usagers
     @GET("users")
-    Call<List<User>> getUsers();
+    Call<List<User>> users();
 
-    //Modification utilisateur
-    @PATCH("update")
-    Call<Void> updateUser(@Path("id") int userId, @Body RequestBody requestBody);
+    // Logout
+    @POST("logout")
+    Call<Void> logout();
 
-    //Suppression utilisateur
-    @DELETE("destroy")
-    Call<Void> deleteUser(@Path("id") int userId);
+    // Modification compte
+    @PATCH("compinion/{id}")
+    Call<Void> update(@Path("id") int id, @Body RequestBody requestBody);
+
+    // Suppression du compte
+    @DELETE("compinion/{id}")
+    Call<Void> destroy(@Path("id") int id);
 
 }
