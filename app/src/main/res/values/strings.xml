@@ -14,7 +14,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Home Fragment-->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 
+    <string name="settings_themes">Changer le thème</string>
+    <string name="settings_langue">Changer la langue</string>
+    <string name="settings_pseudo">Changer le pseudo</string>
+    <string name="settings_password">Changer le mot de passe</string>
+    <string name="settings_logout">Se Déconnecter</string>
 
     <!--Login Activity-->
     <string name="connectez_vous">Vous avez déjà un compte ? Connectez-vous</string>

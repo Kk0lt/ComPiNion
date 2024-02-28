@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingVertical="50dp"
-    tools:context=".LoginActivity">
+    tools:context=".loginFragments.LoginFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
-            android:src="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ch_rabbit" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/connectez_vous"
-                android:textColor="@color/black"
+                android:textColor="@color/hardBlue"
                 android:textSize="28dp" />
 
         </LinearLayout>
@@ -54,11 +54,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:backgroundTint="@color/turquoise"
+        android:backgroundTint="@color/hardBlue"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/turquoise"
+        android:textColor="@color/hardBlue"
         android:textColorHint="@color/black" />
 
     <EditText
@@ -67,11 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/turquoise"
+        android:backgroundTint="@color/hardBlue"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/turquoise"
+        android:textColor="@color/hardBlue"
         android:textColorHint="@color/black" />
 
     <Button
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/turquoise"
+        android:backgroundTint="@color/hardBlue"
         android:paddingHorizontal="60dp"
         android:text="Connexion"
         android:textColor="@color/white"
@@ -94,7 +94,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text="Vous n'avez pas de compte ? Créez-en un !"
-        android:textColor="@color/turquoise"
+        android:textColor="@color/hardBlue"
         android:textStyle="bold" />
 
 </LinearLayout>

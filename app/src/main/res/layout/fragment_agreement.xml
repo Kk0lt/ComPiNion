@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#CDE0F4"
     android:orientation="vertical"
-    tools:context=".AgreementActivity">
+    tools:context=".loginFragments.agreementFragment">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -14,8 +14,7 @@
         android:layout_height="147dp"
         android:layout_gravity="right|top"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
-        android:tint="@color/turquoise"
+        android:tint="@color/hardBlue"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
 
@@ -31,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/agreement_text"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <CheckBox
@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/iAgree"
+            android:textColor="@color/hardBlue"
             android:textStyle="bold" />
 
         <Button
@@ -45,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:backgroundTint="@color/turquoise"
+            android:backgroundTint="@color/hardBlue"
             android:paddingHorizontal="60dp"
             android:text="@string/suivant"
             android:textColor="@color/white" />
@@ -58,8 +59,7 @@
         android:layout_gravity="bottom|left"
         android:rotation="180"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
-        android:tint="@color/turquoise"
+        android:tint="@color/hardBlue"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
 

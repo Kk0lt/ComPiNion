@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightTurquoise"
-    tools:context=".LimitselectionActivity">
+    tools:context=".loginFragments.limitselectionFragment">
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="147dp"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
-        android:tint="@color/turquoise"
+        android:tint="@color/hardBlue"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
 
@@ -24,8 +23,7 @@
         android:layout_gravity="bottom|left"
         android:rotation="180"
         android:scaleType="fitStart"
-        android:src="@tools:sample/avatars"
-        android:tint="@color/turquoise"
+        android:tint="@color/hardBlue"
         android:tintMode="src_in"
         app:srcCompat="@drawable/halfcircle" />
 
@@ -58,8 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
-                android:tint="@color/turquoise"
+                android:tint="@color/hardBlue"
                 app:srcCompat="@drawable/ic_1" />
 
             <ImageView
@@ -67,8 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
-                android:tint="@color/turquoise"
+                android:tint="@color/hardBlue"
                 app:srcCompat="@drawable/ic_2" />
 
             <ImageView
@@ -76,8 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@tools:sample/avatars"
-                android:tint="@color/turquoise"
+                android:tint="@color/hardBlue"
                 app:srcCompat="@drawable/ic_3" />
 
         </LinearLayout>

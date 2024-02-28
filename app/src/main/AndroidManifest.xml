@@ -14,18 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComPiNion"
-        tools:targetApi="31"
-        android:networkSecurityConfig="@xml/configuration_reseau"
-        android:usesCleartextTraffic="true">
-        <activity
-            android:name=".LimitselectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AgreementActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+
+        tools:targetApi="31">
+
+
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
