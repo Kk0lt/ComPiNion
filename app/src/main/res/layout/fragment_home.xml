@@ -4,54 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     android:background="@color/lightTurquoise"
+    android:padding="10dp"
     tools:context=".HomeFragment">
-
-    <ImageView
-        android:id="@+id/ivUpCorner"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="top|left"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@+id/darkModeSwitch"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/halfcircle"
-        app:tint="@color/turquoise" />
-
-    <ImageView
-        android:id="@+id/iv_hamburger"
-        android:layout_width="65dp"
-        android:layout_height="51dp"
-        android:layout_gravity="top|left"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/darkModeSwitch"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_hamburger"
-        app:tint="@color/black" />
 
     <LinearLayout
         android:id="@+id/allStats_layout"
-        android:layout_width="390dp"
-        android:layout_height="760dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/txtCharacter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/bungee"
+            android:gravity="center"
+            android:text="Nom Du Perso"
+            android:textAlignment="center"
+            android:textColor="@color/hardBlue"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.478"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.121" />
 
         <ImageView
             android:id="@+id/ivCharacter"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="259dp"
+            android:layout_height="258dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_margin="20dp"
             android:background="@drawable/bordercircle"
             android:elevation="3dp"
             android:foregroundGravity="center"
@@ -63,107 +53,88 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtCharacter"
             app:layout_constraintVertical_bias="0.131"
-            app:srcCompat="@drawable/test" />
+            app:srcCompat="@drawable/ch_rabbit" />
 
-        <TextView
-            android:id="@+id/txtCharacter"
-            android:layout_width="295dp"
-            android:layout_height="88dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/bungee"
-            android:gravity="center"
-            android:text="Nom Du Perso"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.121" />
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/tvSerie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:gravity="center_vertical"
+                    android:text="@string/frserie"
+                    android:textColor="@color/hardBlue"
+                    android:textSize="28dp" />
 
-                    <TextView
-                        android:id="@+id/tvSerie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/amaranth"
-                        android:text="@string/frserie"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/feuSerie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ic_fire"
-                        android:backgroundTint="@color/turquoise"
-                        android:fontFamily="@font/amaranth"
-                        android:gravity="center_horizontal"
-                        android:text="X"
-                        android:textSize="96sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:id="@+id/feuSerie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:backgroundTint="@color/hardBlue"
+                    android:fontFamily="@font/amaranth"
+                    android:gravity="center_horizontal"
+                    android:text="X"
+                    android:textColor="@color/white"
+                    android:textSize="96sp" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvSerie3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/amaranth"
-                        android:text="@string/frmerite"
-                        android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/feuSerie3"
-                        android:layout_width="145dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ic_star"
-                        android:backgroundTint="@color/turquoise"
-                        android:fontFamily="@font/amaranth"
-                        android:gravity="center_horizontal"
-                        android:text="X"
-                        android:textSize="96sp" />
+                <TextView
+                    android:id="@+id/tvSerie3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/alfa_slab_one"
+                    android:gravity="center"
+                    android:text="@string/frmerite"
+                    android:textColor="@color/hardBlue"
+                    android:textSize="28dp" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/feuSerie3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hardBlue"
+                    android:fontFamily="@font/amaranth"
+                    android:gravity="center_horizontal"
+                    android:text="X"
+                    android:textColor="@color/white"
+                    android:textSize="96sp" />
 
             </LinearLayout>
-        </ScrollView>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnSmoked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/turquoise"
+            android:backgroundTint="@color/hardBlue"
             android:elevation="3dp"
             android:fontFamily="@font/lexend"
             android:foregroundGravity="center"
@@ -175,7 +146,7 @@
             app:icon="@drawable/ic_clope"
             app:iconPadding="0dp"
             app:iconSize="50dp"
-            app:iconTint="@color/black"
+            app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

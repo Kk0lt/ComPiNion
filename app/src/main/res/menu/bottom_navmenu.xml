@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="Home"
-        android:icon="@drawable/ic_home"
-        android:id="@+id/home"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +9,20 @@
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:title="Home"
+        android:icon="@drawable/ic_home"
+        android:id="@+id/home"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:title="History"
         android:icon="@drawable/ic_calendar"
         android:id="@+id/history"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Settings"
+        android:icon="@drawable/ic_cogwheel"
+        android:id="@+id/settings"/>
+
 </menu>
