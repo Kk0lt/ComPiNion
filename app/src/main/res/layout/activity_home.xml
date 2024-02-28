@@ -25,6 +25,7 @@
         android:layout_weight="1"
         android:background="@color/hardBlue"
         android:fadingEdge="horizontal"
+        android:padding="5dp"
         app:itemIconSize="40dp"
         app:itemIconTint="@color/white"
         app:labelVisibilityMode="unlabeled"

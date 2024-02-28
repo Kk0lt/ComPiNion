@@ -11,6 +11,7 @@ import com.example.cumpinion.HistoryFragment;
 import com.example.cumpinion.HomeFragment;
 import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
+import com.example.cumpinion.SettingsFragment;
 import com.example.cumpinion.databinding.ActivityHomeBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (item.getItemId() == R.id.history) {
                 replaceFragment(new HistoryFragment());
+            }
+            else if (item.getItemId() == R.id.settings) {
+                replaceFragment(new SettingsFragment());
             }
             return true;
         });

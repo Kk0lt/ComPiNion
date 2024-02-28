@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <item
+        android:id="@+id/nav_themes"
+        android:title="@string/settings_themes" />
+    <item
+        android:id="@+id/nav_langue"
+        android:title="@string/settings_langue" />
+    <item
+        android:id="@+id/nav_pseudo"
+        android:title="@string/settings_langue" />
+    <item
+        android:id="@+id/nav_password"
+        android:title="@string/settings_password" />
+    <item
+        android:id="@+id/nav_logout"
+        android:title="@string/settings_logout" />
+
+</menu>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightTurquoise"
+    android:padding="15dp"
+    tools:context=".SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivCharacterSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/bordercircle"
+            android:foregroundGravity="center"
+            android:padding="20dp"
+            android:stateListAnimator="@null"
+            app:srcCompat="@drawable/ch_rabbit" />
+
+        <LinearLayout
+            android:id="@+id/lv_Profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend"
+                android:text="Profile"
+                android:textColor="@color/hardBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvChangePseudo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/ic_person"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/hardBlue"
+                android:fontFamily="@font/lexend"
+                android:gravity="center_vertical"
+                android:text="@string/settings_pseudo"
+                android:textColor="@color/hardBlue"
+                android:textSize="26dp" />
+
+            <TextView
+                android:id="@+id/tvPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/ic_password"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/hardBlue"
+                android:fontFamily="@font/lexend"
+                android:gravity="center_vertical"
+                android:text="@string/settings_password"
+                android:textColor="@color/hardBlue"
+                android:textSize="26dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lv_apparence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvApparence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lexend"
+                android:text="Apparence"
+                android:textColor="@color/hardBlue"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvChangeTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/ic_color"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/hardBlue"
+                android:fontFamily="@font/lexend"
+                android:gravity="center_vertical"
+                android:text="@string/settings_themes"
+                android:textColor="@color/hardBlue"
+                android:textSize="26dp" />
+
+            <TextView
+                android:id="@+id/tvLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/ic_language"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/hardBlue"
+                android:fontFamily="@font/lexend"
+                android:gravity="center_vertical"
+                android:text="@string/settings_langue"
+                android:textColor="@color/hardBlue"
+                android:textSize="26dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_logout"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/lexend"
+            android:gravity="center_vertical"
+            android:text="@string/settings_logout"
+            android:textColor="@color/red"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</FrameLayout>

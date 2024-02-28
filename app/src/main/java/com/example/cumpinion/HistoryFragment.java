@@ -92,18 +92,11 @@ public class HistoryFragment extends Fragment {
         adapS = new AdapterStreak(liste);
 
 
-
-
-
         rc.setAdapter(adapS);
 
         calendar.add(Calendar.DATE, 1);
 
         calendar.set(2023, 12,12);
-
-        Toast.makeText(getContext(), "Wow", Toast.LENGTH_LONG).show();
-
-
 
         return view;
     }
