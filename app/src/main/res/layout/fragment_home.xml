@@ -35,16 +35,6 @@
             android:src="@drawable/ic_cogwheel"
             app:backgroundTint="@color/white" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_profil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:src="@drawable/ic_person"
-            app:backgroundTint="@color/lightTurquoise" />
     </LinearLayout>
 
     <LinearLayout
@@ -124,7 +114,6 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/ic_fire"
                         android:backgroundTint="@color/hardBlue"
                         android:fontFamily="@font/amaranth"
                         android:gravity="center_horizontal"
@@ -152,12 +141,11 @@
 
                     <TextView
                         android:id="@+id/feuSerie3"
-                        android:layout_width="145dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/ic_star"
                         android:backgroundTint="@color/hardBlue"
                         android:fontFamily="@font/amaranth"
                         android:gravity="center_horizontal"
