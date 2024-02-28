@@ -4,25 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import classes.AdapterListe;
-import classes.RetrofitInstance;
 import classes.User;
-import interfaces.InterfaceServeur;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import classes.UserViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,11 +28,7 @@ public class LeaderboardFragment extends Fragment {
     //========== Variables declaration ==========
     List<User> liste = new ArrayList<>();
     List<User> listeFriends = new ArrayList<>();
-    RecyclerView rv;
-    AdapterListe adapterListe;
-    Context context;
-
-    InterfaceServeur interfaceServeur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+    UserViewModel uvm;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,58 +69,23 @@ public class LeaderboardFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
-        rv = view.findViewById(R.id.rvLeaderBoard);
-        rv.setHasFixedSize(true);
-
-        //rv.setLayoutManager(new LinearLayoutManager( this.getContext() , LinearLayoutManager.VERTICAL, false));
-        rv.setLayoutManager(
-                new LinearLayoutManager(getContext()));
-
-        Call<List<User>> call = interfaceServeur.getUsers();
-        call.enqueue(new Callback<List<User>>() {
+        uvm = new ViewModelProvider(this).get(UserViewModel.class);
+        uvm.getUsers().observe(getActivity(), new Observer<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.isSuccessful()) {
-                    for (User u: response.body()) {
-                        liste.add(u);
-                    }
-                } else {
-
-                }
+            public void onChanged(List<User> users) {
+                uvm = new ViewModelProvider(getActivity()).get(UserViewModel.class);
             }
 
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-            }
         });
 
-        //Affichage par défaut
-        adapterListe = new AdapterListe(liste);
-        rv.setAdapter(adapterListe);
-        //changement de selection
-        changeSelectedRadio(view);
-
-        return view;
     }
 
     private void changeSelectedRadio(View view) {
         // Écouteur pour la sélection
         RadioGroup radioGroup = view.findViewById(R.id.rg_selectBoard);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbFriends) {
-                adapterListe = new AdapterListe(listeFriends);
-            } else {
-                adapterListe = new AdapterListe(liste);
-            }
-            rv.setAdapter(adapterListe);
+
         });
     }
+
 }
