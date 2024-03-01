@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightTurquoise"
     android:padding="15dp"
     tools:context=".LeaderboardFragment">
 
@@ -10,6 +11,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lightTurquoise"
         android:orientation="vertical">
 
         <RadioGroup
@@ -51,6 +53,11 @@
                 android:textColor="@drawable/radio_button_text_color_selector"
                 android:textSize="24sp" />
         </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvUsers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

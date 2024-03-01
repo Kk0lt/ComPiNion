@@ -49,22 +49,22 @@ public class UserViewModel extends ViewModel {
     }
 
     public void getUsersFromBDD() {
-        Call<List<User>> call = interfaceServeur.users();
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                if (response.isSuccessful()) {
-                    listeUsers.setValue(response.body());
-                } else {
-                    Log.d("isNotSuccessful", "Fuck");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d("onFailure", t.getMessage());
-            }
-        });
+//        Call<List<User>> call = interfaceServeur.getUsers();
+//        call.enqueue(new Callback<List<User>>() {
+//            @Override
+//            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+//                if (response.isSuccessful()) {
+//                    listeUsers.setValue(response.body());
+//                } else {
+//                    Log.d("isNotSuccessful", "Fuck");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<User>> call, Throwable t) {
+//                Log.d("onFailure", t.getMessage());
+//            }
+//        });
     }
 
 }

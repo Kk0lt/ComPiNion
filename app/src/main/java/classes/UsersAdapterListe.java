@@ -14,13 +14,13 @@ import com.example.cumpinion.R;
 
 import java.util.List;
 
-public class AdapterListe extends RecyclerView.Adapter {
+public class UsersAdapterListe extends RecyclerView.Adapter {
 
     List<User> liste;
 
 
     //========================================
-    public AdapterListe(List<User> liste){
+    public UsersAdapterListe(List<User> liste){
         this.liste = liste;
     }
 
