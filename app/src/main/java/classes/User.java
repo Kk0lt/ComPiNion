@@ -14,7 +14,7 @@ public class User {
     String email;
     @SerializedName("password")
     String password;
-    @SerializedName("Pseudo")
+    @SerializedName("pseudo")
     String pseudo;
 
     public User(int id, String nom, String prenom, String email, String password, String pseudo) {

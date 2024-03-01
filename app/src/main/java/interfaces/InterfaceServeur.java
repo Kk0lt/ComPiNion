@@ -2,17 +2,16 @@ package interfaces;
 
 import java.util.List;
 
+import classes.ReponseServer;
 import classes.User;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface InterfaceServeur {
 
@@ -30,7 +29,7 @@ public interface InterfaceServeur {
 
     // Tous les usagers
     @GET("users")
-    Call<List<User>> users();
+    Call<ReponseServer> getUsers();
 
     // Logout
     @POST("logout")

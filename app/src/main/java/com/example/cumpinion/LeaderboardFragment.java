@@ -1,13 +1,10 @@
 package com.example.cumpinion;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import classes.AdapterListe;
+import classes.ReponseServer;
+import classes.UsersAdapterListe;
 import classes.RetrofitInstance;
 import classes.User;
 import classes.UserViewModel;
@@ -37,7 +34,7 @@ public class LeaderboardFragment extends Fragment {
     List<User> liste = new ArrayList<>();
     List<User> listeFriends = new ArrayList<>();
     UserViewModel uvm;
-    AdapterListe adapterListe;
+    UsersAdapterListe usersAdapterListe;
     RecyclerView rvUsers;
 
     public LeaderboardFragment() {
@@ -84,25 +81,27 @@ public class LeaderboardFragment extends Fragment {
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<List<User>> call = serveur.users();
+        Call<ReponseServer> call = serveur.getUsers();
 
         Log.d("ovCre", "2");
 
-        call.enqueue(new Callback<List<User>>()
-        {
+        call.enqueue(new Callback<ReponseServer>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
                 Log.d("on response", "worked");
-
-                List<User> users = response.body();
-                adapterListe = new AdapterListe(users);
-                rvUsers.setAdapter(adapterListe);
+                ReponseServer reponseServer = response.body();
+                List<User> users = reponseServer.getUsers();
+                usersAdapterListe = new UsersAdapterListe(users);
+                rvUsers.setAdapter(usersAdapterListe);
             }
+
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(Call<ReponseServer> call, Throwable t) {
                 Log.d("erreur", "onFailure Erreur");
                 Log.d("erreur", t.getMessage());
             }
         });
+
+
     }
 }

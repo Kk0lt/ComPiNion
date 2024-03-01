@@ -27,31 +27,35 @@
 
             <ImageView
                 android:id="@+id/ivCompanionImage"
-                android:layout_width="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_gravity="start"
+                android:layout_weight="2"
+                android:scaleType="fitStart"
                 app:srcCompat="@drawable/sus" />
 
             <TextView
                 android:id="@+id/tvPseudo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="left"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/lexend"
                 android:gravity="left|center_vertical"
+                android:maxLines="1"
+                android:paddingStart="10dp"
                 android:text="Utilisateur"
                 android:textAlignment="viewStart"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvXp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:fontFamily="@font/lexend"
-                android:gravity="center_horizontal"
+                android:gravity="right|center_vertical|end"
                 android:text="experience"
                 android:textAlignment="center"
                 android:textSize="16sp" />
