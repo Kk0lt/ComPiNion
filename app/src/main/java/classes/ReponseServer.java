@@ -4,18 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ReponseServer {
+import classes.characters.Compinion;
 
+public class ReponseServer {
+    @SerializedName("message")
+    String message;
+    @SerializedName("success")
+    boolean success;
+    @SerializedName("data")
+    List<User> users;
     public ReponseServer(boolean success, List<User> users, String message) {
         this.success = success;
         this.users = users;
         this.message = message;
     }
-
-    @SerializedName("success")
-    boolean success;
-    @SerializedName("users")
-    List<User> users;
 
     public boolean isSuccess() {
         return success;
@@ -41,7 +43,6 @@ public class ReponseServer {
         this.message = message;
     }
 
-    @SerializedName("message")
-    String message;
+
 
 }

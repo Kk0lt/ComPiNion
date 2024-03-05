@@ -1,9 +1,8 @@
 package interfaces;
 
-import java.util.List;
-
 import classes.ReponseServer;
 import classes.User;
+import classes.characters.CompinionsReponseServer;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -42,5 +41,9 @@ public interface InterfaceServeur {
     // Suppression du compte
     @DELETE("compinion/{id}")
     Call<Void> destroy(@Path("id") int id);
+
+    // Afficher la liste des personnages
+    @GET("showAllCharacters")
+    Call<CompinionsReponseServer> getAllCompinions();
 
 }
