@@ -31,6 +31,6 @@ public class Compinion {
     }
     public String getImgUrl() {
         // Assuming your Laravel backend is running on http://yourdomain.com
-        return "http://10.0.2.2/img/" + image;
+        return "http://10.0.2.2/ComPiNion/public/img/" + image;
     }
 }

@@ -49,7 +49,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etEmail_loginFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -62,7 +62,7 @@
         android:textColorHint="@color/black" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPassword_loginFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
