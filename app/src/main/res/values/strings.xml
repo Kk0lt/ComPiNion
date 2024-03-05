@@ -27,7 +27,7 @@
     <!--Login Activity-->
     <string name="connectez_vous">Vous avez déjà un compte ? Connectez-vous</string>
     <!--Create Account Fragment-->
-    <string name="titre_createAccount">Créez un nouveau compte !</string>
+    <string name="titre_createAccount">Créez un nouveau compte!</string>
     <string name="nomHint_createAccount">Nom</string>
     <string name="prenomHint_createAccount">Prénom</string>
     <string name="emailHint_createAccount">Email</string>
