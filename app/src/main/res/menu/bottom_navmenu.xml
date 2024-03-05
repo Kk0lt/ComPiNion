@@ -5,24 +5,24 @@
         android:layout_height="wrap_content"
         android:title="LeaderBoard"
         android:icon="@drawable/ic_peoples"
-        android:id="@+id/leaderboard"/>
+        android:id="@+id/leaderboardFragmentItem"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Home"
         android:icon="@drawable/ic_home"
-        android:id="@+id/home"/>
+        android:id="@+id/homeFragmentItem"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="History"
         android:icon="@drawable/ic_calendar"
-        android:id="@+id/history"/>
+        android:id="@+id/historyFragmentItem"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Settings"
         android:icon="@drawable/ic_cogwheel"
-        android:id="@+id/settings"/>
+        android:id="@+id/settingsFragmentItem"/>
 
 </menu>

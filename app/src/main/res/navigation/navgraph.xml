@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cumpinion.loginFragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/fromLoginToLimitSelect"
+            app:destination="@id/limitselectionFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/limitselectionFragment"
+        android:name="com.example.cumpinion.loginFragments.limitselectionFragment"
+        android:label="fragment_limitselection"
+        tools:layout="@layout/fragment_limitselection" >
+        <action
+            android:id="@+id/fromLimitSelectToAgreement"
+            app:destination="@id/agreementFragment"
+            app:popUpTo="@id/limitselectionFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/agreementFragment"
+        android:name="com.example.cumpinion.loginFragments.agreementFragment"
+        android:label="fragment_agreement"
+        tools:layout="@layout/fragment_agreement" >
+        <action
+            android:id="@+id/fromAgreementToHome"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/agreementFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/leaderboardFragment"
+        android:name="com.example.cumpinion.LeaderboardFragment"
+        android:label="fragment_leaderboard"
+        tools:layout="@layout/fragment_leaderboard" >
+        <action
+            android:id="@+id/fromLeaderboardToHome"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/leaderboardFragment"/>
+        <action
+            android:id="@+id/fromLeaderboardToSettings"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/leaderboardFragment"/>
+        <action
+            android:id="@+id/fromLeaderboardToHistory"
+            app:destination="@id/historyFragment"
+            app:popUpTo="@id/leaderboardFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.cumpinion.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/fromHomeToLeaderboard"
+            app:destination="@id/leaderboardFragment"
+            app:popUpTo="@id/homeFragment"/>
+        <action
+            android:id="@+id/fromHomeToSettings"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/homeFragment"/>
+        <action
+            android:id="@+id/fromHomeToHistory"
+            app:destination="@id/historyFragment"
+            app:popUpTo="@id/homeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.cumpinion.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+        <action
+            android:id="@+id/fromHistoryToLeaderboard"
+            app:destination="@id/leaderboardFragment"
+            app:popUpTo="@id/historyFragment"/>
+        <action
+            android:id="@+id/fromHistoryToSettings"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/historyFragment"/>
+        <action
+            android:id="@+id/fromHistoryToHome"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/historyFragment"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.cumpinion.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/fromSettingsToLeaderboard"
+            app:destination="@id/leaderboardFragment"
+            app:popUpTo="@id/settingsFragment"/>
+        <action
+            android:id="@+id/fromSettingsToHistory"
+            app:destination="@id/historyFragment"
+            app:popUpTo="@id/settingsFragment"/>
+        <action
+            android:id="@+id/fromHistoryToHome"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/settingsFragment"/>
+
+    </fragment>
+</navigation>

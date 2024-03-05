@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
@@ -13,6 +16,7 @@ import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
 import com.example.cumpinion.SettingsFragment;
 import com.example.cumpinion.databinding.ActivityHomeBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,39 +24,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        NavHostFragment host =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.FragmentContainer);
+        NavController navController = host.getNavController();
+        navController.navigate(R.id.loginFragment);
+
+        bottomNavigationBar(navController);
 
 
+    }
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    private void bottomNavigationBar(NavController navController) {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        replaceFragment(new HomeFragment());
-        binding.bottomNavigationView.setSelectedItemId(R.id.home);
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
 
-            if (item.getItemId() == R.id.home) {
-                replaceFragment(new HomeFragment());
+            if (item.getItemId() == R.id.homeFragmentItem) {
+                navController.navigate(R.id.homeFragment);
             }
-            else if (item.getItemId() == R.id.leaderboard) {
-                replaceFragment(new LeaderboardFragment());
+            else if (item.getItemId() == R.id.leaderboardFragmentItem) {
+                navController.navigate(R.id.leaderboardFragment);
             }
-            else if (item.getItemId() == R.id.history) {
-                replaceFragment(new HistoryFragment());
+            else if (item.getItemId() == R.id.historyFragmentItem) {
+                navController.navigate(R.id.historyFragment);
             }
-            else if (item.getItemId() == R.id.settings) {
-                replaceFragment(new SettingsFragment());
+            else if (item.getItemId() == R.id.settingsFragmentItem) {
+                navController.navigate(R.id.settingsFragment);
             }
             return true;
         });
-
-
-
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
-    }
+
 }

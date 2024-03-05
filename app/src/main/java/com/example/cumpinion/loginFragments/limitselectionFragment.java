@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,12 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.cumpinion.R;
 
 import java.util.List;
 
-import classes.ReponseServer;
 import classes.RetrofitInstance;
 
 import classes.characters.Compinion;
@@ -57,6 +59,7 @@ public class limitselectionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Button btNext = view.findViewById(R.id.btNext_limitSelectionFragment);
 
         rvCharacters = view.findViewById(R.id.rvCharacters);
         rvCharacters.setHasFixedSize(true);
@@ -80,5 +83,14 @@ public class limitselectionFragment extends Fragment {
                 Log.d("erreur", t.getMessage());
             }
         });
+
+        btNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController controller = Navigation.findNavController(view);
+                controller.navigate(R.id.fromLimitSelectToAgreement);
+            }
+        });
+
     }
 }
