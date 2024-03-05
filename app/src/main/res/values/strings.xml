@@ -28,7 +28,8 @@
     <string name="connectez_vous">Vous avez déjà un compte ? Connectez-vous</string>
 
     <!--LimitSelection Activity-->
-    <string name="select">Selectionnez une limite:</string>
+    <string name="selectLimit">Selectionnez une limite:</string>
+    <string name="selectCharacter">Selectionnez votre companion:</string>
 
     <!--Agreement Activity-->
     <string name="iAgree">J\'accepte</string>
