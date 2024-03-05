@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -48,53 +49,64 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etEmail_loginFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:backgroundTint="@color/hardBlue"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/hardBlue"
-        android:textColorHint="@color/black" />
-
-    <EditText
-        android:id="@+id/etPassword_loginFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/hardBlue"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColor="@color/hardBlue"
-        android:textColorHint="@color/black" />
-
-    <Button
-        android:id="@+id/btLogin"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/hardBlue"
-        android:paddingHorizontal="60dp"
-        android:text="Connexion"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/tvCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Vous n'avez pas de compte ? Créez-en un !"
-        android:textColor="@color/hardBlue"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etEmail_loginFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/hardBlue"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/hardBlue"
+            android:textColorHint="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etPassword_loginFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/hardBlue"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/hardBlue"
+            android:textColorHint="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/hardBlue"
+            android:paddingHorizontal="60dp"
+            android:text="Connexion"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCreateAccount_loginFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Vous n'avez pas de compte ? Créez-en un !"
+            android:textColor="@color/hardBlue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

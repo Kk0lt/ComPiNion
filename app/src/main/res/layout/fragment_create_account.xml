@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hardBlue"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".loginFragments.CreateAccountFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTitre_CreateAccountFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexend"
+            android:text="@string/titre_createAccount"
+            android:textColor="@color/lightTurquoise"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ch_goat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/etNom_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/nomHint_createAccount"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etPrenom_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/prenomHint_createAccount"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etEmail_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/emailHint_createAccount"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etPassword_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/passwordHint_createAccount"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:text="@string/btcreerCompte"
+            android:textColor="@color/hardBlue"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -80,6 +80,14 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
             imageView = itemView.findViewById(R.id.characterSelectCard_iv);
             textView = itemView.findViewById(R.id.tvcompanionNameCard);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+            });
+
         }
 
     }

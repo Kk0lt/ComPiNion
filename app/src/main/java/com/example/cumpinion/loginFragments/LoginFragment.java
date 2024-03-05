@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.R;
@@ -56,6 +57,15 @@ public class LoginFragment extends Fragment {
         Button btConnexion = view.findViewById(R.id.btLogin);
         EditText etEmail = view.findViewById(R.id.etEmail_loginFragment);
         EditText etPassword = view.findViewById(R.id.etPassword_loginFragment);
+        TextView tvCreateAccount_loginFragment = view.findViewById(R.id.tvCreateAccount_loginFragment);
+
+        tvCreateAccount_loginFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController controller = Navigation.findNavController(view);
+                controller.navigate(R.id.fromLoginToCreateAccount);
+            }
+        });
 
         // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
         BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
