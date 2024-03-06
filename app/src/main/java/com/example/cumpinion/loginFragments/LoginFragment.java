@@ -79,7 +79,6 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String email  = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                Log.d("Nom", email + password);
 
                 // Créer un objet JSON contenant les informations d'identification
                 JSONObject jsonObject = new JSONObject();

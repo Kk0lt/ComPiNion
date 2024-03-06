@@ -41,6 +41,21 @@
         android:padding="20dp">
 
         <EditText
+            android:id="@+id/etPrenom_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/prenomHint_createAccount"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
+        <EditText
             android:id="@+id/etNom_CreateAccountFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +71,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/etPrenom_CreateAccountFragment"
+            android:id="@+id/etPseudo_CreateAccountFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -64,7 +79,7 @@
             android:backgroundTint="@color/lightTurquoise"
             android:ems="10"
             android:fontFamily="@font/lexend"
-            android:hint="@string/prenomHint_createAccount"
+            android:hint="@string/pseudoHint_createAccount"
             android:inputType="text"
             android:textColor="@color/white"
             android:textColorHint="@color/lightTurquoise"
@@ -100,8 +115,23 @@
             android:textColorHint="@color/lightTurquoise"
             android:textSize="20sp" />
 
+        <EditText
+            android:id="@+id/etConfirmPassword_CreateAccountFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="@color/lightTurquoise"
+            android:ems="10"
+            android:fontFamily="@font/lexend"
+            android:hint="@string/confirmPasswordHint_createAccount"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightTurquoise"
+            android:textSize="20sp" />
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btCreateAccount_CreateAccountFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
