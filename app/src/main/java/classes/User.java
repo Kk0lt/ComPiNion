@@ -16,14 +16,19 @@ public class User {
     String password;
     @SerializedName("pseudo")
     String pseudo;
+    @SerializedName("character_id")
+    int companion_id;
+    @SerializedName("limite")
+    int limite;
 
-    public User(int id, String nom, String prenom, String email, String password, String pseudo) {
-        this.id = id;
+    public User( String nom, String prenom, String email, String password, String pseudo, int companion_id, int limite) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.pseudo = pseudo;
+        this.companion_id = companion_id;
+        this.limite = limite;
     }
 
     public int getId() { return id; }
@@ -68,4 +73,19 @@ public class User {
         this.pseudo = pseudo;
     }
 
+    public int getCompanion_id() {
+        return companion_id;
+    }
+
+    public void setCompanion_id(int companion_id) {
+        this.companion_id = companion_id;
+    }
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite(int limite) {
+        this.limite = limite;
+    }
 }

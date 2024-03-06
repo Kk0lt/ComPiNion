@@ -20,7 +20,7 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
 
 
     List<Compinion> liste;
-
+    InterfaceCompinion interfaceCompinion;
 
     //========================================
     public CompinionsAdapterList(List<Compinion> liste){
@@ -83,7 +83,9 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    int position = getLayoutPosition();
+                    Compinion compinion = liste.get(position);
+                    interfaceCompinion.gestionClic(compinion);
 
                 }
             });

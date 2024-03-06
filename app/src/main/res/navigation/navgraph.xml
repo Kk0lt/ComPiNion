@@ -10,15 +10,19 @@
         android:name="com.example.cumpinion.loginFragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/fromLoginToLimitSelect"
-            app:destination="@id/limitselectionFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
+<!--        <action-->
+<!--            android:id="@+id/fromLoginToLimitSelect"-->
+<!--            app:destination="@id/limitselectionFragment"/>-->
         <action
             android:id="@+id/fromLoginToCreateAccount"
             app:destination="@id/createAccountFragment"
             app:popUpTo="@id/loginFragment"/>
+        <action
+            android:id="@+id/fromLoginToHome"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            />
+
     </fragment>
     <fragment
         android:id="@+id/limitselectionFragment"
@@ -120,6 +124,10 @@
         android:name="com.example.cumpinion.loginFragments.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/fromCreateAccountToLimitSelect"
+            app:destination="@+id/limitselectionFragment"
+            app:popUpTo="@id/createAccountFragment"/>
 
     </fragment>
 </navigation>

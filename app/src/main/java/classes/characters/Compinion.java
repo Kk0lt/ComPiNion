@@ -8,10 +8,20 @@ public class Compinion {
     String name;
     @SerializedName("img")
     String image;
-
-    public Compinion(String name, String image) {
+    @SerializedName("id")
+    int id;
+    public Compinion(int id, String name, String image) {
+        this.id = id;
         this.name = name;
         this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

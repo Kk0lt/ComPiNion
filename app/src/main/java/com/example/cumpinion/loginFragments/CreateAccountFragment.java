@@ -5,10 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +16,9 @@ import android.widget.Toast;
 
 import com.example.cumpinion.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import classes.RetrofitInstance;
+import classes.User;
 import interfaces.InterfaceServeur;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class CreateAccountFragment extends Fragment {
@@ -63,6 +54,12 @@ public class CreateAccountFragment extends Fragment {
         Button btCreate = view.findViewById(R.id.btCreateAccount_CreateAccountFragment);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
+        createAccountinViewModel(view, etPrenom, etNom, etPseudo, etEmail, etPassword, etConfirmPassword, btCreate, serveur);
+
+    }
+
+    private void createAccountinViewModel(@NonNull View view, EditText etPrenom, EditText etNom, EditText etPseudo, EditText etEmail, EditText etPassword, EditText etConfirmPassword,
+                                          Button btCreate, InterfaceServeur serveur) {
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,37 +69,11 @@ public class CreateAccountFragment extends Fragment {
                 String email  = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 String confirmPassword = etConfirmPassword.getText().toString();
+                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
                 if(confirmPassword.equals(password)){
-
-                    // Créer un objet JSON contenant les informations d'identification
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("prenom", prenom);
-                        jsonObject.put("nom", nom);
-                        jsonObject.put("pseudo", pseudo);
-                        jsonObject.put("email", email);
-                        jsonObject.put("password", password);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
-                    Call<Void> call = serveur.register(requestBody);
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            Log.d("Réussi!", "!!!!!!!Compte Crée  : " + email +" "+ password);
-                            // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
-                            NavController controller = Navigation.findNavController(view);
-                            controller.navigate(R.id.loginFragment);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.d("Réussi!", t.getMessage());
-
-                        }
-                    });
+                    User newUser = new User(prenom, nom, pseudo, email, password, 1);
+                    createUserViewModel.addUser(newUser);
                 }
                 else{
                     Toast.makeText(getContext(), "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();
@@ -112,6 +83,5 @@ public class CreateAccountFragment extends Fragment {
 
             }
         });
-
     }
 }

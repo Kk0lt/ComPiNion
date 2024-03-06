@@ -5,9 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,17 @@ import android.widget.Button;
 
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import classes.RetrofitInstance;
+import interfaces.InterfaceServeur;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class agreementFragment extends Fragment {
@@ -37,11 +50,47 @@ public class agreementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button btNext = view.findViewById(R.id.btNext_agreementFragment);
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController controller = Navigation.findNavController(view);
-                controller.navigate(R.id.fromAgreementToHome);
+                String prenom = createUserViewModel.getUserMutableLiveData().getValue().getPrenom();
+                String nom = createUserViewModel.getUserMutableLiveData().getValue().getNom();
+                String pseudo = createUserViewModel.getUserMutableLiveData().getValue().getPseudo();
+                String email = createUserViewModel.getUserMutableLiveData().getValue().getEmail();
+                String password = createUserViewModel.getUserMutableLiveData().getValue().getPassword();
+
+                // Créer un objet JSON contenant les informations d'identification
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("prenom", prenom);
+                    jsonObject.put("nom", nom);
+                    jsonObject.put("pseudo", pseudo);
+                    jsonObject.put("email", email);
+                    jsonObject.put("password", password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+                Call<Void> call = serveur.register(requestBody);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.d("Réussi!", "!!!!!!!Compte Crée  : " + email +" "+ password);
+                        NavController controller = Navigation.findNavController(view);
+                        controller.navigate(R.id.fromAgreementToHome);
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.d("Réussi!", t.getMessage());
+
+                    }
+                });
+
+
             }
         });
     }

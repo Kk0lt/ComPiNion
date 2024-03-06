@@ -98,7 +98,8 @@ public class LoginFragment extends Fragment {
                             Log.d("Réussi!", "Connected : " + email +" "+ password);
                             // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
                             NavController controller = Navigation.findNavController(view);
-                            controller.navigate(R.id.fromLoginToLimitSelect);
+                            controller.navigate(R.id.fromLoginToHome);
+//                            controller.popBackStack(R.id.loginFragment, true);
                         } else {
                             // La connexion a échoué
                             Toast.makeText(getContext(), "Vérifiez vos information de connexion", Toast.LENGTH_SHORT).show();

@@ -69,6 +69,7 @@
             android:fontFamily="@font/lexend"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:text="ok@hotmail.com"
             android:textColor="@color/hardBlue"
             android:textColorHint="@color/black"
             android:textSize="20sp" />
@@ -84,6 +85,7 @@
             android:fontFamily="@font/lexend"
             android:hint="Password"
             android:inputType="textPassword"
+            android:text="Password123"
             android:textColor="@color/hardBlue"
             android:textColorHint="@color/black"
             android:textSize="20sp" />
