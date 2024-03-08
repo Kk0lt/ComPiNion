@@ -67,7 +67,6 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
 
         Button btNext = view.findViewById(R.id.btNext_limitSelectionFragment);
         ImageView ic_0, ic_1, ic_2, ic_3;
-
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
         NavController controller = Navigation.findNavController(view);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
@@ -77,6 +76,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         ic_1 = view.findViewById(R.id.ivIcon1);
         ic_2 = view.findViewById(R.id.ivIcon2);
         ic_3 = view.findViewById(R.id.ivIcon3);
+
         // Réinitialisez la couleur de contour pour toutes les images
         resetTint(ic_0, ic_1, ic_2, ic_3);
 

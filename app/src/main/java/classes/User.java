@@ -20,7 +20,12 @@ public class User {
     int companion_id;
     @SerializedName("limite")
     int limite;
+    private String token;
 
+
+    public User(){
+
+    }
     public User( String nom, String prenom, String email, String password, String pseudo, int companion_id, int limite) {
         this.nom = nom;
         this.prenom = prenom;
@@ -31,6 +36,16 @@ public class User {
         this.limite = limite;
     }
 
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int companion_id, int limite) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.pseudo = pseudo;
+        this.companion_id = companion_id;
+        this.limite = limite;
+    }
     public int getId() { return id; }
 
     public String getNom() {
@@ -87,5 +102,13 @@ public class User {
 
     public void setLimite(int limite) {
         this.limite = limite;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

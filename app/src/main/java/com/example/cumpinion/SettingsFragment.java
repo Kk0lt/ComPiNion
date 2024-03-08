@@ -2,11 +2,28 @@ package com.example.cumpinion;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import classes.ReponseServer;
+import classes.RetrofitInstance;
+import classes.characters.Compinion;
+import classes.characters.CompinionsReponseServer;
+import interfaces.InterfaceServeur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +77,38 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView tvChangePsuedo = view.findViewById(R.id.tvChangePseudo_Settings);
+        TextView tvChangePwd = view.findViewById(R.id.tvChangePassword_Settings);
+        TextView tvChangeApparence = view.findViewById(R.id.tvChangeApparence_Settings);
+        TextView tvChangeTheme = view.findViewById(R.id.tvChangeTheme_Settings);
+        TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
+        TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.logout();
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        NavController controller = Navigation.findNavController(view);
+                        controller.navigate(R.id.loginFragment);
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getContext(), "erreur serveur", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+
     }
 }

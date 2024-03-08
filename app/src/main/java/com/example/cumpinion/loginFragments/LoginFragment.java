@@ -23,10 +23,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import classes.RetrofitInstance;
+import classes.User;
 import interfaces.InterfaceServeur;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,26 +93,47 @@ public class LoginFragment extends Fragment {
                     e.printStackTrace();
                 }
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
-                Call<Void> call = serveur.login(requestBody);
-                call.enqueue(new Callback<Void>() {
+                Call<ResponseBody> call = serveur.login(requestBody);
+                call.enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
-                            // La connexion a réussi
-                            Log.d("Réussi!", "Connected : " + email +" "+ password);
-                            // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
-                            NavController controller = Navigation.findNavController(view);
-                            controller.navigate(R.id.fromLoginToHome);
-//                            controller.popBackStack(R.id.loginFragment, true);
+                            try {
+                                // Récupérer le corps de la réponse sous forme de chaîne
+                                String responseBody = response.body().string();
+                                JSONObject jsonObject = new JSONObject(responseBody);
+                                JSONObject userData = jsonObject.getJSONObject("user");
+
+                                // Récupérer les informations de l'utilisateur depuis l'objet JSON
+                                String userName = userData.getString("nom");
+                                String userPrenom = userData.getString("prenom");
+                                String userEmail = userData.getString("email");
+                                String userPseudo = userData.getString("pseudo");
+                                int userId = userData.getInt("id");
+                                int userCompanion = userData.getInt("character_id");
+                                int limite = userData.getInt("limite");
+
+                                // Créer un nouvel objet User avec les informations récupérées
+                                User user = new User(userId,userName, userPrenom, userEmail, password, userPseudo, userCompanion, limite);
+                                Log.d("Réussi!", "Connected : " + user);
+
+                                // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
+                                NavController controller = Navigation.findNavController(view);
+                                controller.navigate(R.id.fromLoginToHome);
+
+                            } catch (JSONException | IOException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             // La connexion a échoué
-                            Toast.makeText(getContext(), "Vérifiez vos information de connexion", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(getContext(), "Vérifiez vos informations de connexion", Toast.LENGTH_SHORT).show();
                         }
                     }
 
+
+
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.d("fail", t.getMessage());
 
                     }
@@ -120,14 +145,14 @@ public class LoginFragment extends Fragment {
     }
 
 /*   Pour réafficher la barre de navigation utiliser ce code: */
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//
-//        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
-//        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-//        // Rétablir la visibilité de la barre de navigation
-//        bottomNavigationView.setVisibility(View.VISIBLE);
-//    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        // Rétablir la visibilité de la barre de navigation
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
 
 }
