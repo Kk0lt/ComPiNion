@@ -27,8 +27,12 @@ public interface InterfaceServeur {
     Call<User> user(@Path("id") int id);
 
     // Tous les usagers
-    @GET("users")
+    @GET("users/{id}")
     Call<ReponseServer> getUsers();
+
+    // Tous les usagers
+    @GET("user/{id}/amis")
+    Call<ReponseServer> getAmis();
 
     // Logout
     @POST("logout")
