@@ -81,6 +81,43 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         resetTint(ic_0, ic_1, ic_2, ic_3);
 
         // Ajoutez des onClickListeners pour chaque image
+        limitSelection(ic_0, ic_1, ic_2, ic_3);
+
+
+        getActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+//                setEnabled(false);
+//                getActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
+        });
+
+        rvCharacters = view.findViewById(R.id.rvCharacters);
+        rvCharacters.setHasFixedSize(true);
+        rvCharacters.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
+
+        showSelectableCompanions(serveur);
+
+        btNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+                createUserViewModel.setUserLimit(selectedLimit);
+
+                NavController controller = Navigation.findNavController(view);
+                controller.navigate(R.id.fromLimitSelectToAgreement);
+            }
+        });
+
+    }
+
+    /*----------------------- Methodes privés -----------------------*/
+
+
+    /**
+     * Méthode pour réinitialiser la couleur de contour de toutes les images
+     * */
+    private void limitSelection(ImageView ic_0, ImageView ic_1, ImageView ic_2, ImageView ic_3) {
         ic_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,36 +156,11 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
 
             }
         });
-
-
-
-        getActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-//                setEnabled(false);
-//                getActivity().getOnBackPressedDispatcher().onBackPressed();
-            }
-        });
-
-        rvCharacters = view.findViewById(R.id.rvCharacters);
-        rvCharacters.setHasFixedSize(true);
-        rvCharacters.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
-
-        showSelectableCompanions(serveur);
-
-        btNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
-                createUserViewModel.setUserLimit(selectedLimit);
-
-                NavController controller = Navigation.findNavController(view);
-                controller.navigate(R.id.fromLimitSelectToAgreement);
-            }
-        });
-
     }
-    // Méthode pour réinitialiser la couleur de contour de toutes les images
+
+    /**
+     * Méthode pour réinitialiser la couleur de contour de toutes les images
+     */
     private void resetTint(ImageView... imageViews) {
         for (ImageView imageView : imageViews) {
             imageView.clearColorFilter(); // Efface tout filtre de couleur précédent
