@@ -36,6 +36,7 @@ public class LeaderboardFragment extends Fragment {
     UserViewModel uvm;
     UsersAdapterListe usersAdapterListe;
     RecyclerView rvUsers;
+    RecyclerView rvAmis;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -60,7 +61,13 @@ public class LeaderboardFragment extends Fragment {
         // Écouteur pour la sélection
         RadioGroup radioGroup = view.findViewById(R.id.rg_selectBoard);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-
+            if(radioGroup.getCheckedRadioButtonId() == -1){
+                rvUsers.setVisibility(rvUsers.VISIBLE);
+                rvAmis.setVisibility(rvAmis.INVISIBLE);
+            } else {
+                rvUsers.setVisibility(rvUsers.INVISIBLE);
+                rvAmis.setVisibility(rvAmis.VISIBLE);
+            }
         });
     }
 
@@ -74,17 +81,25 @@ public class LeaderboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d("ovCre", "ovCrea");
-
-
+        
         rvUsers = view.findViewById(R.id.rvUsers);
         rvUsers.setHasFixedSize(true);
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<ReponseServer> call = serveur.getUsers();
+        rvAmis = view.findViewById(R.id.rvAmis);
+        rvAmis.setHasFixedSize(true);
+        rvAmis.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Log.d("ovCre", "2");
 
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        getUsers(serveur);
+
+
+    }
+
+    private void getUsers(InterfaceServeur serveur) {
+        Call<ReponseServer> call = serveur.getUsers();
         call.enqueue(new Callback<ReponseServer>() {
             @Override
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
@@ -101,7 +116,25 @@ public class LeaderboardFragment extends Fragment {
                 Log.d("erreur", t.getMessage());
             }
         });
+    }
 
+    private void getAmis(InterfaceServeur s) {
+        Call<ReponseServer> call = s.getAmis();
+        call.enqueue(new Callback<ReponseServer>() {
+            @Override
+            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
+                Log.d("on response", "worked");
+                ReponseServer reponseServer = response.body();
+                List<User> users = reponseServer.getUsers();
+                usersAdapterListe = new UsersAdapterListe(users);
+                rvAmis.setAdapter(usersAdapterListe);
+            }
 
+            @Override
+            public void onFailure(Call<ReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
     }
 }

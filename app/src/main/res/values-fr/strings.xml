@@ -2,29 +2,29 @@
 <resources>
     <string name="app_name">ComPiNion</string>
 
-    <string name="serie">Streak</string>
-    <string name="merite">Merit</string>
+    <string name="serie">Série</string>
+    <string name="merite">Mérite</string>
 
     <!--Home Fragment-->
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
+    <string name="nav_open">Ouvrir</string>
+    <string name="nav_close">Fermer</string>
 
-    <string name="settings_themes">Choose theme</string>
-    <string name="settings_langue">Switch language</string>
-    <string name="settings_pseudo">New username</string>
-    <string name="settings_password">New password</string>
-    <string name="settings_logout">Log off</string>
+    <string name="settings_themes">Choisir le thème</string>
+    <string name="settings_langue">Choisir la langue</string>
+    <string name="settings_pseudo">Nouveau pseudonyme</string>
+    <string name="settings_password">Nouveau mot de passe</string>
+    <string name="settings_logout">Déconnexion</string>
 
     <!--Login Activity-->
-    <string name="connectez_vous">Already have an account? Log in!</string>
+    <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
 
     <!--LimitSelection Activity-->
-    <string name="selectLimit">Choose a cigaret limit :</string>
-    <string name="selectCharacter">Choose your Compinion</string>
+    <string name="selectLimit">Choisissez une limite de cigarette :</string>
+    <string name="selectCharacter">Choisissez votre Compinion</string>
 
     <!--Agreement Activity-->
-    <string name="iAgree">I agree</string>
-    <string name="suivant">Next</string>
+    <string name="iAgree">J\'accepte</string>
+    <string name="suivant">Suivant</string>
 
     <string name="agreement_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
         risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.
@@ -39,6 +39,6 @@
 
     <!--Autre-->
 
-    <string name="past_streak">Past streaks :</string>
+    <string name="past_streak">Séries précédentes :</string>
 
 </resources>

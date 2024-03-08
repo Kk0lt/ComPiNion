@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightTurquoise"
-    android:padding="15dp"
     tools:context=".LeaderboardFragment">
 
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:background="@color/lightTurquoise"
         android:orientation="vertical">
 
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bordercircle"
+            android:background="@drawable/rectangleborder"
             android:checkedButton="@id/rbAll"
             android:orientation="horizontal"
             android:padding="8dp">
@@ -56,6 +56,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUsers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAmis"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
