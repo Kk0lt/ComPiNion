@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,8 +74,10 @@ public class CreateAccountFragment extends Fragment {
                 CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
                 if(confirmPassword.equals(password)){
-                    User newUser = new User(prenom, nom, pseudo, email, password, 1);
+                    User newUser = new User(nom, prenom, email, password, pseudo, 1,0);
                     createUserViewModel.addUser(newUser);
+                    NavController controller = Navigation.findNavController(view);
+                    controller.navigate(R.id.fromCreateAccountToLimitSelect);
                 }
                 else{
                     Toast.makeText(getContext(), "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();

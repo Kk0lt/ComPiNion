@@ -61,6 +61,8 @@ public class agreementFragment extends Fragment {
                 String pseudo = createUserViewModel.getUserMutableLiveData().getValue().getPseudo();
                 String email = createUserViewModel.getUserMutableLiveData().getValue().getEmail();
                 String password = createUserViewModel.getUserMutableLiveData().getValue().getPassword();
+                int limite = createUserViewModel.getUserMutableLiveData().getValue().getLimite();
+                int companion_id = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
 
                 // Créer un objet JSON contenant les informations d'identification
                 JSONObject jsonObject = new JSONObject();
@@ -70,6 +72,8 @@ public class agreementFragment extends Fragment {
                     jsonObject.put("pseudo", pseudo);
                     jsonObject.put("email", email);
                     jsonObject.put("password", password);
+                    jsonObject.put("character_id", companion_id);
+                    jsonObject.put("limite", limite);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +83,7 @@ public class agreementFragment extends Fragment {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        Log.d("Réussi!", "!!!!!!!Compte Crée  : " + email +" "+ password);
+                        Log.d("Réussi!", "!!!!!!!Compte Crée  : " + createUserViewModel.getUserMutableLiveData().getValue());
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.fromAgreementToHome);
                     }

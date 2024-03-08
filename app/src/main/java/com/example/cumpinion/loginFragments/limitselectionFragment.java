@@ -1,5 +1,6 @@
 package com.example.cumpinion.loginFragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.cumpinion.R;
 
@@ -35,6 +38,7 @@ import retrofit2.Response;
 
 
 public class limitselectionFragment extends Fragment implements InterfaceCompinion {
+    int selectedLimit = 0;
 
     RecyclerView rvCharacters;
     CompinionsAdapterList compinionsAdapterList;
@@ -60,10 +64,63 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Button btNext = view.findViewById(R.id.btNext_limitSelectionFragment);
+        ImageView ic_0, ic_1, ic_2, ic_3;
+
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
         NavController controller = Navigation.findNavController(view);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+
+
+        ic_0 = view.findViewById(R.id.ivIcon0);
+        ic_1 = view.findViewById(R.id.ivIcon1);
+        ic_2 = view.findViewById(R.id.ivIcon2);
+        ic_3 = view.findViewById(R.id.ivIcon3);
+        // Réinitialisez la couleur de contour pour toutes les images
+        resetTint(ic_0, ic_1, ic_2, ic_3);
+
+        // Ajoutez des onClickListeners pour chaque image
+        ic_0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTint(ic_0, ic_1, ic_2, ic_3);
+                ic_0.setColorFilter(getResources().getColor(R.color.hardBlue), PorterDuff.Mode.SRC_IN);
+                selectedLimit = 0;
+            }
+        });
+
+        ic_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTint(ic_0, ic_1, ic_2, ic_3);
+                ic_1.setColorFilter(getResources().getColor(R.color.hardBlue), PorterDuff.Mode.SRC_IN);
+                selectedLimit = 1;
+
+            }
+        });
+
+        ic_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTint(ic_0, ic_1, ic_2, ic_3);
+                ic_2.setColorFilter(getResources().getColor(R.color.hardBlue), PorterDuff.Mode.SRC_IN);
+                selectedLimit = 2;
+
+            }
+        });
+
+        ic_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetTint(ic_0, ic_1, ic_2, ic_3);
+                ic_3.setColorFilter(getResources().getColor(R.color.hardBlue), PorterDuff.Mode.SRC_IN);
+                selectedLimit = 3;
+
+            }
+        });
+
+
 
         getActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
@@ -82,11 +139,21 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+                createUserViewModel.setUserLimit(selectedLimit);
+
                 NavController controller = Navigation.findNavController(view);
                 controller.navigate(R.id.fromLimitSelectToAgreement);
             }
         });
 
+    }
+    // Méthode pour réinitialiser la couleur de contour de toutes les images
+    private void resetTint(ImageView... imageViews) {
+        for (ImageView imageView : imageViews) {
+            imageView.clearColorFilter(); // Efface tout filtre de couleur précédent
+            imageView.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN); // Applique la couleur par défaut avec le mode SRC_IN
+        }
     }
 
     //Methode pour afficher les companions de la base de donnés

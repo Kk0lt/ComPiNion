@@ -24,6 +24,13 @@ public class CreateUserViewModel extends ViewModel {
         utilisateurMutableLiveData.getValue().setCompanion_id(id);
     }
 
+    //setter la limite
+    public void setUserLimit(int limite){
+        utilisateurMutableLiveData.getValue().setLimite(limite);
+    }
+
+
+
 //    Créer un nouveau compte dans la BD
 //    public void createUser(@NonNull View view, EditText etPrenom, EditText etNom, EditText etPseudo, EditText etEmail, EditText etPassword, EditText etConfirmPassword,
 //                           Button btCreate, InterfaceServeur serveur){
