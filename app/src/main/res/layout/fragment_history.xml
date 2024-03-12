@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/amaranth"
-                android:text="@string/PastStreak"
+                android:text="@string/past_streak"
                 android:textSize="34sp" />
 
             <androidx.recyclerview.widget.RecyclerView

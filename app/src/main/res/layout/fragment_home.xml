@@ -74,7 +74,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/alfa_slab_one"
                     android:gravity="center_vertical"
-                    android:text="@string/frserie"
+                    android:text="@string/serie"
                     android:textColor="@color/hardBlue"
                     android:textSize="28dp" />
 
@@ -107,7 +107,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/alfa_slab_one"
                     android:gravity="center"
-                    android:text="@string/frmerite"
+                    android:text="@string/merite"
                     android:textColor="@color/hardBlue"
                     android:textSize="28dp" />
 
