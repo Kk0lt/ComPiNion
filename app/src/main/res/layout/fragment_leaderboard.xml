@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightTurquoise"
+    android:background="@color/lightBlue"
     tools:context=".LeaderboardFragment">
 
     <LinearLayout
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="@color/lightTurquoise"
+        android:background="@color/lightBlue"
         android:orientation="vertical">
 
         <RadioGroup
