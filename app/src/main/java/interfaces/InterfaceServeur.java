@@ -39,6 +39,12 @@ public interface InterfaceServeur {
     @POST("logout")
     Call<Void> logout();
 
+    @POST("user/{id1}/block/{id2}")
+    Call<Void> block(@Path("id1") int id1, @Path("id2") int id2);
+
+    @DELETE("user/{id1}/unblock/{id2}")
+    Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
+
     // Modification compte
     @PATCH("compinion/{id}")
     Call<Void> update(@Path("id") int id, @Body RequestBody requestBody);

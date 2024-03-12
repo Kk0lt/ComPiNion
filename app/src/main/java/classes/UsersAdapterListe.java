@@ -18,9 +18,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
     List<User> liste;
 
-
-    //========================================
-    public UsersAdapterListe(List<User> liste){
+    public UsersAdapterListe(List<User> liste) {
         this.liste = liste;
     }
 
@@ -28,7 +26,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_carte,parent,false); // creer une view et la rempli
+        View view = inflater.inflate(R.layout.layout_carteuser,parent,false);
         return new UsersViewHolder(view);//retourne la view que j'ai crée
     }
 
@@ -38,11 +36,33 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         UsersViewHolder usersViewHolder =(UsersViewHolder)holder;
 
         User user = liste.get(position);
-        String fulllName =user.getNom() + " " + user.getPrenom();
+        String fullName = user.getNom() + " " + user.getPrenom();
 
         String pseudo = "@"+user.getPseudo() ;
         usersViewHolder.tvPseudo.setText(pseudo);
 
+        int xp = user.getJours();
+        String experience = xp + " jours";
+        usersViewHolder.tvXp.setText(experience);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.isExtended()) {
+                    user.setExtended(false);
+                    notifyItemChanged(position);
+                }
+                else {
+                    user.setExtended(true);
+                    notifyItemChanged(position);
+                }
+            }
+        });
+
+        if(user.isExtended())
+            LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.layout_carterelation, (ViewGroup) holder.itemView);
+        else
+            ((ViewGroup) holder.itemView).removeAllViews();
 
     }
 
@@ -66,10 +86,9 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         notifyItemRemoved(position);
     }
 
-    //========================================
-    public class UsersViewHolder extends RecyclerView.ViewHolder{
+    public class UsersViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvNom, tvPseudo, tvXp;
+        TextView tvPseudo, tvXp;
         ImageView ivCompanionImage;
 
         public UsersViewHolder(@NonNull View itemView) {
@@ -79,9 +98,10 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             tvXp = itemView.findViewById(R.id.tvXp);
             ivCompanionImage = itemView.findViewById(R.id.ivCompanionImage);
 
-
-
         }
 
     }
+
+
+
 }
