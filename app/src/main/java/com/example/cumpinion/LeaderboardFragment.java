@@ -95,7 +95,6 @@ public class LeaderboardFragment extends Fragment {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         getUsers(serveur);
 
-
     }
 
     private void getUsers(InterfaceServeur serveur) {
