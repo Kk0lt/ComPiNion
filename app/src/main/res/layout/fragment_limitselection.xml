@@ -28,10 +28,11 @@
         app:srcCompat="@drawable/halfcircle" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,12 +51,59 @@
                 android:textColor="@color/black"
                 android:textSize="30dp" />
 
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="4">
+
+                <RadioButton
+                    android:id="@+id/rb0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@drawable/ic_0" />
+
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@drawable/ic_1" />
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@drawable/ic_2" />
+
+                <RadioButton
+                    android:id="@+id/rb3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@drawable/ic_3" />
+            </RadioGroup>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:visibility="visible"
+                android:weightSum="4">
+
+                <ImageView
+                    android:id="@+id/ivIcon0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tint="@color/hardBlue"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_0" />
 
                 <ImageView
                     android:id="@+id/ivIcon1"
@@ -63,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:tint="@color/hardBlue"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_1" />
 
                 <ImageView
@@ -71,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:tint="@color/hardBlue"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_2" />
 
                 <ImageView
@@ -79,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:tint="@color/hardBlue"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_3" />
 
             </LinearLayout>
@@ -150,6 +201,19 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btNext_limitSelectionFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/hardBlue"
+            android:paddingHorizontal="40dp"
+            android:text="@string/suivant"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

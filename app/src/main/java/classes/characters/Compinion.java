@@ -8,10 +8,20 @@ public class Compinion {
     String name;
     @SerializedName("img")
     String image;
-
-    public Compinion(String name, String image) {
+    @SerializedName("id")
+    int id;
+    public Compinion(int id, String name, String image) {
+        this.id = id;
         this.name = name;
         this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,6 +41,6 @@ public class Compinion {
     }
     public String getImgUrl() {
         // Assuming your Laravel backend is running on http://yourdomain.com
-        return "http://10.0.2.2/img/" + image;
+        return "http://10.0.2.2/ComPiNion/public/img/" + image;
     }
 }
