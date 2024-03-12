@@ -29,7 +29,7 @@ public interface InterfaceServeur {
 
     // Tous les usagers
     @GET("users/{id}")
-    Call<ReponseServer> getUsers();
+    Call<ReponseServer> getUsers(@Path("id") int id);
 
     // Tous les usagers
     @GET("user/{id}/amis")

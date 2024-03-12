@@ -98,7 +98,7 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void getUsers(InterfaceServeur serveur) {
-        Call<ReponseServer> call = serveur.getUsers();
+        Call<ReponseServer> call = serveur.getUsers(1);
         call.enqueue(new Callback<ReponseServer>() {
             @Override
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
