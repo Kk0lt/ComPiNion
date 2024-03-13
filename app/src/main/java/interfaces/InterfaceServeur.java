@@ -57,4 +57,9 @@ public interface InterfaceServeur {
     @GET("showAllCharacters")
     Call<CompinionsReponseServer> getAllCompinions();
 
+    // Afficher l'image du personnage du joueur
+
+    @GET("showCharacter/{id}")
+    Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
+
 }

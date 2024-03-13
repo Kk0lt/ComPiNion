@@ -79,7 +79,7 @@
                     android:textSize="28dp" />
 
                 <TextView
-                    android:id="@+id/feuSerie"
+                    android:id="@+id/serie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -100,7 +100,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvSerie3"
+                    android:id="@+id/tvMerit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -112,7 +112,7 @@
                     android:textSize="28dp" />
 
                 <TextView
-                    android:id="@+id/feuSerie3"
+                    android:id="@+id/merit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
