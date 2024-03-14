@@ -1,22 +1,37 @@
 package classes;
 
+import android.app.Activity;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import classes.characters.Compinion;
+import classes.characters.CompinionsReponseServer;
+import interfaces.InterfaceServeur;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class UsersAdapterListe extends RecyclerView.Adapter {
 
-    List<User> liste;
+    private List<User> liste;
+    private String url;
 
     public UsersAdapterListe(List<User> liste) {
         this.liste = liste;
@@ -32,37 +47,23 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // apres avoir gonflé la view il va les lier
-        UsersViewHolder usersViewHolder =(UsersViewHolder)holder;
-
+        UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
         User user = liste.get(position);
-        String fullName = user.getNom() + " " + user.getPrenom();
 
-        String pseudo = "@"+user.getPseudo() ;
+        String pseudo = "@" + user.getPseudo();
         usersViewHolder.tvPseudo.setText(pseudo);
 
         int xp = user.getJours();
         String experience = xp + " jours";
         usersViewHolder.tvXp.setText(experience);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        int cid = user.getCompanion_id();
+        getImg(cid, new ImageCallback() {
             @Override
-            public void onClick(View v) {
-                if(user.isExtended()) {
-                    user.setExtended(false);
-                    notifyItemChanged(position);
-                }
-                else {
-                    user.setExtended(true);
-                    notifyItemChanged(position);
-                }
+            public void onImageLoaded(String imageUrl) {
+                Picasso.get().load(imageUrl).into(usersViewHolder.ivCompanionImage);
             }
         });
-
-        if(user.isExtended())
-            LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.layout_carterelation, (ViewGroup) holder.itemView);
-        else
-            ((ViewGroup) holder.itemView).removeAllViews();
 
     }
 
@@ -71,37 +72,48 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         return liste.size();
     }
 
-    public void addUser(User user){
-        liste.add(user);
-        notifyItemInserted(liste.size()-1);
-    }
-
-    public void editUser(int position, User user){
-        liste.set(position, user);
-        notifyItemChanged(position);
-    }
-
-    public void deleteUser(int position){
-        liste.remove(position);
-        notifyItemRemoved(position);
-    }
-
     public class UsersViewHolder extends RecyclerView.ViewHolder {
-
         TextView tvPseudo, tvXp;
         ImageView ivCompanionImage;
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
-            //tvNom = itemView.findViewById(R.id.tvNom);
             tvPseudo = itemView.findViewById(R.id.tvPseudo);
             tvXp = itemView.findViewById(R.id.tvXp);
             ivCompanionImage = itemView.findViewById(R.id.ivCompanionImage);
-
         }
 
     }
 
+    private String getImg(int id, ImageCallback callback) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<CompinionsReponseServer> call = serveur.getCompinion(id);
+        call.enqueue(new Callback<CompinionsReponseServer>() {
+            @Override
+            public void onResponse(Call<CompinionsReponseServer> call, Response<CompinionsReponseServer> response) {
+                CompinionsReponseServer reponseServer = response.body();
+                List<Compinion> compinions = reponseServer.getCompinionList();
+                for (Compinion compinion : compinions) {
+                    if (compinion.getId() == id) {
+                        String url = compinion.getImgUrl();
+                        callback.onImageLoaded(url);
+                        break;
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<CompinionsReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur character list");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+        return url;
+    }
+
+    public interface ImageCallback {
+        void onImageLoaded(String imageUrl);
+    }
 
 }
