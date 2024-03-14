@@ -65,21 +65,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user.isExtended()) {
-                    user.setExtended(false);
-                    usersViewHolder.layoutCarterelation.setVisibility(View.VISIBLE);
-                    usersViewHolder.layoutUser.setVisibility(View.GONE);
-                } else {
-                    user.setExtended(true);
-                    usersViewHolder.layoutCarterelation.setVisibility(View.GONE);
-                    usersViewHolder.layoutUser.setVisibility(View.VISIBLE);
-                }
-                notifyItemChanged(position);
-            }
-        });
     }
 
     @Override
@@ -90,16 +75,12 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     public class UsersViewHolder extends RecyclerView.ViewHolder {
         TextView tvPseudo, tvXp;
         ImageView ivCompanionImage;
-        ConstraintLayout layoutCarterelation;
-        ConstraintLayout layoutUser;
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPseudo = itemView.findViewById(R.id.tvPseudo);
             tvXp = itemView.findViewById(R.id.tvXp);
             ivCompanionImage = itemView.findViewById(R.id.ivCompanionImage);
-            layoutCarterelation = itemView.findViewById(R.id.layout_carterelation);
-            layoutUser = itemView.findViewById(R.id.layout_carteuser);
         }
 
     }

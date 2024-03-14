@@ -8,70 +8,139 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import classes.ReponseServer;
+import classes.RetrofitInstance;
+import classes.User;
+import classes.UsersAdapterListe;
+import classes.characters.Compinion;
+import classes.characters.CompinionsReponseServer;
+import interfaces.InterfaceServeur;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
+    User user;
+    TextView tvPseudo, nbMerit, nbStreak;
+    ImageView imgProfile;
+    String url;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
+//    public DrawerLayout drawerLayout;
+//    public ActionBarDrawerToggle actionBarDrawerToggle;
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        //Normalement, le bundle venant du login va retourner l'id du user connecté
 
 //        drawerLayout = view.findViewById(R.id.drawer);
 //        actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, R.string.nav_open, R.string.nav_close);
 
+        tvPseudo = view.findViewById(R.id.tvHome);
+        nbMerit = view.findViewById(R.id.merit);
+        nbStreak = view.findViewById(R.id.serie);
+        imgProfile = view.findViewById(R.id.ivHome);
+        User user = getUser(serveur, 2, new UserCallback() {
+            @Override
+            public void onUserLoaded(User user) {
+                if (user != null) {
+                    tvPseudo.setText(user.getPseudo());
+                    nbMerit.setText(String.valueOf(user.getMerite()));
+                    nbStreak.setText(String.valueOf(user.getJours()));
+                    int cid = user.getCompanion_id();
+                    getImg(cid, new ImageCallback() {
+                        @Override
+                        public void onImageLoaded(String imageUrl) {
+                            Picasso.get().load(imageUrl).into(imgProfile);
+                        }
+                    });
+                }
+            }
+        });
+
         return view;
+    }
+
+    private User getUser(InterfaceServeur s, int id, final UserCallback callback) {
+
+        Call<ReponseServer> call = s.user(id);
+        call.enqueue(new Callback<ReponseServer>() {
+            @Override
+            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
+                ReponseServer reponseServer = response.body();
+                List<User> userList = reponseServer.getUsers();
+                User user = userList.get(0);
+                callback.onUserLoaded(user);
+            }
+
+            @Override
+            public void onFailure(Call<ReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+
+        });
+        return user;
+    }
+
+    private String getImg(int id, ImageCallback callback) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<CompinionsReponseServer> call = serveur.getCompinion(id);
+        call.enqueue(new Callback<CompinionsReponseServer>() {
+            @Override
+            public void onResponse(Call<CompinionsReponseServer> call, Response<CompinionsReponseServer> response) {
+                CompinionsReponseServer reponseServer = response.body();
+                List<Compinion> compinions = reponseServer.getCompinionList();
+                for (Compinion compinion : compinions) {
+                    if (compinion.getId() == id) {
+                        String url = compinion.getImgUrl();
+                        callback.onImageLoaded(url);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CompinionsReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur character list");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
+        return url;
+    }
+
+    public interface ImageCallback {
+        void onImageLoaded(String imageUrl);
+    }
+
+    public interface UserCallback {
+        void onUserLoaded(User user);
     }
 
 }

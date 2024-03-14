@@ -90,7 +90,6 @@ public class agreementFragment extends Fragment {
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.d("Réussi!", t.getMessage());
-
                     }
                 });
 

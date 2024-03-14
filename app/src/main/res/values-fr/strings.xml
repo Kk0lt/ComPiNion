@@ -40,5 +40,8 @@
     <!--Autre-->
 
     <string name="past_streak">Séries précédentes :</string>
+    <string name="add_friend">Suivre</string>
+    <string name="block">Bloquer</string>
+    <string name="unblock">Débloquer</string>
 
 </resources>

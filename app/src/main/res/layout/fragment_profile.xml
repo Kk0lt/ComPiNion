@@ -18,7 +18,7 @@
         android:weightSum="4">
 
         <TextView
-            android:id="@+id/tvHome"
+            android:id="@+id/tvProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
             app:layout_constraintVertical_bias="0.121" />
 
         <ImageView
-            android:id="@+id/ivHome"
+            android:id="@+id/ivProfile"
             android:layout_width="259dp"
             android:layout_height="258dp"
             android:layout_gravity="center"
@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHome"
+            app:layout_constraintTop_toBottomOf="@+id/tvProfile"
             app:layout_constraintVertical_bias="0.131"
             app:srcCompat="@drawable/ch_rabbit" />
 
@@ -129,31 +129,36 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnSmoked"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/hardBlue"
-            android:elevation="3dp"
-            android:fontFamily="@font/lexend"
-            android:foregroundGravity="center"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:stateListAnimator="@null"
-            android:textSize="16sp"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_clope"
-            app:iconPadding="0dp"
-            app:iconSize="50dp"
-            app:iconTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:strokeColor="@color/white"
-            app:strokeWidth="4dp" />
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:backgroundTint="@color/hardBlue"
+                android:text="@string/add_friend"
+                android:textSize="20sp"
+                app:icon="@drawable/ic_friend"
+                app:iconGravity="textStart"
+                app:iconSize="24sp" />
+
+            <Button
+                android:id="@+id/btBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:backgroundTint="@color/hardBlue"
+                android:text="@string/block"
+                android:textSize="20sp"
+                app:icon="@drawable/ic_block"
+                app:iconGravity="textStart"
+                app:iconSize="24sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

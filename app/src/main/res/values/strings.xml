@@ -52,5 +52,8 @@
     <!--Autre-->
 
     <string name="past_streak">Past streaks :</string>
+    <string name="add_friend">Follow</string>
+    <string name="block">Block</string>
+    <string name="unblock">Unblock</string>
 
 </resources>
