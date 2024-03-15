@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -111,11 +112,17 @@ public class LoginFragment extends Fragment {
                                 String userPseudo = userData.getString("pseudo");
                                 int userId = userData.getInt("id");
                                 int userCompanion = userData.getInt("character_id");
+                                int jours = userData.getInt("jours");
+                                int merite = userData.getInt("merite");
                                 int limite = userData.getInt("limite");
+                                LoggedUserViewModel loggedUserViewModel =
+                                        new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
                                 // Créer un nouvel objet User avec les informations récupérées
-                                User user = new User(userId,userName, userPrenom, userEmail, password, userPseudo, userCompanion, limite);
-                                Log.d("Réussi!", "Connected : " + user);
+                                User loggedUser = new User(userId,userName, userPrenom, userEmail, password, userPseudo,
+                                        merite, jours, userCompanion, limite);
+                                Log.d("Réussi!", "Connected : " + loggedUser);
+                                loggedUserViewModel.addUser(loggedUser);
 
                                 // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
                                 NavController controller = Navigation.findNavController(view);

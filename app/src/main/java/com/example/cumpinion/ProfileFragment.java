@@ -9,11 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +19,6 @@ import java.util.List;
 import classes.ReponseServer;
 import classes.RetrofitInstance;
 import classes.User;
-import classes.UsersAdapterListe;
-import classes.characters.Compinion;
-import classes.characters.CompinionsReponseServer;
 import interfaces.InterfaceServeur;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -60,12 +53,12 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        tvPseudo = view.findViewById(R.id.tvProfile);
-        nbMerit = view.findViewById(R.id.merit);
-        nbStreak = view.findViewById(R.id.serie);
-        imgProfile = view.findViewById(R.id.ivProfile);
-        btAdd = view.findViewById(R.id.btFriend);
-        btBlock = view.findViewById(R.id.btBlock);
+        tvPseudo = view.findViewById(R.id.tvProfile_ProfileFragment);
+        nbMerit = view.findViewById(R.id.merit_profileFragment);
+        nbStreak = view.findViewById(R.id.serie_profileFragment);
+        imgProfile = view.findViewById(R.id.ivProfile_ProfileFragment);
+        btAdd = view.findViewById(R.id.btFriend_ProfileFragment);
+        btBlock = view.findViewById(R.id.btBlock_ProfileFragment);
 
         tvPseudo.setText(user.getPseudo());
         nbMerit.setText(user.getMerite());
