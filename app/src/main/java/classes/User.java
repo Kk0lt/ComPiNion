@@ -28,6 +28,8 @@ public class User {
     @SerializedName("jours")
     int jours;
 
+
+
     private boolean isExtended;
 
     public User(){
@@ -54,8 +56,7 @@ public class User {
         this.companion_id = companion_id;
         this.limite = limite;
     }
-
-    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int streak, int companion_id, int limite, Boolean extension) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -63,7 +64,20 @@ public class User {
         this.password = password;
         this.pseudo = pseudo;
         this.merite = merit;
-        this.jours = streak;
+        this.jours = jours;
+        this.companion_id = companion_id;
+        this.limite = limite;
+    }
+
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite, Boolean extension) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.pseudo = pseudo;
+        this.merite = merit;
+        this.jours = jours;
         this.companion_id = companion_id;
         this.limite = limite;
         this.isExtended = extension;
