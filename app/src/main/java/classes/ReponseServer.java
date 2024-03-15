@@ -13,6 +13,7 @@ public class ReponseServer {
     boolean success;
     @SerializedName("data")
     List<User> users;
+
     public ReponseServer(boolean success, List<User> users, String message) {
         this.success = success;
         this.users = users;

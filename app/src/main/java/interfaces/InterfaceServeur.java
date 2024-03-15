@@ -25,11 +25,11 @@ public interface InterfaceServeur {
 
     // Usager logged in
     @GET("user/{id}")
-    Call<User> user(@Path("id") int id);
+    Call<ReponseServer> user(@Path("id") int id);
 
     // Tous les usagers
     @GET("users/{id}")
-    Call<ReponseServer> getUsers();
+    Call<ReponseServer> getUsers(@Path("id") int id);
 
     // Tous les usagers
     @GET("user/{id}/amis")
@@ -39,22 +39,29 @@ public interface InterfaceServeur {
     @POST("logout")
     Call<Void> logout();
 
+    //Block
     @POST("user/{id1}/block/{id2}")
-    Call<Void> block(@Path("id1") int id1, @Path("id2") int id2);
+    Call<Void> block(@Path("id1") int id1, @Path("id2") int id2, @Body RequestBody requestBody);
 
+    //Unblock
     @DELETE("user/{id1}/unblock/{id2}")
     Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
 
     // Modification compte
-    @PATCH("compinion/{id}")
+    @PATCH("compinion/{id}/update")
     Call<Void> update(@Path("id") int id, @Body RequestBody requestBody);
 
     // Suppression du compte
-    @DELETE("compinion/{id}")
+    @DELETE("compinion/{id}/delete")
     Call<Void> destroy(@Path("id") int id);
 
     // Afficher la liste des personnages
     @GET("showAllCharacters")
     Call<CompinionsReponseServer> getAllCompinions();
+
+    // Afficher l'image du personnage du joueur
+
+    @GET("showCharacter/{id}")
+    Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
 
 }

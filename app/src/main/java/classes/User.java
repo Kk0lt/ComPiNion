@@ -28,7 +28,7 @@ public class User {
     @SerializedName("jours")
     int jours;
 
-    private boolean isExtended = false;
+    private boolean isExtended;
 
     public User(){
 
@@ -55,7 +55,7 @@ public class User {
         this.limite = limite;
     }
 
-    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int streak, int companion_id, int limite) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int streak, int companion_id, int limite, Boolean extension) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -66,6 +66,7 @@ public class User {
         this.jours = streak;
         this.companion_id = companion_id;
         this.limite = limite;
+        this.isExtended = extension;
     }
 
     public int getId() { return id; }

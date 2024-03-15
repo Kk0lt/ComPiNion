@@ -31,9 +31,6 @@ import retrofit2.Response;
 public class LeaderboardFragment extends Fragment {
 
     //========== Variables declaration ==========
-    List<User> liste = new ArrayList<>();
-    List<User> listeFriends = new ArrayList<>();
-    UserViewModel uvm;
     UsersAdapterListe usersAdapterListe;
     RecyclerView rvUsers;
     RecyclerView rvAmis;
@@ -46,14 +43,6 @@ public class LeaderboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        uvm = new ViewModelProvider(this).get(UserViewModel.class);
-//        uvm.getUsers().observe(getActivity(), new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(List<User> users) {
-//                uvm = new ViewModelProvider(getActivity()).get(UserViewModel.class);
-//            }
-//
-//        });
 
     }
 
@@ -98,11 +87,10 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void getUsers(InterfaceServeur serveur) {
-        Call<ReponseServer> call = serveur.getUsers();
+        Call<ReponseServer> call = serveur.getUsers(1);
         call.enqueue(new Callback<ReponseServer>() {
             @Override
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
-                Log.d("on response", "worked");
                 ReponseServer reponseServer = response.body();
                 List<User> users = reponseServer.getUsers();
                 usersAdapterListe = new UsersAdapterListe(users);
@@ -117,23 +105,22 @@ public class LeaderboardFragment extends Fragment {
         });
     }
 
-    private void getAmis(InterfaceServeur s) {
-        Call<ReponseServer> call = s.getAmis();
-        call.enqueue(new Callback<ReponseServer>() {
-            @Override
-            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
-                Log.d("on response", "worked");
-                ReponseServer reponseServer = response.body();
-                List<User> users = reponseServer.getUsers();
-                usersAdapterListe = new UsersAdapterListe(users);
-                rvAmis.setAdapter(usersAdapterListe);
-            }
-
-            @Override
-            public void onFailure(Call<ReponseServer> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
-            }
-        });
-    }
+//    private void getAmis(InterfaceServeur s) {
+//        Call<ReponseServer> call = s.getAmis();
+//        call.enqueue(new Callback<ReponseServer>() {
+//            @Override
+//            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
+//                ReponseServer reponseServer = response.body();
+//                List<User> amis = reponseServer.getAmis();
+//                amisAdapterListe = new UsersAdapterListe(amis);
+//                rvAmis.setAdapter(amisAdapterListe);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ReponseServer> call, Throwable t) {
+//                Log.d("erreur", "onFailure Erreur");
+//                Log.d("erreur", t.getMessage());
+//            }
+//        });
+//    }
 }
