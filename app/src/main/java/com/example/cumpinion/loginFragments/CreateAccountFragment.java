@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,25 +66,53 @@ public class CreateAccountFragment extends Fragment {
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String prenom = etPrenom.getText().toString();
-                String nom = etNom.getText().toString();
-                String pseudo = etPseudo.getText().toString();
-                String email  = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-                String confirmPassword = etConfirmPassword.getText().toString();
-                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
-                if(confirmPassword.equals(password)){
-                    User newUser = new User(nom, prenom, email, password, pseudo, 1,0);
-                    createUserViewModel.addUser(newUser);
-                    NavController controller = Navigation.findNavController(view);
-                    controller.navigate(R.id.fromCreateAccountToLimitSelect);
+
+                boolean valide = true;
+
+                if (TextUtils.isEmpty(etPrenom.getText().toString())){
+                    etPrenom.setError("Entrez un prénom");
+                    valide = false;
                 }
-                else{
-                    Toast.makeText(getContext(), "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();
-
+                if (TextUtils.isEmpty(etNom.getText().toString())){
+                    etNom.setError("Entrez un nom");
+                    valide = false;
                 }
+                if (TextUtils.isEmpty(etPseudo.getText().toString())){
+                    etPseudo.setError("Entrez un Pseudo");
+                    valide = false;
+                }
+                if (TextUtils.isEmpty(etEmail.getText().toString())){
+                    etEmail.setError("Entrez un email");
+                    valide = false;
+                }
+                if (TextUtils.isEmpty(etPassword.getText().toString())){
+                    etPassword.setError("Entrez un mot de passe");
+                    valide = false;
+                }
+                if (TextUtils.isEmpty(etConfirmPassword.getText().toString())){
+                    etConfirmPassword.setError("Confirmez votre mot de passe");
+                    valide = false;
+                }
+                else if (valide = true) {
 
+                    String prenom = etPrenom.getText().toString();
+                    String nom = etNom.getText().toString();
+                    String pseudo = etPseudo.getText().toString();
+                    String email = etEmail.getText().toString();
+                    String password = etPassword.getText().toString();
+                    String confirmPassword = etConfirmPassword.getText().toString();
+                    CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+
+                    if (confirmPassword.equals(password)) {
+                        User newUser = new User(nom, prenom, email, password, pseudo, 1, 0);
+                        createUserViewModel.addUser(newUser);
+                        NavController controller = Navigation.findNavController(view);
+                        controller.navigate(R.id.fromCreateAccountToLimitSelect);
+                    } else {
+                        Toast.makeText(getContext(), "Les mots de passe ne concordent pas", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
         });

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,70 +83,81 @@ public class LoginFragment extends Fragment {
         btConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email  = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
 
-                // Créer un objet JSON contenant les informations d'identification
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("email", email);
-                    jsonObject.put("password", password);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                boolean valide = true;
+
+                if (TextUtils.isEmpty(etEmail.getText().toString())){
+                    etEmail.setError("Entrez votre email");
+                    valide = false;
                 }
-                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
-                Call<ResponseBody> call = serveur.login(requestBody);
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()) {
-                            try {
-                                // Récupérer le corps de la réponse sous forme de chaîne
-                                String responseBody = response.body().string();
-                                JSONObject jsonObject = new JSONObject(responseBody);
-                                JSONObject userData = jsonObject.getJSONObject("user");
+                if (TextUtils.isEmpty(etPassword.getText().toString())){
+                    etPassword.setError("Entrez votre mot de passe");
+                    valide = false;
+                }
+                else if (valide = true) {
+                    String email = etEmail.getText().toString();
+                    String password = etPassword.getText().toString();
 
-                                // Récupérer les informations de l'utilisateur depuis l'objet JSON
-                                String userName = userData.getString("nom");
-                                String userPrenom = userData.getString("prenom");
-                                String userEmail = userData.getString("email");
-                                String userPseudo = userData.getString("pseudo");
-                                int userId = userData.getInt("id");
-                                int userCompanion = userData.getInt("character_id");
-                                int jours = userData.getInt("jours");
-                                int merite = userData.getInt("merite");
-                                int limite = userData.getInt("limite");
-                                LoggedUserViewModel loggedUserViewModel =
-                                        new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
+                    // Créer un objet JSON contenant les informations d'identification
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("email", email);
+                        jsonObject.put("password", password);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+                    Call<ResponseBody> call = serveur.login(requestBody);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                try {
+                                    // Récupérer le corps de la réponse sous forme de chaîne
+                                    String responseBody = response.body().string();
+                                    JSONObject jsonObject = new JSONObject(responseBody);
+                                    JSONObject userData = jsonObject.getJSONObject("user");
 
-                                // Créer un nouvel objet User avec les informations récupérées
-                                User loggedUser = new User(userId,userName, userPrenom, userEmail, password, userPseudo,
-                                        merite, jours, userCompanion, limite);
-                                Log.d("Réussi!", "Connected : " + loggedUser);
-                                loggedUserViewModel.addUser(loggedUser);
+                                    // Récupérer les informations de l'utilisateur depuis l'objet JSON
+                                    String userName = userData.getString("nom");
+                                    String userPrenom = userData.getString("prenom");
+                                    String userEmail = userData.getString("email");
+                                    String userPseudo = userData.getString("pseudo");
+                                    int userId = userData.getInt("id");
+                                    int userCompanion = userData.getInt("character_id");
+                                    int jours = userData.getInt("jours");
+                                    int merite = userData.getInt("merite");
+                                    int limite = userData.getInt("limite");
+                                    LoggedUserViewModel loggedUserViewModel =
+                                            new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
-                                // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
-                                NavController controller = Navigation.findNavController(view);
-                                controller.navigate(R.id.fromLoginToHome);
+                                    // Créer un nouvel objet User avec les informations récupérées
+                                    User loggedUser = new User(userId, userName, userPrenom, userEmail, password, userPseudo,
+                                            merite, jours, userCompanion, limite);
+                                    Log.d("Réussi!", "Connected : " + loggedUser);
+                                    loggedUserViewModel.addUser(loggedUser);
 
-                            } catch (JSONException | IOException e) {
-                                e.printStackTrace();
+                                    // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
+                                    NavController controller = Navigation.findNavController(view);
+                                    controller.navigate(R.id.fromLoginToHome);
+
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                // La connexion a échoué
+                                Toast.makeText(getContext(), "Vérifiez vos informations de connexion", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            // La connexion a échoué
-                            Toast.makeText(getContext(), "Vérifiez vos informations de connexion", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
 
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.d("fail", t.getMessage());
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d("fail", t.getMessage());
-
-                    }
-                });
-
+                        }
+                    });
+                }
             }
         });
 
