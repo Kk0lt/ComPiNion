@@ -1,5 +1,7 @@
 package com.example.cumpinion;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -62,14 +64,30 @@ public class SettingsFragment extends Fragment {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.logout();
 
-        deconnexion(view, tvLogout, call);
+
+
+
+            deconnexion(view, tvLogout, call);
 
     }
 
     private void deconnexion(@NonNull View view, TextView tvLogout, Call<Void> call) {
+
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Create the object of AlertDialog Builder class
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                // Set the message show for the Alert time
+                builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter? ?");
+
+                // Set Alert Title
+                builder.setTitle("Deconnexion");
+                builder.setCancelable(false);
+
+                builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -84,6 +102,16 @@ public class SettingsFragment extends Fragment {
 
                     }
                 });
+                });
+                // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                builder.setNegativeButton("Non", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    // If user click no then dialog box is canceled.
+                    dialog.cancel();
+                });
+                // Create the Alert dialog
+                AlertDialog alertDialog = builder.create();
+                // Show the Alert Dialog box
+                alertDialog.show();
             }
         });
     }
