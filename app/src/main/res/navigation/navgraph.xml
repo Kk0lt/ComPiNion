@@ -63,6 +63,9 @@
             android:id="@+id/fromLeaderboardToHistory"
             app:destination="@id/historyFragment"
             app:popUpTo="@id/leaderboardFragment"/>
+        <action
+            android:id="@+id/fromLeaderboardToProfile"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -129,5 +132,13 @@
             app:destination="@+id/limitselectionFragment"
             app:popUpTo="@id/createAccountFragment"/>
 
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cumpinion.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/fromProfileToLeaderboard"
+            app:destination="@id/leaderboardFragment" />
     </fragment>
 </navigation>
