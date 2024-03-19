@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cumpinion.loginFragments.CreateUserViewModel;
+import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -61,34 +64,30 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        //Normalement, le bundle venant du login va retourner l'id du user connecté
 
-//        drawerLayout = view.findViewById(R.id.drawer);
-//        actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, R.string.nav_open, R.string.nav_close);
+        LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
+
+        Log.d("Réussi!", "Utilisateur : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPrenom());
+
 
         tvPseudo = view.findViewById(R.id.tvHome);
         nbMerit = view.findViewById(R.id.merit);
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
-        btSmoke = view.findViewById(R.id.btnSmoked);
 
-        User user = getUser(serveur, 2, new UserCallback() {
-            @Override
-            public void onUserLoaded(User user) {
-                if (user != null) {
-                    tvPseudo.setText(user.getPseudo());
-                    nbMerit.setText(String.valueOf(user.getMerite()));
-                    nbStreak.setText(String.valueOf(user.getJours()));
-                    int cid = user.getCompanion_id();
-                    getImg(cid, new ImageCallback() {
+
+        tvPseudo.setText(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+        nbMerit.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getMerite()));
+        nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
+        int companionId = loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
+        btSmoke = view.findViewById(R.id.btnSmoked);
+        getImg(companionId, new ImageCallback() {
                         @Override
                         public void onImageLoaded(String imageUrl) {
                             Picasso.get().load(imageUrl).into(imgProfile);
                         }
                     });
-                }
-            }
-        });
+
 
         btSmoke.setOnClickListener(new View.OnClickListener() {
             @Override
