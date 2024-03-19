@@ -19,6 +19,7 @@ import java.util.List;
 import classes.ReponseServer;
 import classes.RetrofitInstance;
 import classes.User;
+import classes.UserResponseServer;
 import interfaces.InterfaceServeur;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -29,10 +30,9 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment {
     //public DrawerLayout drawerLayout;
     //public ActionBarDrawerToggle actionBarDrawerToggle;
-    TextView tvPseudo, nbMerit, nbStreak;
-    ImageView imgProfile;
+
     Button btAdd, btBlock;
-    User user;
+    User user = new User();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -49,15 +49,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-
-
-        Bundle bundle = getArguments();
-        int idSelectedUser = bundle.getInt("idSelectedUser");
-
-        User user = new User();
-        user = getUser(serveur, idSelectedUser); //Normalement, le bundle va retourner le id du user logged in
-
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        TextView tvPseudo, nbMerit, nbStreak;
+        ImageView imgProfile;
 
         tvPseudo = view.findViewById(R.id.tvProfile_ProfileFragment);
         nbMerit = view.findViewById(R.id.merit_profileFragment);
@@ -66,14 +61,32 @@ public class ProfileFragment extends Fragment {
         btAdd = view.findViewById(R.id.btFriend_ProfileFragment);
         btBlock = view.findViewById(R.id.btBlock_ProfileFragment);
 
-        tvPseudo.setText(user.getPseudo());
-        nbMerit.setText(user.getMerite());
-        nbStreak.setText(user.getJours());
-        //Pour l'image, le bundle va renvoyer l'url présente dans la carte.
+        Bundle bundle = getArguments();
+        int idSelectedUser = bundle.getInt("idSelectedUser");
+
+        Call<UserResponseServer> call = serveur.user(idSelectedUser);
+        call.enqueue(new Callback<UserResponseServer>() {
+            @Override
+            public void onResponse(Call<UserResponseServer> call, Response<UserResponseServer> response) {
+                UserResponseServer reponseServer = response.body();
+                User user = reponseServer.getUser();
+                Log.d("Selected User : ", user.getNom());
+                tvPseudo.setText(user.getPseudo());
+                nbMerit.setText(String.valueOf(user.getMerite())); // Convert to string
+                nbStreak.setText(String.valueOf(user.getJours())); // Convert to string
+
+            }
+
+            @Override
+            public void onFailure(Call<UserResponseServer> call, Throwable t) {
+                Log.d("OnFailure",t.getMessage());
+            }
+        });
 
 
-//      drawerLayout = view.findViewById(R.id.drawer);
-//      actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, R.string.nav_open, R.string.nav_close);
+
+
+//      Pour l'image, le bundle va renvoyer l'url présente dans la carte.
 
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,25 +105,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private User getUser(InterfaceServeur s, int id) {
-        Call<ReponseServer> call = s.user(id);
-        call.enqueue(new Callback<ReponseServer>() {
-            @Override
-            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
-                List<User> luser = (List<User>) response.body();
-                user = new User();
-                user = luser.get(0);
-            }
 
-            @Override
-            public void onFailure(Call<ReponseServer> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
-            }
-
-        });
-        return user;
-    }
 
     private void block(InterfaceServeur s, User user, int id2) {
         int idLoggedUser = user.getId();

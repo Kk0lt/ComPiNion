@@ -94,9 +94,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int position = getLayoutPosition();
-                    User selectedUser = new User();
                     idSelectedUser = liste.get(position).getId();
-
                     Bundle bundle = new Bundle();
                     bundle.putInt("idSelectedUser", idSelectedUser);
 

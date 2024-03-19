@@ -2,6 +2,7 @@ package interfaces;
 
 import classes.ReponseServer;
 import classes.User;
+import classes.UserResponseServer;
 import classes.characters.CompinionsReponseServer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -25,7 +26,7 @@ public interface InterfaceServeur {
 
     // Usager logged in
     @GET("user/{id}")
-    Call<ReponseServer> user(@Path("id") int id);
+    Call<UserResponseServer> user(@Path("id") int id);
 
     // Tous les usagers
     @GET("users/{id}")
