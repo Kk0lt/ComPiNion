@@ -99,7 +99,7 @@
             android:backgroundTint="@color/hardBlue"
             android:fontFamily="@font/lexend"
             android:paddingHorizontal="60dp"
-            android:text="Connexion"
+            android:text="@string/btnConnexion"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -111,7 +111,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend"
-            android:text="Vous n'avez pas de compte ? Créez-en un !"
+            android:text="@string/connectez_vous"
             android:textAlignment="center"
             android:textColor="@color/hardBlue"
             android:textSize="18sp"

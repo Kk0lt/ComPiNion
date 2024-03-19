@@ -55,19 +55,24 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tvChangePsuedo = view.findViewById(R.id.tvChangePseudo_Settings);
+        TextView tvChangePseudo = view.findViewById(R.id.tvChangePseudo_Settings);
         TextView tvChangePwd = view.findViewById(R.id.tvChangePassword_Settings);
         TextView tvChangeApparence = view.findViewById(R.id.tvChangeApparence_Settings);
         TextView tvChangeTheme = view.findViewById(R.id.tvChangeTheme_Settings);
         TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
+
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.logout();
 
+        tvChangePseudo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
-
-            deconnexion(view, tvLogout, call);
+        deconnexion(view, tvLogout, call);
 
     }
 

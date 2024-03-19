@@ -17,7 +17,7 @@
 
     <!--Login Activity-->
     <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
-
+    <string name="btnConnexion">Connexion</string>
     <!--LimitSelection Activity-->
     <string name="selectLimit">Choisissez une limite de cigarette :</string>
     <string name="selectCharacter">Choisissez votre Compinion</string>
