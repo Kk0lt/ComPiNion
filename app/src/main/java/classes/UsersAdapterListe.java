@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -32,9 +35,11 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
     private List<User> liste;
     private String url;
+    private NavController navController;
 
-    public UsersAdapterListe(List<User> liste) {
+    public UsersAdapterListe(List<User> liste, NavController navController) {
         this.liste = liste;
+        this.navController = navController;
     }
 
     @NonNull
@@ -62,6 +67,13 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             @Override
             public void onImageLoaded(String imageUrl) {
                 Picasso.get().load(imageUrl).into(usersViewHolder.ivCompanionImage);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.fromLeaderboardToProfile);
             }
         });
 
