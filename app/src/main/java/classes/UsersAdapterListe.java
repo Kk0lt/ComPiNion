@@ -1,6 +1,7 @@
 package classes;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     private List<User> liste;
     private String url;
     private NavController navController;
+    int idSelectedUser;
 
     public UsersAdapterListe(List<User> liste, NavController navController) {
         this.liste = liste;
@@ -70,12 +72,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.fromLeaderboardToProfile);
-            }
-        });
 
     }
 
@@ -93,7 +89,24 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             tvPseudo = itemView.findViewById(R.id.tvPseudo);
             tvXp = itemView.findViewById(R.id.tvXp);
             ivCompanionImage = itemView.findViewById(R.id.ivCompanionImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    User selectedUser = new User();
+                    idSelectedUser = liste.get(position).getId();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idSelectedUser", idSelectedUser);
+
+                    NavController controller = Navigation.findNavController(v);
+                    controller.navigate(R.id.fromLeaderboardToProfile, bundle);
+                }
+            });
         }
+
+
 
     }
 

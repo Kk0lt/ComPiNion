@@ -49,7 +49,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        User user = getUser(serveur, 1); //Normalement, le bundle va retourner le id du user logged in
+
+
+        Bundle bundle = getArguments();
+        int idSelectedUser = bundle.getInt("idSelectedUser");
+
+        User user = new User();
+        user = getUser(serveur, idSelectedUser); //Normalement, le bundle va retourner le id du user logged in
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -92,6 +98,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
                 List<User> luser = (List<User>) response.body();
+                user = new User();
                 user = luser.get(0);
             }
 
