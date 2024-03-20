@@ -65,7 +65,9 @@
             app:popUpTo="@id/leaderboardFragment"/>
         <action
             android:id="@+id/fromLeaderboardToProfile"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/leaderboardFragment"/>
+
     </fragment>
 
     <fragment

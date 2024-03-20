@@ -141,27 +141,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private User getUser(InterfaceServeur s, int id, final UserCallback callback) {
 
-        Call<ReponseServer> call = s.user(id);
-        call.enqueue(new Callback<ReponseServer>() {
-            @Override
-            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
-                ReponseServer reponseServer = response.body();
-                List<User> userList = reponseServer.getUsers();
-                User user = userList.get(0);
-                callback.onUserLoaded(user);
-            }
-
-            @Override
-            public void onFailure(Call<ReponseServer> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
-            }
-
-        });
-        return user;
-    }
 
     private String getImg(int id, ImageCallback callback) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);

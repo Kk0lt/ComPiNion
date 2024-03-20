@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cumpinion.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import classes.RetrofitInstance;
 import classes.User;
@@ -58,6 +59,10 @@ public class CreateAccountFragment extends Fragment {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
         createAccountinViewModel(view, etPrenom, etNom, etPseudo, etEmail, etPassword, etConfirmPassword, btCreate, serveur);
+        // Inflate the layout for this fragment
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        // Rétablir la visibilité de la barre de navigation
+        bottomNavigationView.setVisibility(View.GONE);
 
     }
 
