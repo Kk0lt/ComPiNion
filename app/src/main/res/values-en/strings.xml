@@ -17,6 +17,7 @@
 
     <!--Login Activity-->
     <string name="connectez_vous">Already have an account? Log in!</string>
+    <string name="btnConnexion">Log in</string>
 
     <!--LimitSelection Activity-->
     <string name="selectLimit">Choose a cigaret limit :</string>

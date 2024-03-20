@@ -177,7 +177,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
                 Log.d("on response", "response character list");
                 CompinionsReponseServer reponseServer = response.body();
                 List<Compinion> compinions = reponseServer.getCompinionList();
-                compinionsAdapterList = new CompinionsAdapterList(compinions);
+                compinionsAdapterList = new CompinionsAdapterList(compinions, limitselectionFragment.this);
                 rvCharacters.setAdapter(compinionsAdapterList);
             }
 
@@ -192,6 +192,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
     @Override
     public void gestionClic(Compinion compinion) {
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+
         createUserViewModel.getUserMutableLiveData().getValue().setCompanion_id(compinion.getId());
     }
 }

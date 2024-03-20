@@ -10,10 +10,12 @@ public class Compinion {
     String image;
     @SerializedName("id")
     int id;
+    boolean selected;
     public Compinion(int id, String name, String image) {
         this.id = id;
         this.name = name;
         this.image = image;
+        selected = false;
     }
 
     public int getId() {
@@ -39,6 +41,15 @@ public class Compinion {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     public String getImgUrl() {
         // Assuming your Laravel backend is running on http://yourdomain.com
         return "http://10.0.2.2/ComPiNion/public/img/" + image;
