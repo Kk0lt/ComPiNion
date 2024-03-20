@@ -34,4 +34,8 @@ public class LoggedUserViewModel extends ViewModel {
     public void setUserPseudo(String psuedo){
         utilisateurMutableLiveData.getValue().setPseudo(psuedo);
     }
+    //setter la pseudo
+    public void setUserPassword(String password){
+        utilisateurMutableLiveData.getValue().setPassword(password);
+    }
 }

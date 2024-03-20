@@ -73,6 +73,15 @@ public class SettingsFragment extends Fragment {
 
         //appels des différentes méthodes
 
+        changePassword(tvChangePwd, loggedUserViewModel);
+
+        changeUsername(tvChangePseudo, loggedUserViewModel);
+        deconnexion(view, tvLogout);
+
+    }
+    /*========== Méthodes privées ==========*/
+
+    private void changePassword(TextView tvChangePwd, LoggedUserViewModel loggedUserViewModel) {
         tvChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,13 +113,18 @@ public class SettingsFragment extends Fragment {
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     String newPassword = etNewPassword.getText().toString();
                     String confirmPassword = etConfirmPassword.getText().toString();
                     String currentPassword = etCurrentPassword.getText().toString();
                     boolean mdpValide = true;
 
+                    if (newPassword.equals(loggedUserViewModel.getUserMutableLiveData().getValue().getPassword())){
+                        etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        etNewPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        mdpValide = false;
+                    }
                     if (newPassword.equals(currentPassword)){
+                        etNewPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
                         etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
                         mdpValide = false;
                     }
@@ -126,15 +140,12 @@ public class SettingsFragment extends Fragment {
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
-                                Log.d("Worked", "new: "+newPassword + " current: " + currentPassword +" confirm: " + confirmPassword);
+                                loggedUserViewModel.setUserPassword(newPassword);
                                 alertDialog.dismiss();
-
                             }
-
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("failed", "Failed: "+newPassword + " current: " + currentPassword +" confirm: " + confirmPassword);
-
+                                Log.d("failed", "Failed: "+ t.getMessage());
                             }
                         });
                     }
@@ -153,13 +164,8 @@ public class SettingsFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
-        changeUsername(tvChangePseudo, loggedUserViewModel);
-        deconnexion(view, tvLogout);
-
     }
 
-    /*========== Méthodes privées ==========*/
 
     /**
      * Methode pour changer le psuedonyme dans une boite de dialogue
