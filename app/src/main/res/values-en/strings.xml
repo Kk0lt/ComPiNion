@@ -55,5 +55,6 @@
     <string name="add_friend">Follow</string>
     <string name="block">Block</string>
     <string name="unblock">Unblock</string>
-
+    <string name="confirmer">Confirm</string>
+    <string name="annuler">Cancel</string>
 </resources>

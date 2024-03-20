@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,10 +72,94 @@ public class SettingsFragment extends Fragment {
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
         //appels des différentes méthodes
+
+        tvChangePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
+                builder.setView(view);
+                TextView tvLabel = view.findViewById(R.id.tvLavbel_DialogBox);
+                tvLabel.setText(R.string.settings_password);
+
+                //DECLARATION
+                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogBox);
+                Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
+
+                EditText etNewPassword = view.findViewById(R.id.etNewUsername_DialogBox);
+                EditText etConfirmPassword = view.findViewById(R.id.etConfirmPassword_DialogBox);
+                EditText etCurrentPassword = view.findViewById(R.id.etCurrentPassword_Dialog);
+                //CACHER LES LETTRES DU CHAMPS
+                etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                //METTRE LES CHAMPS VISIBLES
+                etCurrentPassword.setVisibility(View.VISIBLE);
+                etConfirmPassword.setVisibility(View.VISIBLE);
+                //METTRE LES PLACEHOLDERS
+                etNewPassword.setHint(R.string.settings_password);
+                etConfirmPassword.setHint(R.string.confirmPasswordHint_createAccount);
+                etCurrentPassword.setHint(R.string.passwordHint_createAccount);
+                AlertDialog alertDialog = builder.create();
+
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    String newPassword = etNewPassword.getText().toString();
+                    String confirmPassword = etConfirmPassword.getText().toString();
+                    String currentPassword = etCurrentPassword.getText().toString();
+                    boolean mdpValide = true;
+
+                    if (newPassword.equals(currentPassword)){
+                        etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        mdpValide = false;
+                    }
+                    if (!newPassword.equals(confirmPassword)){
+                        etConfirmPassword.setError("les mots de passe ne correspondent pas");
+                        etNewPassword.setError("les mots de passe ne correspondent pas");
+                        mdpValide = false;
+                    }
+
+                    if (mdpValide){
+                        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                        Call<Void> call = serveur.updatePassword(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), currentPassword, newPassword);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Log.d("Worked", "new: "+newPassword + " current: " + currentPassword +" confirm: " + confirmPassword);
+                                alertDialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.d("failed", "Failed: "+newPassword + " current: " + currentPassword +" confirm: " + confirmPassword);
+
+                            }
+                        });
+                    }
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+
+                    }
+                });
+                // Create the Alert dialog
+                // Show the Alert Dialog box
+                alertDialog.show();
+            }
+        });
+
         changeUsername(tvChangePseudo, loggedUserViewModel);
         deconnexion(view, tvLogout);
 
     }
+
+    /*========== Méthodes privées ==========*/
 
     /**
      * Methode pour changer le psuedonyme dans une boite de dialogue
@@ -90,7 +175,7 @@ public class SettingsFragment extends Fragment {
                 builder.setView(view);
                 EditText etNewPseudo = view.findViewById(R.id.etNewUsername_DialogBox);
 
-                builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
+                builder.setPositiveButton(R.string.confirmer, (DialogInterface.OnClickListener) (dialog, which) -> {
                     String newPseudo = etNewPseudo.getText().toString();
                     InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
                     Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
@@ -98,30 +183,20 @@ public class SettingsFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
-
                             loggedUserViewModel.setUserPseudo(newPseudo);
-
                             Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
-
                         }
-
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.d("failure!", "failure : " + t.getMessage());
-
                         }
                     });
-
                 });
-
-                builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                builder.setNegativeButton(R.string.annuler, (DialogInterface.OnClickListener) (dialog, which) -> {
                     dialog.cancel();
                 });
-
                 AlertDialog alertDialog1 = builder.create();
                 alertDialog1.show();
-
-
             }
         });
     }

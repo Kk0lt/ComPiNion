@@ -9,6 +9,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -86,5 +88,14 @@ public interface InterfaceServeur {
 
     @PATCH("compinion/{id}/update/jours")
     Call<Void> updateJours(@Path("id") int id, @Query("jours") String jours);
+    // Update password endpoint
+    @FormUrlEncoded
+    @PATCH("compinion/{id}/update/password")
+    Call<Void> updatePassword(
+            @Path("id") int id,
+            @Field("current_password") String currentPassword,
+            @Field("new_password") String newPassword
+    );
+
 
 }
