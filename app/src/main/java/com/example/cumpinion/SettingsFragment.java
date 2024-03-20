@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -119,5 +120,16 @@ public class SettingsFragment extends Fragment {
                 alertDialog.show();
             }
         });
+    }
+
+    /*   Pour réafficher la barre de navigation utiliser ce code: */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+        // Rétablir la visibilité de la barre de navigation
+        bottomNavigationView.setVisibility(View.GONE);
     }
 }
