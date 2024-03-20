@@ -29,4 +29,9 @@ public class LoggedUserViewModel extends ViewModel {
     public void setUserLimit(int limite){
         utilisateurMutableLiveData.getValue().setLimite(limite);
     }
+
+    //setter la pseudo
+    public void setUserPseudo(String psuedo){
+        utilisateurMutableLiveData.getValue().setPseudo(psuedo);
+    }
 }

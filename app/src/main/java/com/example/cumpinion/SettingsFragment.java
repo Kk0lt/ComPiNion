@@ -11,14 +11,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -63,36 +68,87 @@ public class SettingsFragment extends Fragment {
         TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
 
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<Void> call = serveur.logout();
+        LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
+        //appels des différentes méthodes
+        changeUsername(tvChangePseudo, loggedUserViewModel);
+        deconnexion(view, tvLogout);
+
+    }
+
+    /**
+     * Methode pour changer le psuedonyme dans une boite de dialogue
+     */
+    private void changeUsername(TextView tvChangePseudo, LoggedUserViewModel loggedUserViewModel) {
         tvChangePseudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
+                builder.setView(view);
+                EditText etNewPseudo = view.findViewById(R.id.etNewUsername_DialogBox);
+
+                builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    String newPseudo = etNewPseudo.getText().toString();
+                    InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                    Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
+
+                            loggedUserViewModel.setUserPseudo(newPseudo);
+
+                            Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("failure!", "failure : " + t.getMessage());
+
+                        }
+                    });
+
+                });
+
+                builder.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    dialog.cancel();
+                });
+
+                AlertDialog alertDialog1 = builder.create();
+                alertDialog1.show();
+
+
             }
         });
-
-        deconnexion(view, tvLogout, call);
-
     }
 
-    private void deconnexion(@NonNull View view, TextView tvLogout, Call<Void> call) {
+
+    /**
+    * Methode de deconnexion de l'application
+    * */
+    private void deconnexion(@NonNull View view, TextView tvLogout) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.logout();
 
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Create the object of AlertDialog Builder class
+                // Creation d'une boite de dialogue
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                // Set the message show for the Alert time
+                // Set message
                 builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter? ?");
 
-                // Set Alert Title
+                // Set  Title
                 builder.setTitle("Deconnexion");
                 builder.setCancelable(false);
 
+                //buton de confirmation de deconnexion
                 builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -101,6 +157,11 @@ public class SettingsFragment extends Fragment {
                         loggedUserViewModel.addUser(new User());
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.loginFragment);
+
+                        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                        // Rétablir la visibilité de la barre de navigation
+                        bottomNavigationView.setVisibility(View.GONE);
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
@@ -109,7 +170,7 @@ public class SettingsFragment extends Fragment {
                     }
                 });
                 });
-                // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                // Negative button.
                 builder.setNegativeButton("Non", (DialogInterface.OnClickListener) (dialog, which) -> {
                     // If user click no then dialog box is canceled.
                     dialog.cancel();
@@ -122,14 +183,11 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    /*   Pour réafficher la barre de navigation utiliser ce code: */
+    /**
+     * Réafficher la barre de navigation : */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
-        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-        // Rétablir la visibilité de la barre de navigation
-        bottomNavigationView.setVisibility(View.GONE);
     }
 }
