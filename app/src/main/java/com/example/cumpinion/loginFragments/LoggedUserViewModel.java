@@ -38,4 +38,15 @@ public class LoggedUserViewModel extends ViewModel {
     public void setUserPassword(String password){
         utilisateurMutableLiveData.getValue().setPassword(password);
     }
+
+    //setter les mérites
+    public void setUserMerit(int limite){
+        utilisateurMutableLiveData.getValue().setMerite(limite);
+    }
+
+    //setter les streaks
+    public void setUserStreak(int streak){
+        utilisateurMutableLiveData.getValue().setJours(streak);
+    }
+
 }

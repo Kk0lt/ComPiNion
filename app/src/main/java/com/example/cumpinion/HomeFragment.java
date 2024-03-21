@@ -71,7 +71,6 @@ public class HomeFragment extends Fragment {
 
         Log.d("Réussi!", "Utilisateur : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPrenom());
 
-
         tvPseudo = view.findViewById(R.id.tvHome);
         nbMerit = view.findViewById(R.id.merit);
         nbStreak = view.findViewById(R.id.serie);
@@ -90,7 +89,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
 
-
         btSmoke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,17 +99,23 @@ public class HomeFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         AlertDialog.Builder bSmoked = new AlertDialog.Builder(getContext());
                         bSmoked.setTitle("Dommage, mais ne te décourage pas!");
-                        if(user.getLimite()-1 == 0) {
+                        if(loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1 == 0) {
                             bSmoked.setMessage("Tu as écoulé ta limite de cigarette pour la journée. " +
                                     "Nous reprenons la série du début, mais continue tes efforts pour battre ton record!");
                         } else {
                             bSmoked.setMessage("N'abandonne pas! Tu peux encore améliorer ta série et ton score!" +
-                                    "\n" + (user.getLimite() - 1) + "/" + user.getLimite());
+                                    "\n" + (loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1) + "/" + loggedUserViewModel.getUserMutableLiveData().getValue().getLimite());
                         }
                         bSmoked.setPositiveButton("Très bien", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
+                                int i = loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1;
+                                if(i == 0) {
+
+                                } else {
+
+                                }
                             }
                         });
 
@@ -135,7 +139,8 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(), "Ne lâche pas!", Toast.LENGTH_LONG).show();
-                        user.setMerite(user.getMerite()+1);
+                        int i = loggedUserViewModel.getUserMutableLiveData().getValue().getMerite();
+                        updateMerite(loggedUserViewModel, i+1);
                     }
                 });
                 AlertDialog alertDialog = builder.create();
@@ -146,7 +151,35 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private static void updateMerite(LoggedUserViewModel loggedUserViewModel, int i) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.updateMerite(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), i);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                loggedUserViewModel.setUserMerit(i);
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
 
+    private static void updateStreak(LoggedUserViewModel loggedUserViewModel, int i) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.updateJours(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), i);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                loggedUserViewModel.setUserStreak(i);
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
 
     private String getImg(int id, ImageCallback callback) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);

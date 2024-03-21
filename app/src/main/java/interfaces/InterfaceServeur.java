@@ -84,10 +84,10 @@ public interface InterfaceServeur {
     Call<Void> updateEmail(@Path("id") int id, @Query("email") String email);
 
     @PATCH("compinion/{id}/update/merite")
-    Call<Void> updateMerite(@Path("id") int id, @Query("merite") String merite);
+    Call<Void> updateMerite(@Path("id") int id, @Query("merite") int merite);
 
     @PATCH("compinion/{id}/update/jours")
-    Call<Void> updateJours(@Path("id") int id, @Query("jours") String jours);
+    Call<Void> updateJours(@Path("id") int id, @Query("jours") int jours);
     // Update password endpoint
     @FormUrlEncoded
     @PATCH("compinion/{id}/update/password")
