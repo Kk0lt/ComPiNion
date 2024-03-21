@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment {
     ImageView imgProfile;
     String url;
     Button btSmoke;
+    RecyclerView rvStreaks;
 
 //    public DrawerLayout drawerLayout;
 //    public ActionBarDrawerToggle actionBarDrawerToggle;
@@ -74,7 +76,7 @@ public class HomeFragment extends Fragment {
         nbMerit = view.findViewById(R.id.merit);
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
-
+        rvStreaks = view.findViewById(R.id.rvStreaks);
 
         tvPseudo.setText(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
         nbMerit.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getMerite()));
@@ -119,6 +121,8 @@ public class HomeFragment extends Fragment {
                                 Toast.makeText(getContext(), "La mise à jour a été annulée.", Toast.LENGTH_LONG).show();
                             }
                         });
+                        AlertDialog alertSmoke = bSmoked.create();
+                        alertSmoke.show();
                     }
                 });
                 builder.setNegativeButton("Je n'ai pas fumé!", new DialogInterface.OnClickListener() {
@@ -134,7 +138,8 @@ public class HomeFragment extends Fragment {
                         user.setMerite(user.getMerite()+1);
                     }
                 });
-
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
