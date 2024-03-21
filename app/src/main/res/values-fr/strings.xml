@@ -9,6 +9,7 @@
     <string name="nav_open">Ouvrir</string>
     <string name="nav_close">Fermer</string>
 
+    <!--Settings Fragment-->
     <string name="settings_themes">Choisir le thème</string>
     <string name="settings_langue">Choisir la langue</string>
     <string name="settings_pseudo">Nouveau pseudonyme</string>
@@ -18,6 +19,17 @@
     <!--Login Activity-->
     <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
     <string name="btnConnexion">Connexion</string>
+
+    <!--Create Account Fragment-->
+    <string name="titre_createAccount">Créez un nouveau compte!</string>
+    <string name="nomHint_createAccount">Nom</string>
+    <string name="prenomHint_createAccount">Prénom</string>
+    <string name="pseudoHint_createAccount">Pseudo</string>
+    <string name="emailHint_createAccount">Email</string>
+    <string name="passwordHint_createAccount">Mot de passe</string>
+    <string name="confirmPasswordHint_createAccount">Confirmer le mot de passe</string>
+    <string name="btcreerCompte">Creer un compte</string>
+
     <!--LimitSelection Activity-->
     <string name="selectLimit">Choisissez une limite de cigarette :</string>
     <string name="selectCharacter">Choisissez votre Compinion</string>
@@ -37,11 +49,13 @@
         cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas
         adipiscing ante non diam sodales hendrerit.</string>
 
-    <!--Autre-->
 
+    <!--Autre-->
     <string name="past_streak">Séries précédentes :</string>
     <string name="add_friend">Suivre</string>
     <string name="block">Bloquer</string>
     <string name="unblock">Débloquer</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="annuler">Annuler</string>
 
 </resources>

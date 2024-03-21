@@ -2,16 +2,20 @@ package interfaces;
 
 import classes.ReponseServer;
 import classes.User;
+import classes.UserResponseServer;
 import classes.characters.CompinionsReponseServer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface InterfaceServeur {
 
@@ -25,7 +29,7 @@ public interface InterfaceServeur {
 
     // Usager logged in
     @GET("user/{id}")
-    Call<ReponseServer> user(@Path("id") int id);
+    Call<UserResponseServer> user(@Path("id") int id);
 
     // Tous les usagers
     @GET("users/{id}")
@@ -63,5 +67,35 @@ public interface InterfaceServeur {
 
     @GET("showCharacter/{id}")
     Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
+
+
+    /*======Modification des infos de user=====*/
+
+    @PATCH("compinion/{id}/update/prenom")
+    Call<Void> updatePrenom(@Path("id") int id, @Query("prenom") String prenom);
+
+    @PATCH("compinion/{id}/update/nom")
+    Call<Void> updateNom(@Path("id") int id, @Query("nom") String nom);
+
+    @PATCH("compinion/{id}/update/pseudo")
+    Call<Void> updatePseudo(@Path("id") int id, @Query("pseudo") String pseudo);
+
+    @PATCH("compinion/{id}/update/email")
+    Call<Void> updateEmail(@Path("id") int id, @Query("email") String email);
+
+    @PATCH("compinion/{id}/update/merite")
+    Call<Void> updateMerite(@Path("id") int id, @Query("merite") String merite);
+
+    @PATCH("compinion/{id}/update/jours")
+    Call<Void> updateJours(@Path("id") int id, @Query("jours") String jours);
+    // Update password endpoint
+    @FormUrlEncoded
+    @PATCH("compinion/{id}/update/password")
+    Call<Void> updatePassword(
+            @Path("id") int id,
+            @Field("current_password") String currentPassword,
+            @Field("new_password") String newPassword
+    );
+
 
 }
