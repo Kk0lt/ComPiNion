@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ComPiNion</string>
+    <string name="welcome">Welcome!</string>
 
     <string name="serie">Streak</string>
     <string name="merite">Merit</string>
@@ -9,7 +10,12 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
 
+    <!--Settings Fragment-->
     <string name="settings_themes">Choose theme</string>
+        <string name="choosetext">Choose your application\'s color theme!</string>
+        <string name="blue">Blue</string>
+        <string name="red">Red</string>
+        <string name="green">Green</string>
     <string name="settings_langue">Switch language</string>
     <string name="settings_pseudo">New username</string>
     <string name="settings_password">New password</string>
@@ -17,6 +23,17 @@
 
     <!--Login Activity-->
     <string name="connectez_vous">Already have an account? Log in!</string>
+    <string name="btnConnexion">Log in</string>
+
+    <!--Create Account Fragment-->
+    <string name="titre_createAccount">Create new account !</string>
+    <string name="nomHint_createAccount">Lastname</string>
+    <string name="prenomHint_createAccount">Firstname</string>
+    <string name="pseudoHint_createAccount">Username</string>
+    <string name="emailHint_createAccount">Email</string>
+    <string name="passwordHint_createAccount">Password</string>
+    <string name="confirmPasswordHint_createAccount">Confirm password</string>
+    <string name="btcreerCompte">Create account</string>
 
     <!--LimitSelection Activity-->
     <string name="selectLimit">Choose a cigaret limit :</string>
@@ -43,5 +60,6 @@
     <string name="add_friend">Follow</string>
     <string name="block">Block</string>
     <string name="unblock">Unblock</string>
-
+    <string name="confirmer">Confirm</string>
+    <string name="annuler">Cancel</string>
 </resources>

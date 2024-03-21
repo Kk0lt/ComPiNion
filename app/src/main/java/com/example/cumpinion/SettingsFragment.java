@@ -2,6 +2,9 @@ package com.example.cumpinion;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,16 +14,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.Locale;
 
 import classes.ReponseServer;
 import classes.RetrofitInstance;
@@ -34,6 +45,7 @@ import retrofit2.Response;
 
 public class SettingsFragment extends Fragment {
 
+    private SharedPreferences sharedPreferences;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -56,38 +68,184 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tvChangePsuedo = view.findViewById(R.id.tvChangePseudo_Settings);
+        TextView tvChangePseudo = view.findViewById(R.id.tvChangePseudo_Settings);
         TextView tvChangePwd = view.findViewById(R.id.tvChangePassword_Settings);
         TextView tvChangeApparence = view.findViewById(R.id.tvChangeApparence_Settings);
         TextView tvChangeTheme = view.findViewById(R.id.tvChangeTheme_Settings);
         TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<Void> call = serveur.logout();
 
+        sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
 
+        String langue = sharedPreferences.getString("language", null);
+        if (langue != null) {
+            changeLangue(langue);
+        } else {
+            changeLangue("eng");
+        }
 
+        LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
-            deconnexion(view, tvLogout, call);
+        //appels des différentes méthodes
+
+        changePassword(tvChangePwd, loggedUserViewModel);
+        changerLangue(tvLanguage);
+        changeUsername(tvChangePseudo, loggedUserViewModel);
+        changerTheme(tvChangeTheme);
+        deconnexion(view, tvLogout);
 
     }
+    /*========== Méthodes privées ==========*/
 
-    private void deconnexion(@NonNull View view, TextView tvLogout, Call<Void> call) {
+    private void changePassword(TextView tvChangePwd, LoggedUserViewModel loggedUserViewModel) {
+        tvChangePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
+                builder.setView(view);
+                TextView tvLabel = view.findViewById(R.id.tvLavbel_DialogBox);
+                tvLabel.setText(R.string.settings_password);
+
+                //DECLARATION
+                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogBox);
+                Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
+
+                EditText etNewPassword = view.findViewById(R.id.etNewUsername_DialogBox);
+                EditText etConfirmPassword = view.findViewById(R.id.etConfirmPassword_DialogBox);
+                EditText etCurrentPassword = view.findViewById(R.id.etCurrentPassword_Dialog);
+                //CACHER LES LETTRES DU CHAMPS
+                etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                //METTRE LES CHAMPS VISIBLES
+                etCurrentPassword.setVisibility(View.VISIBLE);
+                etConfirmPassword.setVisibility(View.VISIBLE);
+                //METTRE LES PLACEHOLDERS
+                etNewPassword.setHint(R.string.settings_password);
+                etConfirmPassword.setHint(R.string.confirmPasswordHint_createAccount);
+                etCurrentPassword.setHint(R.string.passwordHint_createAccount);
+                AlertDialog alertDialog = builder.create();
+
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    String newPassword = etNewPassword.getText().toString();
+                    String confirmPassword = etConfirmPassword.getText().toString();
+                    String currentPassword = etCurrentPassword.getText().toString();
+                    boolean mdpValide = true;
+
+                    if (newPassword.equals(loggedUserViewModel.getUserMutableLiveData().getValue().getPassword())){
+                        etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        etNewPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        mdpValide = false;
+                    }
+                    if (newPassword.equals(currentPassword)){
+                        etNewPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
+                        mdpValide = false;
+                    }
+                    if (!newPassword.equals(confirmPassword)){
+                        etConfirmPassword.setError("les mots de passe ne correspondent pas");
+                        etNewPassword.setError("les mots de passe ne correspondent pas");
+                        mdpValide = false;
+                    }
+
+                    if (mdpValide){
+                        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                        Call<Void> call = serveur.updatePassword(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), currentPassword, newPassword);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                loggedUserViewModel.setUserPassword(newPassword);
+                                alertDialog.dismiss();
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.d("failed", "Failed: "+ t.getMessage());
+                            }
+                        });
+                    }
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+
+                    }
+                });
+                // Create the Alert dialog
+                // Show the Alert Dialog box
+                alertDialog.show();
+            }
+        });
+    }
+
+
+    /**
+     * Methode pour changer le psuedonyme dans une boite de dialogue
+     */
+    private void changeUsername(TextView tvChangePseudo, LoggedUserViewModel loggedUserViewModel) {
+        tvChangePseudo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
+                builder.setView(view);
+                EditText etNewPseudo = view.findViewById(R.id.etNewUsername_DialogBox);
+
+                builder.setPositiveButton(R.string.confirmer, (DialogInterface.OnClickListener) (dialog, which) -> {
+                    String newPseudo = etNewPseudo.getText().toString();
+                    InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                    Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
+                            loggedUserViewModel.setUserPseudo(newPseudo);
+                            Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("failure!", "failure : " + t.getMessage());
+                        }
+                    });
+                });
+                builder.setNegativeButton(R.string.annuler, (DialogInterface.OnClickListener) (dialog, which) -> {
+                    dialog.cancel();
+                });
+                AlertDialog alertDialog1 = builder.create();
+                alertDialog1.show();
+            }
+        });
+    }
+
+
+    /**
+    * Methode de deconnexion de l'application
+    * */
+    private void deconnexion(@NonNull View view, TextView tvLogout) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.logout();
 
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Create the object of AlertDialog Builder class
+                // Creation d'une boite de dialogue
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                // Set the message show for the Alert time
+                // Set message
                 builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter? ?");
 
-                // Set Alert Title
+                // Set  Title
                 builder.setTitle("Deconnexion");
                 builder.setCancelable(false);
 
+                //buton de confirmation de deconnexion
                 builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -96,6 +254,11 @@ public class SettingsFragment extends Fragment {
                         loggedUserViewModel.addUser(new User());
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.loginFragment);
+
+                        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+                        // Rétablir la visibilité de la barre de navigation
+                        bottomNavigationView.setVisibility(View.GONE);
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
@@ -104,7 +267,7 @@ public class SettingsFragment extends Fragment {
                     }
                 });
                 });
-                // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                // Negative button.
                 builder.setNegativeButton("Non", (DialogInterface.OnClickListener) (dialog, which) -> {
                     // If user click no then dialog box is canceled.
                     dialog.cancel();
@@ -115,16 +278,86 @@ public class SettingsFragment extends Fragment {
                 alertDialog.show();
             }
         });
+
     }
 
-    /*   Pour réafficher la barre de navigation utiliser ce code: */
+    private void changerLangue(TextView tvLanguage) {
+        tvLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String langue = sharedPreferences.getString("language", null);
+                if (langue != null) {
+                    if (langue.equalsIgnoreCase("eng"))
+                        changeLangue("fr");
+                    else
+                        changeLangue("eng");
+                } else {
+                    changeLangue("fr");
+                }
+            }
+        });
+
+    }
+
+    private void changerTheme(TextView tvTheme) {
+        tvTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("@string/settings_themes");
+                builder.setMessage("@string/choosetext");
+                builder.setCancelable(false);
+
+                // Bleu
+                builder.setPositiveButton("@string/blue", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Blue);
+                });
+                // Rouge
+                builder.setNegativeButton("@string/red", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Red);
+                });
+                // Vert
+                builder.setNeutralButton("@string/green", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Green);
+                });
+
+                AlertDialog alertTheme = builder.create();
+                alertTheme.show();
+            }
+        });
+    }
+
+        /**
+         * Réafficher la barre de navigation : */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        // Accédez à l'activité parente (MainActivity) pour obtenir la barre de navigation
-        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
-        // Rétablir la visibilité de la barre de navigation
-        bottomNavigationView.setVisibility(View.GONE);
     }
+
+    /**
+     * Changer la langue */
+    private void changeLangue(String selectedLanguage) {
+        Locale locale = new Locale(selectedLanguage);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("language", selectedLanguage);
+        editor.apply();
+
+        getActivity().recreate();
+    }
+
+    /**
+     * Changer le thème */
+    private void changeTheme(int themeId) {
+        getActivity().setTheme(themeId);
+        getActivity().recreate();
+    }
+
 }

@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lexend"
-                android:text="Bienvenue !"
+                android:text="@string/welcome"
                 android:textColor="@color/black"
                 android:textSize="40dp"
                 android:textStyle="bold" />
@@ -99,7 +99,7 @@
             android:backgroundTint="@color/hardBlue"
             android:fontFamily="@font/lexend"
             android:paddingHorizontal="60dp"
-            android:text="Connexion"
+            android:text="@string/btnConnexion"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -111,11 +111,51 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend"
-            android:text="Vous n'avez pas de compte ? Créez-en un !"
+            android:text="@string/connectez_vous"
             android:textAlignment="center"
             android:textColor="@color/hardBlue"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/toggleLanguage"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/rectangleborder"
+        android:checkedButton="@id/english"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/francais"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/whiteoutline"
+            android:button="@null"
+            android:gravity="center"
+            android:tag="fr"
+            android:text="Français"
+            android:textColor="@color/hardBlue" />
+
+        <RadioButton
+            android:id="@+id/english"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/whiteoutline"
+            android:button="@null"
+            android:gravity="center"
+            android:tag="eng"
+            android:text="Anglais"
+            android:textColor="@color/hardBlue" />
+    </RadioGroup>
 
 </LinearLayout>

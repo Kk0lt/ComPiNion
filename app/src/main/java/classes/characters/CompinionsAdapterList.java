@@ -1,5 +1,7 @@
 package classes.characters;
 
+import android.graphics.Color;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,14 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
 
     List<Compinion> liste;
     InterfaceCompinion interfaceCompinion;
+    int currentPosition;
+
+    public CompinionsAdapterList(List<Compinion> liste, InterfaceCompinion interfaceCompinion) {
+        this.liste = liste;
+        this.interfaceCompinion = interfaceCompinion;
+        currentPosition = 0;
+        this.liste.get(currentPosition).setSelected(true);
+    }
 
     //========================================
     public CompinionsAdapterList(List<Compinion> liste){
@@ -45,6 +55,16 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
         Log.d("test", compinion.getImgUrl());
         charactersViewHolder.textView.setText(compinion.getName().toUpperCase());
         Picasso.get().load(compinion.getImgUrl()).into(charactersViewHolder.imageView);
+
+        if(compinion.isSelected()){
+            charactersViewHolder.itemView.setBackgroundColor(Color.parseColor("#0D2F54"));
+            charactersViewHolder.textView.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+        }
+        else {
+            charactersViewHolder.itemView.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+            charactersViewHolder.textView.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+
+        }
     }
 
 
@@ -84,7 +104,12 @@ public class CompinionsAdapterList extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int position = getLayoutPosition();
+
+                    liste.get(currentPosition).setSelected(false);
                     Compinion compinion = liste.get(position);
+                    currentPosition = position;
+                    liste.get(currentPosition).setSelected(true);
+                    notifyDataSetChanged();
                     interfaceCompinion.gestionClic(compinion);
 
                 }
