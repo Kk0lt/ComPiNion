@@ -1,5 +1,8 @@
 package com.example.cumpinion.loginFragments;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import classes.RetrofitInstance;
 import classes.User;
@@ -39,6 +45,9 @@ import retrofit2.Response;
 
 
 public class LoginFragment extends Fragment {
+
+    private RadioGroup languageRadio;
+    private SharedPreferences sharedPreferences;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -60,11 +69,23 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
+
+        String langue = sharedPreferences.getString("language", null);
+        if (langue != null) {
+            changeLangue(langue);
+            RadioButton radioButton = view.findViewWithTag(langue);
+            if (radioButton != null) {
+                radioButton.setChecked(true);
+            }
+        }
+
         Button btConnexion = view.findViewById(R.id.btLogin);
         EditText etEmail = view.findViewById(R.id.etEmail_loginFragment);
         EditText etPassword = view.findViewById(R.id.etPassword_loginFragment);
         TextView tvCreateAccount_loginFragment = view.findViewById(R.id.tvCreateAccount_loginFragment);
-
+        languageRadio = view.findViewById(R.id.toggleLanguage);
         tvCreateAccount_loginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,9 +182,34 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        languageRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton selectedRadioButton = view.findViewById(checkedId);
+                String selectedLanguage = selectedRadioButton.getTag().toString();
+
+                changeLangue(selectedLanguage);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("language", selectedLanguage);
+                editor.apply();
+
+                getActivity().recreate();
+            }
+        });
     }
 
-/*   Pour réafficher la barre de navigation utiliser ce code: */
+    private void changeLangue(String selectedLanguage) {
+        Locale locale = new Locale(selectedLanguage);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    /*   Pour réafficher la barre de navigation utiliser ce code: */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -2,6 +2,9 @@ package com.example.cumpinion;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.Locale;
 
 import classes.ReponseServer;
 import classes.RetrofitInstance;
@@ -40,6 +45,7 @@ import retrofit2.Response;
 
 public class SettingsFragment extends Fragment {
 
+    private SharedPreferences sharedPreferences;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -69,13 +75,23 @@ public class SettingsFragment extends Fragment {
         TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
 
+        sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
+
+        String langue = sharedPreferences.getString("language", null);
+        if (langue != null) {
+            changeLangue(langue);
+        } else {
+            changeLangue("eng");
+        }
+
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
         //appels des différentes méthodes
 
         changePassword(tvChangePwd, loggedUserViewModel);
-
+        changerLangue(tvLanguage);
         changeUsername(tvChangePseudo, loggedUserViewModel);
+        changerTheme(tvChangeTheme);
         deconnexion(view, tvLogout);
 
     }
@@ -262,13 +278,86 @@ public class SettingsFragment extends Fragment {
                 alertDialog.show();
             }
         });
+
     }
 
-    /**
-     * Réafficher la barre de navigation : */
+    private void changerLangue(TextView tvLanguage) {
+        tvLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String langue = sharedPreferences.getString("language", null);
+                if (langue != null) {
+                    if (langue.equalsIgnoreCase("eng"))
+                        changeLangue("fr");
+                    else
+                        changeLangue("eng");
+                } else {
+                    changeLangue("fr");
+                }
+            }
+        });
+
+    }
+
+    private void changerTheme(TextView tvTheme) {
+        tvTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("@string/settings_themes");
+                builder.setMessage("@string/choosetext");
+                builder.setCancelable(false);
+
+                // Bleu
+                builder.setPositiveButton("@string/blue", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Blue);
+                });
+                // Rouge
+                builder.setNegativeButton("@string/red", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Red);
+                });
+                // Vert
+                builder.setNeutralButton("@string/green", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    changeTheme(R.style.AppTheme_Green);
+                });
+
+                AlertDialog alertTheme = builder.create();
+                alertTheme.show();
+            }
+        });
+    }
+
+        /**
+         * Réafficher la barre de navigation : */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
     }
+
+    /**
+     * Changer la langue */
+    private void changeLangue(String selectedLanguage) {
+        Locale locale = new Locale(selectedLanguage);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("language", selectedLanguage);
+        editor.apply();
+
+        getActivity().recreate();
+    }
+
+    /**
+     * Changer le thème */
+    private void changeTheme(int themeId) {
+        getActivity().setTheme(themeId);
+        getActivity().recreate();
+    }
+
 }

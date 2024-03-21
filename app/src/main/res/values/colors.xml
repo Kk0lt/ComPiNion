@@ -8,6 +8,10 @@
     <color name="turquoise">#4793e3</color>
     <color name="lightBlue">#CDE0F4</color>
     <color name="hardBlue">#0D2F54</color>
+    <color name="lightGreen">#ABf7B1</color>
+    <color name="hardGreen">#008631</color>
+    <color name="lightRed">#f9aeae</color>
+    <color name="hardRed">#c50000</color>
     <color name="red">#A60101</color>
     <color name="grey">#7A7A7A</color>
 

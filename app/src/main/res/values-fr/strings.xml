@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ComPiNion</string>
+    <string name="welcome">Bienvenue!</string>
 
     <string name="serie">Série</string>
     <string name="merite">Mérite</string>
@@ -11,6 +12,10 @@
 
     <!--Settings Fragment-->
     <string name="settings_themes">Choisir le thème</string>
+        <string name="choosetext">Choisissez la couleur de votre application!</string>
+        <string name="blue">Bleu</string>
+        <string name="red">Rouge</string>
+        <string name="green">Vert</string>
     <string name="settings_langue">Choisir la langue</string>
     <string name="settings_pseudo">Nouveau pseudonyme</string>
     <string name="settings_password">Nouveau mot de passe</string>

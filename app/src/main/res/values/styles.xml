@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Bleu -->
+    <style name="AppTheme.Blue" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/hardBlue</item>
+        <item name="colorSecondary">@color/lightBlue</item>
+    </style>
+
+    <!-- Vert -->
+    <style name="AppTheme.Green" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/hardGreen</item>
+        <item name="colorSecondary">@color/lightGreen</item>
+    </style>
+
+    <!-- Rouge -->
+    <style name="AppTheme.Red" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/hardRed</item>
+        <item name="colorSecondary">@color/lightRed</item>
+    </style>
+
+</resources>
