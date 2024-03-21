@@ -129,7 +129,8 @@ public class LoginFragment extends Fragment {
                     }
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
                     Call<ResponseBody> call = serveur.login(requestBody);
-                    call.enqueue(new Callback<ResponseBody>() {
+
+                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
