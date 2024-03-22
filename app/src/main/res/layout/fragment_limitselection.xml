@@ -134,6 +134,15 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvErrAgree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="6dp"
+                android:textColor="#CD4444"
+                android:textSize="16sp" />
+
         </LinearLayout>
 
         <LinearLayout
