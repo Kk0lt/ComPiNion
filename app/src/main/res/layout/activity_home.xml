@@ -9,7 +9,6 @@
     android:weightSum="10"
     tools:context=".ui.main.MainActivity">
 
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/FragmentContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"

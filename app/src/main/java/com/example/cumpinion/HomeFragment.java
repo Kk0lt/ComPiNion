@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         AlertDialog.Builder bSmoked = new AlertDialog.Builder(getContext());
                         bSmoked.setTitle("Dommage, mais ne te décourage pas!");
-                        if(loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1 == 0) {
+                        if(loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1 < 0) {
                             bSmoked.setMessage("Tu as écoulé ta limite de cigarette pour la journée. " +
                                     "Nous reprenons la série du début, mais continue tes efforts pour battre ton record!");
                         } else {
@@ -111,8 +111,8 @@ public class HomeFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
                                 int i = loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1;
-                                if(i == 0) {
-
+                                if(i < 0) {
+                                    loggedUserViewModel.setUserStreak(0);
                                 } else {
 
                                 }
