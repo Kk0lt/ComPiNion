@@ -159,7 +159,8 @@ public class HomeFragment extends Fragment {
                 for (Compinion compinion : compinions) {
                     if (compinion.getId() == id) {
                         String url = compinion.getImgUrl();
-                        callback.onImageLoaded(url);
+                        Picasso.get().load(compinion.getImgUrl()).into(imgProfile);
+//                        callback.onImageLoaded(url);
                         break;
                     }
                 }
