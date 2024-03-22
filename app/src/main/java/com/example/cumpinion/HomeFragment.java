@@ -174,6 +174,7 @@ public class HomeFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         LocalDate localDate = LocalDate.now();
+                        getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
                         LocalDate diff = streak.getStart_date().plusDays(loggedUserViewModel.getUserMutableLiveData().getValue().getJours());
                         if(localDate.isAfter(diff)) {
                             Toast.makeText(getContext(), "Bravo!", Toast.LENGTH_LONG).show();
