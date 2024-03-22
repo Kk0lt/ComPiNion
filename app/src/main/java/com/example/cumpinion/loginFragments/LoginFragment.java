@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
                                     String userPrenom = userData.getString("prenom");
                                     String userEmail = userData.getString("email");
                                     String userPseudo = userData.getString("pseudo");
-                                    String imgUrl = jsonObject.getJSONObject("nom").toString();
+                                    String imgUrl = jsonObject.getString("image");
                                     int userId = userData.getInt("id");
                                     String userCompanion = imgUrl;
                                     int jours = userData.getInt("jours");

@@ -79,7 +79,7 @@ public class agreementFragment extends Fragment {
                         jsonObject.put("pseudo", pseudo);
                         jsonObject.put("email", email);
                         jsonObject.put("password", password);
-                        jsonObject.put("character_id", companion_id);
+                        //jsonObject.put("character_id", companion_id);
                         jsonObject.put("limite", limite);
                     } catch (JSONException e) {
                         e.printStackTrace();
