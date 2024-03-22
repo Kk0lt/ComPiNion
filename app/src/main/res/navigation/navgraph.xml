@@ -60,10 +60,6 @@
             app:destination="@id/settingsFragment"
             app:popUpTo="@id/leaderboardFragment"/>
         <action
-            android:id="@+id/fromLeaderboardToHistory"
-            app:destination="@id/historyFragment"
-            app:popUpTo="@id/leaderboardFragment"/>
-        <action
             android:id="@+id/fromLeaderboardToProfile"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/leaderboardFragment"/>
@@ -83,28 +79,7 @@
             android:id="@+id/fromHomeToSettings"
             app:destination="@id/settingsFragment"
             app:popUpTo="@id/homeFragment"/>
-        <action
-            android:id="@+id/fromHomeToHistory"
-            app:destination="@id/historyFragment"
-            app:popUpTo="@id/homeFragment"/>
     </fragment>
-    <fragment
-        android:id="@+id/historyFragment"
-        android:name="com.example.cumpinion.HistoryFragment"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
-        <action
-            android:id="@+id/fromHistoryToLeaderboard"
-            app:destination="@id/leaderboardFragment"
-            app:popUpTo="@id/historyFragment"/>
-        <action
-            android:id="@+id/fromHistoryToSettings"
-            app:destination="@id/settingsFragment"
-            app:popUpTo="@id/historyFragment"/>
-        <action
-            android:id="@+id/fromHistoryToHome"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/historyFragment"/>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.cumpinion.SettingsFragment"
@@ -113,10 +88,6 @@
         <action
             android:id="@+id/fromSettingsToLeaderboard"
             app:destination="@id/leaderboardFragment"
-            app:popUpTo="@id/settingsFragment"/>
-        <action
-            android:id="@+id/fromSettingsToHistory"
-            app:destination="@id/historyFragment"
             app:popUpTo="@id/settingsFragment"/>
         <action
             android:id="@+id/fromHistoryToHome"

@@ -1,6 +1,9 @@
 package interfaces;
 
 import classes.ReponseServer;
+import classes.Streak;
+import classes.StreakReponseServer;
+import classes.StreaksReponseServer;
 import classes.User;
 import classes.UserResponseServer;
 import classes.characters.CompinionsReponseServer;
@@ -51,12 +54,8 @@ public interface InterfaceServeur {
     @DELETE("user/{id1}/unblock/{id2}")
     Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
 
-    // Modification compte
-    @PATCH("compinion/{id}/update")
-    Call<Void> update(@Path("id") int id, @Body RequestBody requestBody);
-
     // Suppression du compte
-    @DELETE("compinion/{id}/delete")
+    @DELETE("user/{id}/delete")
     Call<Void> destroy(@Path("id") int id);
 
     // Afficher la liste des personnages
@@ -68,31 +67,37 @@ public interface InterfaceServeur {
     @GET("showCharacter/{id}")
     Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
 
+    // Afficher la/les streaks relative à un utilisateur
+    @GET("user/{id}/streaks")
+    Call<StreaksReponseServer> getStreaks(@Path("id") int id);
+
+    @GET("user/{id}/streak")
+    Call<StreakReponseServer> getStreak(@Path("id") int id);
 
     /*======Modification des infos de user=====*/
 
-    @PATCH("compinion/{id}/update/prenom")
+    @PATCH("user/{id}/update/prenom")
     Call<Void> updatePrenom(@Path("id") int id, @Query("prenom") String prenom);
 
-    @PATCH("compinion/{id}/update/nom")
+    @PATCH("user/{id}/update/nom")
     Call<Void> updateNom(@Path("id") int id, @Query("nom") String nom);
 
-    @PATCH("compinion/{id}/update/pseudo")
+    @PATCH("user/{id}/update/pseudo")
     Call<Void> updatePseudo(@Path("id") int id, @Query("pseudo") String pseudo);
 
-    @PATCH("compinion/{id}/update/email")
+    @PATCH("user/{id}/update/email")
     Call<Void> updateEmail(@Path("id") int id, @Query("email") String email);
 
-    @PATCH("compinion/{id}/update/merite")
+    @PATCH("user/{id}/update/merite")
     Call<Void> updateMerite(@Path("id") int id, @Query("merite") int merite);
 
-    @PATCH("compinion/{id}/update/jours")
+    @PATCH("user/{id}/update/jours")
     Call<Void> updateJours(@Path("id") int id, @Query("jours") int jours);
 
-    @PATCH("compinion/{id}/update/limite")
+    @PATCH("user/{id}/update/limite")
     Call<Void> updateLimite(@Path("id") int id, @Query("limite") int limite);
 
-    @POST("compinion/{id}/update/endstreak")
+    @POST("user/{id}/update/endstreak")
     Call<Void> endStreak(@Path("id") int id);
 
     // Update password endpoint
