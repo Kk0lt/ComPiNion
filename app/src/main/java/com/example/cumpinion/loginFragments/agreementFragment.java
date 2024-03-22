@@ -66,7 +66,8 @@ public class agreementFragment extends Fragment {
                 String email = createUserViewModel.getUserMutableLiveData().getValue().getEmail();
                 String password = createUserViewModel.getUserMutableLiveData().getValue().getPassword();
                 int limite = createUserViewModel.getUserMutableLiveData().getValue().getLimite();
-                int companion_id = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
+                String url = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_url();
+
 
                 //Vérification du cochage
                 if(chkAgree.isChecked()) {

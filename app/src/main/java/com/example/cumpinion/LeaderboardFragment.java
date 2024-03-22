@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+
+import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class LeaderboardFragment extends Fragment {
 
     //========== Variables declaration ==========
     UsersAdapterListe usersAdapterListe;
+    UsersAdapterListe amisAdapterListe;
     RecyclerView rvUsers;
     RecyclerView rvAmis;
     NavController navController;
@@ -47,20 +51,6 @@ public class LeaderboardFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-    }
-
-    private void changeSelectedRadio(View view) {
-        // Écouteur pour la sélection
-        RadioGroup radioGroup = view.findViewById(R.id.rg_selectBoard);
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if(radioGroup.getCheckedRadioButtonId() == -1){
-                rvUsers.setVisibility(rvUsers.VISIBLE);
-                rvAmis.setVisibility(rvAmis.INVISIBLE);
-            } else {
-                rvUsers.setVisibility(rvUsers.INVISIBLE);
-                rvAmis.setVisibility(rvAmis.VISIBLE);
-            }
-        });
     }
 
     @Nullable
@@ -84,13 +74,16 @@ public class LeaderboardFragment extends Fragment {
 
         Log.d("ovCre", "2");
 
+        LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
+
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        getUsers(serveur);
+        getUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+        getAmis(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
     }
 
-    private void getUsers(InterfaceServeur serveur) {
-        Call<ReponseServer> call = serveur.getUsers(1);
+    private void getUsers(InterfaceServeur serveur, int i) {
+        Call<ReponseServer> call = serveur.getUsers(i);
         call.enqueue(new Callback<ReponseServer>() {
             @Override
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
@@ -108,30 +101,22 @@ public class LeaderboardFragment extends Fragment {
         });
     }
 
-//    private void getAmis(InterfaceServeur s) {
-//        Call<ReponseServer> call = s.getAmis();
-//        call.enqueue(new Callback<ReponseServer>() {
-//            @Override
-//            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
-//                ReponseServer reponseServer = response.body();
-//                List<User> amis = reponseServer.getAmis();
-//                amisAdapterListe = new UsersAdapterListe(amis);
-//                rvAmis.setAdapter(amisAdapterListe);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ReponseServer> call, Throwable t) {
-//                Log.d("erreur", "onFailure Erreur");
-//                Log.d("erreur", t.getMessage());
-//            }
-//        });
-//    }
+    private void getAmis(InterfaceServeur s, int i) {
+        Call<ReponseServer> call = s.getAmis(i);
+        call.enqueue(new Callback<ReponseServer>() {@Override
+            public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
+                ReponseServer reponseServer = response.body();
+                List<User> amis = reponseServer.getUsers();
+                amisAdapterListe = new UsersAdapterListe(amis, navController);
+                rvAmis.setAdapter(amisAdapterListe);
+            }
 
-    public void navigateToProfile(int id) {
-        Fragment f = new ProfileFragment();
-        Bundle b = new Bundle();
-        b.putInt("id", id);
-        f.setArguments(b);
+            @Override
+            public void onFailure(Call<ReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
     }
 
 }
