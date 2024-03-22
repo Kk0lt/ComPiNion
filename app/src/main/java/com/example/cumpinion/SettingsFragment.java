@@ -287,10 +287,15 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 String langue = sharedPreferences.getString("language", null);
                 if (langue != null) {
-                    if (langue.equalsIgnoreCase("eng"))
+                    if (langue.equalsIgnoreCase("eng")) {
                         changeLangue("fr");
-                    else
+                        getActivity().recreate();
+                    }
+                    else {
                         changeLangue("eng");
+                        getActivity().recreate();
+
+                    }
                 } else {
                     changeLangue("fr");
                 }
@@ -350,7 +355,6 @@ public class SettingsFragment extends Fragment {
         editor.putString("language", selectedLanguage);
         editor.apply();
 
-        getActivity().recreate();
     }
 
     /**
