@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.cumpinion.R;
 
@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 
 public class limitselectionFragment extends Fragment implements InterfaceCompinion {
-    int selectedLimit = 0;
+    int selectedLimit = -1;
 
     RecyclerView rvCharacters;
     CompinionsAdapterList compinionsAdapterList;
@@ -66,6 +66,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         super.onViewCreated(view, savedInstanceState);
 
         Button btNext = view.findViewById(R.id.btNext_limitSelectionFragment);
+        TextView tvErrCig = view.findViewById(R.id.tvErrAgree);
         ImageView ic_0, ic_1, ic_2, ic_3;
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
         NavController controller = Navigation.findNavController(view);
@@ -102,10 +103,17 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
             @Override
             public void onClick(View v) {
                 CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
-                createUserViewModel.setUserLimit(selectedLimit);
+                if(selectedLimit >= 0){
+                    createUserViewModel.setUserLimit(selectedLimit);
 
-                NavController controller = Navigation.findNavController(view);
-                controller.navigate(R.id.fromLimitSelectToAgreement);
+                    NavController controller = Navigation.findNavController(view);
+                    controller.navigate(R.id.fromLimitSelectToAgreement);
+                }
+                else {
+                    String erreur = getResources().getString(R.string.errorCigaretteNum);
+                    tvErrCig.setText(erreur);
+                }
+
             }
         });
 

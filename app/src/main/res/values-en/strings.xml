@@ -36,8 +36,9 @@
     <string name="btcreerCompte">Create account</string>
 
     <!--LimitSelection Activity-->
-    <string name="selectLimit">Choose a cigaret limit :</string>
+    <string name="selectLimit">Choose a cigarette limit :</string>
     <string name="selectCharacter">Choose your Compinion</string>
+    <string name="errorCigaretteNum">Please choose a limit</string>
 
     <!--Agreement Activity-->
     <string name="iAgree">I agree</string>
@@ -54,6 +55,7 @@
         cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas
         adipiscing ante non diam sodales hendrerit.</string>
 
+    <string name="errAgree">Please accept the terms and conditions</string>
     <!--Autre-->
 
     <string name="past_streak">Past streaks :</string>

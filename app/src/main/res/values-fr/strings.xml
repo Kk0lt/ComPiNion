@@ -38,6 +38,7 @@
     <!--LimitSelection Activity-->
     <string name="selectLimit">Choisissez une limite de cigarette :</string>
     <string name="selectCharacter">Choisissez votre Compinion</string>
+    <string name="errorCigaretteNum">Veuillez séléctionnez une limite</string>
 
     <!--Agreement Activity-->
     <string name="iAgree">J\'accepte</string>
@@ -53,6 +54,8 @@
         blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
         cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas
         adipiscing ante non diam sodales hendrerit.</string>
+
+    <string name="errAgree">Veuillez accepter les termes et conditions</string>
 
 
     <!--Autre-->
