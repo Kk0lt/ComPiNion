@@ -21,8 +21,8 @@ public class LoggedUserViewModel extends ViewModel {
 
 
     //Ajouter un companion
-    public void setUserCompanion(int id){
-        utilisateurMutableLiveData.getValue().setCompanion_id(id);
+    public void setUserCompanion(String url){
+        utilisateurMutableLiveData.getValue().setCompanion_url(url);
     }
 
     //setter la limite
@@ -38,4 +38,15 @@ public class LoggedUserViewModel extends ViewModel {
     public void setUserPassword(String password){
         utilisateurMutableLiveData.getValue().setPassword(password);
     }
+
+    //setter les mérites
+    public void setUserMerit(int limite){
+        utilisateurMutableLiveData.getValue().setMerite(limite);
+    }
+
+    //setter les streaks
+    public void setUserStreak(int streak){
+        utilisateurMutableLiveData.getValue().setJours(streak);
+    }
+
 }
