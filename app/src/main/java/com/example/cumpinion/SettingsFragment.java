@@ -190,6 +190,7 @@ public class SettingsFragment extends Fragment {
         tvChangePseudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean estBon = true;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(false);
@@ -200,6 +201,13 @@ public class SettingsFragment extends Fragment {
                 builder.setPositiveButton(R.string.confirmer, (DialogInterface.OnClickListener) (dialog, which) -> {
                     String newPseudo = etNewPseudo.getText().toString();
                     InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                    //FAIRE DES VÉRIFICATIONS QUE LE NOUVEAU PSEUDO A DE L'ALLURE APRES ON VA POUVOIR CALLEWR TOUT SA
+                    if(newPseudo.trim().isEmpty()){
+                        /*Mettre plus de verifications et ensuite mettre des messages d'erreurs pour quand sa va inévitablement pas fonctionner*/
+                        
+                    }
+
+                    //FIN DES VÉRIFICATIONS
                     Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
                     call.enqueue(new Callback<Void>() {
                         @Override
