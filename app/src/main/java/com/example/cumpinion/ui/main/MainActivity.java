@@ -1,20 +1,13 @@
 package com.example.cumpinion.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
-import com.example.cumpinion.HistoryFragment;
-import com.example.cumpinion.HomeFragment;
-import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
-import com.example.cumpinion.SettingsFragment;
 import com.example.cumpinion.databinding.ActivityHomeBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -45,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
             else if (item.getItemId() == R.id.leaderboardFragmentItem) {
                 navController.navigate(R.id.leaderboardFragment);
-            }
-            else if (item.getItemId() == R.id.historyFragmentItem) {
-                navController.navigate(R.id.historyFragment);
             }
             else if (item.getItemId() == R.id.settingsFragmentItem) {
                 navController.navigate(R.id.settingsFragment);

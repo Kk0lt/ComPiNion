@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -145,9 +146,8 @@ public class LoginFragment extends Fragment {
                                     String userPrenom = userData.getString("prenom");
                                     String userEmail = userData.getString("email");
                                     String userPseudo = userData.getString("pseudo");
-                                    String imgUrl = jsonObject.getString("image");
+                                    String imgUrl = jsonObject.getString("nom");
                                     int userId = userData.getInt("id");
-                                    String userCompanion = imgUrl;
                                     int jours = userData.getInt("jours");
                                     int merite = userData.getInt("merite");
                                     int limite = userData.getInt("limite");
@@ -156,7 +156,7 @@ public class LoginFragment extends Fragment {
 
                                     // Créer un nouvel objet User avec les informations récupérées
                                     User loggedUser = new User(userId, userName, userPrenom, userEmail, password, userPseudo,
-                                            merite, jours, userCompanion, limite);
+                                            merite, jours, imgUrl, limite);
                                     Log.d("Réussi!", "Connected : " + loggedUser);
                                     loggedUserViewModel.addUser(loggedUser);
 
