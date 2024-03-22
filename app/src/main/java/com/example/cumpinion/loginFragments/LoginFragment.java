@@ -115,7 +115,7 @@ public class LoginFragment extends Fragment {
                     etPassword.setError("Entrez votre mot de passe");
                     valide = false;
                 }
-                else if (valide = true) {
+                else if (valide) {
                     String email = etEmail.getText().toString();
                     String password = etPassword.getText().toString();
 
