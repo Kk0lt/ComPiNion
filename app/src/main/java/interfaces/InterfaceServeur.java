@@ -37,7 +37,7 @@ public interface InterfaceServeur {
 
     // Tous les usagers
     @GET("user/{id}/amis")
-    Call<ReponseServer> getAmis();
+    Call<ReponseServer> getAmis(@Path("id") int id);
 
     // Logout
     @POST("logout")
@@ -88,6 +88,13 @@ public interface InterfaceServeur {
 
     @PATCH("compinion/{id}/update/jours")
     Call<Void> updateJours(@Path("id") int id, @Query("jours") int jours);
+
+    @PATCH("compinion/{id}/update/limite")
+    Call<Void> updateLimite(@Path("id") int id, @Query("limite") int limite);
+
+    @POST("compinion/{id}/update/endstreak")
+    Call<Void> endStreak(@Path("id") int id);
+
     // Update password endpoint
     @FormUrlEncoded
     @PATCH("compinion/{id}/update/password")

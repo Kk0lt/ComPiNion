@@ -64,15 +64,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         String experience = xp + " jours";
         usersViewHolder.tvXp.setText(experience);
 
-        int cid = user.getCompanion_id();
-        getImg(cid, new ImageCallback() {
-            @Override
-            public void onImageLoaded(String imageUrl) {
-                Picasso.get().load(imageUrl).into(usersViewHolder.ivCompanionImage);
-            }
-        });
-
-
     }
 
     @Override
@@ -108,21 +99,13 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
     }
 
-    private String getImg(int id, ImageCallback callback) {
+    private String getImg(int id) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<CompinionsReponseServer> call = serveur.getCompinion(id);
         call.enqueue(new Callback<CompinionsReponseServer>() {
             @Override
             public void onResponse(Call<CompinionsReponseServer> call, Response<CompinionsReponseServer> response) {
-                CompinionsReponseServer reponseServer = response.body();
-                List<Compinion> compinions = reponseServer.getCompinionList();
-                for (Compinion compinion : compinions) {
-                    if (compinion.getId() == id) {
-                        String url = compinion.getImgUrl();
-                        callback.onImageLoaded(url);
-                        break;
-                    }
-                }
+
             }
 
             @Override
@@ -133,10 +116,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         });
 
         return url;
-    }
-
-    public interface ImageCallback {
-        void onImageLoaded(String imageUrl);
     }
 
 }

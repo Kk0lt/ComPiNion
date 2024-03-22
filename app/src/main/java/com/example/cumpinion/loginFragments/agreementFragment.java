@@ -62,7 +62,7 @@ public class agreementFragment extends Fragment {
                 String email = createUserViewModel.getUserMutableLiveData().getValue().getEmail();
                 String password = createUserViewModel.getUserMutableLiveData().getValue().getPassword();
                 int limite = createUserViewModel.getUserMutableLiveData().getValue().getLimite();
-                int companion_id = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
+                String url = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_url();
 
                 // Créer un objet JSON contenant les informations d'identification
                 JSONObject jsonObject = new JSONObject();
@@ -72,7 +72,7 @@ public class agreementFragment extends Fragment {
                     jsonObject.put("pseudo", pseudo);
                     jsonObject.put("email", email);
                     jsonObject.put("password", password);
-                    jsonObject.put("character_id", companion_id);
+                    //jsonObject.put("character_id", companion_id);
                     jsonObject.put("limite", limite);
                 } catch (JSONException e) {
                     e.printStackTrace();

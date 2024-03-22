@@ -20,8 +20,8 @@ public class CreateUserViewModel extends ViewModel {
 
 
     //Ajouter un companion
-    public void setUserCompanion(int id){
-        utilisateurMutableLiveData.getValue().setCompanion_id(id);
+    public void setUserCompanion(String url){
+        utilisateurMutableLiveData.getValue().setCompanion_url(url);
     }
 
     //setter la limite
