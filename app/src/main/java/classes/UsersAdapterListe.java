@@ -35,7 +35,6 @@ import retrofit2.Response;
 public class UsersAdapterListe extends RecyclerView.Adapter {
 
     private List<User> liste;
-    private String url;
     private NavController navController;
     int idSelectedUser;
 
@@ -64,6 +63,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
         String experience = xp + " jours";
         usersViewHolder.tvXp.setText(experience);
 
+        Picasso.get().load(user.character_url).into(usersViewHolder.ivCompanionImage);
     }
 
     @Override
@@ -97,25 +97,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
 
 
-    }
-
-    private String getImg(int id) {
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<CompinionsReponseServer> call = serveur.getCompinion(id);
-        call.enqueue(new Callback<CompinionsReponseServer>() {
-            @Override
-            public void onResponse(Call<CompinionsReponseServer> call, Response<CompinionsReponseServer> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<CompinionsReponseServer> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur character list");
-                Log.d("erreur", t.getMessage());
-            }
-        });
-
-        return url;
     }
 
 }

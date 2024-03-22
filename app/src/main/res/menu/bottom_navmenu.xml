@@ -15,12 +15,6 @@
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="History"
-        android:icon="@drawable/ic_calendar"
-        android:id="@+id/historyFragmentItem"/>
-    <item
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:title="Settings"
         android:icon="@drawable/ic_cogwheel"
         android:id="@+id/settingsFragmentItem"/>

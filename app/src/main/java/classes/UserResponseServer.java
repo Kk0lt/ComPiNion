@@ -9,11 +9,14 @@ public class UserResponseServer {
     private boolean success;
     @SerializedName("data")
     private User user; // Change from List<User> to User
+    @SerializedName("nom")
+    private String imgurl;
 
-    public UserResponseServer(boolean success, User user, String message) {
+    public UserResponseServer(boolean success, User user, String message, String url) {
         this.success = success;
         this.user = user;
         this.message = message;
+        this.imgurl = url;
     }
 
     public boolean isSuccess() {
