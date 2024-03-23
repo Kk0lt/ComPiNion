@@ -41,7 +41,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -104,8 +103,6 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
-
-
 
     private void block(InterfaceServeur s, User user, int id2) {
         int idLoggedUser = user.getId();

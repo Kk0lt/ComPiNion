@@ -8,7 +8,6 @@ import classes.User;
 
 public class LoggedUserViewModel extends ViewModel {
 
-
     private MutableLiveData<User> utilisateurMutableLiveData = new MutableLiveData<User>();;
     public LiveData<User> getUserMutableLiveData(){
         return utilisateurMutableLiveData;

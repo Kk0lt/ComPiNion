@@ -40,8 +40,6 @@ public class LeaderboardFragment extends Fragment {
     UsersAdapterListe amisAdapterListe;
     UsersAdapterListe blockedAdapterListe;
     RecyclerView rvUsers;
-    RecyclerView rvAmis;
-    RecyclerView rvBlocked;
     NavController navController;
     RadioGroup relationRadio;
 
@@ -71,30 +69,23 @@ public class LeaderboardFragment extends Fragment {
         rvUsers.setHasFixedSize(true);
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rvAmis = view.findViewById(R.id.rvAmis);
-        rvAmis.setHasFixedSize(true);
-        rvAmis.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        rvBlocked = view.findViewById(R.id.rvBlocked);
-        rvBlocked.setHasFixedSize(true);
-        rvBlocked.setLayoutManager(new LinearLayoutManager(getContext()));
-
         Log.d("ovCre", "2");
 
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        getUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
-        getAmis(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
-        getBlocked(serveur,loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         relationRadio = view.findViewById(R.id.toggleRelation);
         relationRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                //Implémenter la logique de programmation pour le changement des RecyclerViews;
-
+                if (checkedId == R.id.All) {
+                    getUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+                } else if (checkedId == R.id.Friend) {
+                    getAmis(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+                } else if (checkedId == R.id.Blocked) {
+                    getBlocked(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+                }
             }
         });
 
@@ -126,7 +117,7 @@ public class LeaderboardFragment extends Fragment {
                 ReponseServer reponseServer = response.body();
                 List<User> amis = reponseServer.getUsers();
                 amisAdapterListe = new UsersAdapterListe(amis, navController);
-                rvAmis.setAdapter(amisAdapterListe);
+                rvUsers.setAdapter(amisAdapterListe);
             }
 
             @Override
@@ -144,7 +135,7 @@ public class LeaderboardFragment extends Fragment {
             ReponseServer reponseServer = response.body();
             List<User> blocked = reponseServer.getUsers();
             blockedAdapterListe = new UsersAdapterListe(blocked, navController);
-            rvBlocked.setAdapter(amisAdapterListe);
+            rvUsers.setAdapter(amisAdapterListe);
         }
 
             @Override
