@@ -64,7 +64,11 @@ public class LeaderboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d("ovCre", "ovCrea");
-        
+
+        usersAdapterListe = new UsersAdapterListe(new ArrayList<>(), navController);
+        amisAdapterListe = new UsersAdapterListe(new ArrayList<>(), navController);
+        blockedAdapterListe = new UsersAdapterListe(new ArrayList<>(), navController);
+
         rvUsers = view.findViewById(R.id.rvUsers);
         rvUsers.setHasFixedSize(true);
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -72,8 +76,8 @@ public class LeaderboardFragment extends Fragment {
         Log.d("ovCre", "2");
 
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
-
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        getUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         relationRadio = view.findViewById(R.id.toggleRelation);
         relationRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -88,7 +92,6 @@ public class LeaderboardFragment extends Fragment {
                 }
             }
         });
-
     }
 
     private void getUsers(InterfaceServeur serveur, int i) {
@@ -98,10 +101,8 @@ public class LeaderboardFragment extends Fragment {
             public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
                 ReponseServer reponseServer = response.body();
                 List<User> users = reponseServer.getUsers();
-                usersAdapterListe = new UsersAdapterListe(users, navController);
-                rvUsers.setAdapter(usersAdapterListe);
+                rvUsers.setAdapter(new UsersAdapterListe(users, navController));
             }
-
             @Override
             public void onFailure(Call<ReponseServer> call, Throwable t) {
                 Log.d("erreur", "onFailure Erreur");
@@ -135,7 +136,7 @@ public class LeaderboardFragment extends Fragment {
             ReponseServer reponseServer = response.body();
             List<User> blocked = reponseServer.getUsers();
             blockedAdapterListe = new UsersAdapterListe(blocked, navController);
-            rvUsers.setAdapter(amisAdapterListe);
+            rvUsers.setAdapter(blockedAdapterListe);
         }
 
             @Override

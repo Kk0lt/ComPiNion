@@ -11,19 +11,11 @@ public class StreaksReponseServer {
     @SerializedName("success")
     boolean success;
     @SerializedName("data")
-    List<Streak> streaks;
+    List<Streak> data; // Modifier le nom de la propriété et son type pour refléter le changement
 
-    public StreaksReponseServer(String message, boolean success, List<Streak> _streaks) {
-        this.message = message;
+    public StreaksReponseServer(boolean success, List<Streak> data, String message) {
         this.success = success;
-        this.streaks = _streaks;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
+        this.data = data; // Modifier l'assignation de la propriété pour refléter le changement
         this.message = message;
     }
 
@@ -35,12 +27,19 @@ public class StreaksReponseServer {
         this.success = success;
     }
 
-    public List<Streak> getStreaks() {
-        return streaks;
+    public void setData(List<Streak> data) { // Modifier le nom de cette méthode pour refléter le changement
+        this.data = data;
     }
 
-    public void setStreaks(List<Streak> streaks) {
-        this.streaks = streaks;
+    public String getMessage() {
+        return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<Streak> getData() { // Modifier le nom de cette méthode pour refléter le changement
+        return data;
+    }
 }

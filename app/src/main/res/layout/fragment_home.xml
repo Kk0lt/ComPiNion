@@ -53,8 +53,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvHome"
-            app:layout_constraintVertical_bias="0.131"
-            app:srcCompat="@drawable/ch_rabbit" />
+            app:layout_constraintVertical_bias="0.131" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -156,11 +155,11 @@
             app:strokeColor="@color/white"
             app:strokeWidth="4dp" />
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvStreaks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvStreaks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

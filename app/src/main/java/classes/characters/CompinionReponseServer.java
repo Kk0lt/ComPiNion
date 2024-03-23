@@ -1,22 +1,21 @@
-package classes;
+package classes.characters;
 
 import com.google.gson.annotations.SerializedName;
 
-import classes.Streak;
+import java.util.List;
 
-public class StreakReponseServer {
-
+public class CompinionReponseServer {
     @SerializedName("message")
     String message;
     @SerializedName("success")
     boolean success;
     @SerializedName("data")
-    Streak streak;
+    Compinion compinion;
 
-    public StreakReponseServer(String message, boolean success, Streak streak) {
+    public CompinionReponseServer(String message, boolean success, Compinion compinion) {
         this.message = message;
+        this.compinion = compinion;
         this.success = success;
-        this.streak = streak;
     }
 
     public String getMessage() {
@@ -35,11 +34,11 @@ public class StreakReponseServer {
         this.success = success;
     }
 
-    public Streak getStreak() {
-        return streak;
+    public Compinion getCompinion() {
+        return compinion;
     }
 
-    public void setStreak(Streak streak) {
-        this.streak = streak;
+    public void setCompinion(Compinion compinion) {
+        this.compinion = compinion;
     }
 }

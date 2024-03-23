@@ -58,6 +58,7 @@
 
     <string name="past_streak">Past streaks :</string>
     <string name="add_friend">Follow</string>
+    <string name="remove_friend">Unfollow</string>
     <string name="block">Block</string>
     <string name="unblock">Unblock</string>
     <string name="confirmer">Confirm</string>

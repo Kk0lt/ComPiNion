@@ -2,25 +2,28 @@ package classes;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 public class Streak {
 
     @SerializedName("id")
-    int id;
-    @SerializedName("user_id")
-    int user_id;
-    @SerializedName("start_date")
-    LocalDate start_date;
-    @SerializedName("end_date")
-    LocalDate end_date;
+    private int id;
 
-    public Streak(int id, int user_id, LocalDate start_date, LocalDate end_date) {
+    @SerializedName("user_id")
+    private int user_id;
+
+    @SerializedName("start_date")
+    Date startDate;
+
+    @SerializedName("end_date")
+    Date endDate;
+
+    public Streak(int id, int user_id, Date start_date, Date end_date) {
         this.id = id;
         this.user_id = user_id;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = start_date;
+        this.endDate = end_date;
     }
 
     public int getId() {
@@ -39,19 +42,19 @@ public class Streak {
         this.user_id = user_id;
     }
 
-    public LocalDate getStart_date() {
-        return start_date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(LocalDate start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date start_date) {
+        this.startDate = start_date;
     }
 
-    public LocalDate getEnd_date() {
-        return end_date;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(LocalDate end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Date end_date) {
+        this.endDate = end_date;
     }
 }

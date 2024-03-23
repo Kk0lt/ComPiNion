@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:background="@drawable/rectangleborder"
-            android:checkedButton="@id/english"
+            android:checkedButton="@id/All"
             android:orientation="horizontal">
 
             <RadioButton
@@ -75,18 +75,6 @@
             android:layout_height="match_parent" >
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAmis"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBlocked"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 

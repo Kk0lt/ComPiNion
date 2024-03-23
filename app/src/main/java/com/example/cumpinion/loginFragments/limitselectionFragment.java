@@ -192,6 +192,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
     public void gestionClic(Compinion compinion) {
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
-        createUserViewModel.getUserMutableLiveData().getValue().setCompanion_url(compinion.getImgUrl());
+        createUserViewModel.getUserMutableLiveData().getValue().setCompanion_id(compinion.getId());
     }
+
 }

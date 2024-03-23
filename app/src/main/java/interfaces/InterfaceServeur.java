@@ -1,11 +1,10 @@
 package interfaces;
 
 import classes.ReponseServer;
-import classes.Streak;
 import classes.StreakReponseServer;
 import classes.StreaksReponseServer;
-import classes.User;
 import classes.UserResponseServer;
+import classes.characters.CompinionReponseServer;
 import classes.characters.CompinionsReponseServer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -50,13 +49,25 @@ public interface InterfaceServeur {
     @POST("logout")
     Call<Void> logout();
 
-    //Block
-    @POST("user/{id1}/block/{id2}")
-    Call<Void> block(@Path("id1") int id1, @Path("id2") int id2, @Body RequestBody requestBody);
+    //Relations
+        @GET("user/{id1}/relation/{id2}")
+        Call<String> relation(@Path("id1") int id1, @Path("id2") int id2);
 
-    //Unblock
-    @DELETE("user/{id1}/unblock/{id2}")
-    Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
+        //Friend
+        @POST("user/{id1}/friend/{id2}")
+        Call<Void> friend(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Unfriend
+        @DELETE("user/{id1}/unblock/{id2}")
+        Call<Void> unfriend(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Block
+        @POST("user/{id1}/block/{id2}")
+        Call<Void> block(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Unblock
+        @DELETE("user/{id1}/unblock/{id2}")
+        Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
 
     // Suppression du compte
     @DELETE("user/{id}/delete")
@@ -69,7 +80,7 @@ public interface InterfaceServeur {
     // Afficher l'image du personnage du joueur
 
     @GET("showCharacter/{id}")
-    Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
+    Call<CompinionReponseServer> getCompinion(@Path("id") int id);
 
     // Afficher la/les streaks relative à un utilisateur
     @GET("user/{id}/streaks")

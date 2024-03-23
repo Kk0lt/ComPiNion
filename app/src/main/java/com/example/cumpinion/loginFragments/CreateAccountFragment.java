@@ -110,7 +110,7 @@ public class CreateAccountFragment extends Fragment {
                     CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
                     if (confirmPassword.equals(password)) {
-                        User newUser = new User(nom, prenom, email, password, pseudo, "rabbit.png", 0);
+                        User newUser = new User(nom, prenom, email, password, pseudo, 1, 0);
                         createUserViewModel.addUser(newUser);
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.fromCreateAccountToLimitSelect);
