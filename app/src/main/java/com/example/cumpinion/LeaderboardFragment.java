@@ -38,9 +38,12 @@ public class LeaderboardFragment extends Fragment {
     //========== Variables declaration ==========
     UsersAdapterListe usersAdapterListe;
     UsersAdapterListe amisAdapterListe;
+    UsersAdapterListe blockedAdapterListe;
     RecyclerView rvUsers;
     RecyclerView rvAmis;
+    RecyclerView rvBlocked;
     NavController navController;
+    RadioGroup relationRadio;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -72,6 +75,10 @@ public class LeaderboardFragment extends Fragment {
         rvAmis.setHasFixedSize(true);
         rvAmis.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        rvBlocked = view.findViewById(R.id.rvBlocked);
+        rvBlocked.setHasFixedSize(true);
+        rvBlocked.setLayoutManager(new LinearLayoutManager(getContext()));
+
         Log.d("ovCre", "2");
 
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
@@ -79,6 +86,17 @@ public class LeaderboardFragment extends Fragment {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         getUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
         getAmis(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+        getBlocked(serveur,loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+
+        relationRadio = view.findViewById(R.id.toggleRelation);
+        relationRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                //Implémenter la logique de programmation pour le changement des RecyclerViews;
+
+            }
+        });
 
     }
 
@@ -110,6 +128,24 @@ public class LeaderboardFragment extends Fragment {
                 amisAdapterListe = new UsersAdapterListe(amis, navController);
                 rvAmis.setAdapter(amisAdapterListe);
             }
+
+            @Override
+            public void onFailure(Call<ReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getBlocked(InterfaceServeur s, int i) {
+        Call<ReponseServer> call = s.getBlocked(i);
+        call.enqueue(new Callback<ReponseServer>() {@Override
+        public void onResponse(Call<ReponseServer> call, Response<ReponseServer> response) {
+            ReponseServer reponseServer = response.body();
+            List<User> blocked = reponseServer.getUsers();
+            blockedAdapterListe = new UsersAdapterListe(blocked, navController);
+            rvBlocked.setAdapter(amisAdapterListe);
+        }
 
             @Override
             public void onFailure(Call<ReponseServer> call, Throwable t) {

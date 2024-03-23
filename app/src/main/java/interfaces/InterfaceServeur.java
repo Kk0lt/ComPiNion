@@ -38,9 +38,13 @@ public interface InterfaceServeur {
     @GET("users/{id}")
     Call<ReponseServer> getUsers(@Path("id") int id);
 
-    // Tous les usagers
+    // Tous les amis
     @GET("user/{id}/amis")
     Call<ReponseServer> getAmis(@Path("id") int id);
+
+    // Tous les usagers bloqués
+    @GET("user/{id}/blocked")
+    Call<ReponseServer> getBlocked(@Path("id") int id);
 
     // Logout
     @POST("logout")
