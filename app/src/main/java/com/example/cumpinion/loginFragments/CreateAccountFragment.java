@@ -127,7 +127,7 @@ public class CreateAccountFragment extends Fragment {
     }
 
     //Cette méthode sert a detecter si la string envoyer est un chiffre. elle est utilisé dans des verifications de formulaire
-    public boolean estNumeric(String string){
+    private boolean estNumeric(String string){
         try {
             Double.parseDouble(string);
             return true;
@@ -138,7 +138,7 @@ public class CreateAccountFragment extends Fragment {
     }
 
     //Cette méthode que l'addresse courriel contien une arobase . Elle est utilisé dans la vérification de formulaire
-    public boolean estEmailValide(String string){
+    private boolean estEmailValide(String string){
         if(string.indexOf("@") >= 0){
             return false;
         }

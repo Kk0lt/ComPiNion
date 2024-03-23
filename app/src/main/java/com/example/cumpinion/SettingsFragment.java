@@ -202,25 +202,28 @@ public class SettingsFragment extends Fragment {
                     String newPseudo = etNewPseudo.getText().toString();
                     InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
                     //FAIRE DES VÉRIFICATIONS QUE LE NOUVEAU PSEUDO A DE L'ALLURE APRES ON VA POUVOIR CALLEWR TOUT SA
-                    if(newPseudo.trim().isEmpty()){
-                        /*Mettre plus de verifications et ensuite mettre des messages d'erreurs pour quand sa va inévitablement pas fonctionner*/
-                        
+                    if(newPseudo.trim().length() > 50 || newPseudo.trim().isEmpty() || estNumeric(newPseudo.trim()) ){
+                        // aficher un message d'erreur dans le modal
                     }
 
-                    //FIN DES VÉRIFICATIONS
-                    Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
-                            loggedUserViewModel.setUserPseudo(newPseudo);
-                            Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
-                        }
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.d("failure!", "failure : " + t.getMessage());
-                        }
-                    });
+                    else {
+                        //FIN DES VÉRIFICATIONS
+                        Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
+                                loggedUserViewModel.setUserPseudo(newPseudo);
+                                Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.d("failure!", "failure : " + t.getMessage());
+                            }
+
+                        });
+                    }
                 });
                 builder.setNegativeButton(R.string.annuler, (DialogInterface.OnClickListener) (dialog, which) -> {
                     dialog.cancel();
@@ -370,6 +373,17 @@ public class SettingsFragment extends Fragment {
     private void changeTheme(int themeId) {
         getActivity().setTheme(themeId);
         getActivity().recreate();
+    }
+
+    //Cette méthode sert a detecter si la string envoyer est un chiffre. elle est utilisé dans des verifications de formulaire
+    private boolean estNumeric(String string){
+        try {
+            Double.parseDouble(string);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
     }
 
 }
