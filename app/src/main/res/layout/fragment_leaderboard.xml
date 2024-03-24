@@ -15,43 +15,58 @@
         android:orientation="vertical">
 
         <RadioGroup
-            android:id="@+id/rg_selectBoard"
-            android:layout_width="wrap_content"
+            android:id="@+id/toggleRelation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
+            android:layout_gravity="end"
             android:background="@drawable/rectangleborder"
-            android:checkedButton="@id/rbAll"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:checkedButton="@id/All"
+            android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rbAll"
-                android:layout_width="match_parent"
+                android:id="@+id/All"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/whiteoutline"
                 android:button="@null"
-                android:fontFamily="@font/lexend"
                 android:gravity="center"
-                android:padding="8dp"
-                android:text="All"
-                android:textColor="@drawable/radio_button_text_color_selector"
-                android:textSize="24sp" />
+                android:tag="fr"
+                android:text="@string/all"
+                android:textColor="@color/hardBlue" />
 
             <RadioButton
-                android:id="@+id/rbFriends"
-                android:layout_width="match_parent"
+                android:id="@+id/Friend"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/whiteoutline"
                 android:button="@null"
-                android:fontFamily="@font/lexend"
                 android:gravity="center"
-                android:padding="8dp"
-                android:text="Friends"
-                android:textColor="@drawable/radio_button_text_color_selector"
-                android:textSize="24sp" />
+                android:tag="eng"
+                android:text="@string/friend"
+                android:textColor="@color/hardBlue" />
+
+            <RadioButton
+                android:id="@+id/Blocked"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/whiteoutline"
+                android:button="@null"
+                android:gravity="center"
+                android:tag="eng"
+                android:text="@string/blocked"
+                android:textColor="@color/hardBlue" />
         </RadioGroup>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -60,11 +75,6 @@
             android:layout_height="match_parent" >
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAmis"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 

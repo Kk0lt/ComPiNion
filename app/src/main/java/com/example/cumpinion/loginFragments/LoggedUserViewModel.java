@@ -8,7 +8,6 @@ import classes.User;
 
 public class LoggedUserViewModel extends ViewModel {
 
-
     private MutableLiveData<User> utilisateurMutableLiveData = new MutableLiveData<User>();;
     public LiveData<User> getUserMutableLiveData(){
         return utilisateurMutableLiveData;
@@ -21,8 +20,8 @@ public class LoggedUserViewModel extends ViewModel {
 
 
     //Ajouter un companion
-    public void setUserCompanion(String url){
-        utilisateurMutableLiveData.getValue().setCompanion_url(url);
+    public void setUserCompanion(int id){
+        utilisateurMutableLiveData.getValue().setCompanion_id(id);
     }
 
     //setter la limite

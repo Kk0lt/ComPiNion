@@ -1,20 +1,17 @@
 package com.example.cumpinion;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,25 +19,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cumpinion.loginFragments.CreateUserViewModel;
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 import com.squareup.picasso.Picasso;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import classes.ReponseServer;
 import classes.RetrofitInstance;
-import classes.Streak;
-import classes.StreakReponseServer;
-import classes.User;
-import classes.UsersAdapterListe;
+import classes.streaks.Streak;
+import classes.streaks.StreakReponseServer;
 import classes.characters.Compinion;
-import classes.characters.CompinionsReponseServer;
+import classes.characters.CompinionReponseServer;
+import classes.streaks.StreaksAdapterList;
+import classes.streaks.StreaksReponseServer;
 import interfaces.InterfaceServeur;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +42,7 @@ public class HomeFragment extends Fragment {
     String url;
     Button btSmoke;
     RecyclerView rvStreaks;
+    StreaksAdapterList streaksAdapterListe;
     Streak streak;
 
     public HomeFragment() {
@@ -75,20 +67,25 @@ public class HomeFragment extends Fragment {
         //On va chercher l'usager connecté
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
-        //get des éléments de mon xml
+        //Get des éléments de mon xml
         tvPseudo = view.findViewById(R.id.tvHome);
         nbMerit = view.findViewById(R.id.merit);
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
-        rvStreaks = view.findViewById(R.id.rvStreaks);
         btSmoke = view.findViewById(R.id.btnSmoked);
+        //getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
         getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+
+        //Gestion du RecyclerView des streaks
+        rvStreaks = view.findViewById(R.id.rvStreaks);
+        rvStreaks.setHasFixedSize(true);
+        rvStreaks.setLayoutManager(new LinearLayoutManager(getContext()));
+        getStreaks(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         //Connexion des éléments du xml avec les données de l'utilisateur
         tvPseudo.setText(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
         nbMerit.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getMerite()));
         nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
-        Picasso.get().load(loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_url()).into(imgProfile);
 
         //Modals pour le bouton fumé
         btSmoke.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +101,7 @@ public class HomeFragment extends Fragment {
                         AlertDialog.Builder bSmoked = new AlertDialog.Builder(getContext());
                         bSmoked.setTitle("Dommage, mais ne te décourage pas!");
                         //Si ma limite est écoulé texte
+
                         if(loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1 < 0) {
                             bSmoked.setMessage("Tu as écoulé ta limite de cigarette pour la journée. " +
                                     "Nous reprenons la série du début, mais continue tes efforts pour battre ton record!");
@@ -172,16 +170,8 @@ public class HomeFragment extends Fragment {
                 builder.setNegativeButton("Je n'ai pas fumé!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        LocalDate localDate = LocalDate.now();
-                        LocalDate diff = streak.getStart_date().plusDays(loggedUserViewModel.getUserMutableLiveData().getValue().getJours());
-                        if(localDate.isAfter(diff)) {
-                            Toast.makeText(getContext(), "Bravo!", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getContext(), "Bravo! Une journée de plus à votre série!", Toast.LENGTH_LONG).show();
-                            updateStreak(loggedUserViewModel, loggedUserViewModel.getUserMutableLiveData().getValue().getJours()+1);
-                        }
-
+                        Toast.makeText(getContext(), "Bravo! Une journée de plus à votre série!", Toast.LENGTH_LONG).show();
+                        updateStreak(loggedUserViewModel, loggedUserViewModel.getUserMutableLiveData().getValue().getJours()+1);
                     }
                 });
                 builder.setNeutralButton("J'y pense!", new DialogInterface.OnClickListener() {
@@ -211,6 +201,33 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<StreakReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void getStreaks(InterfaceServeur serveur, int i) {
+        Call<StreaksReponseServer> call = serveur.getStreaks(i);
+        call.enqueue(new Callback<StreaksReponseServer>() {
+            @Override
+            public void onResponse(Call<StreaksReponseServer> call, Response<StreaksReponseServer> response) {
+                if (response.isSuccessful()) {
+                    StreaksReponseServer streaksResponse = response.body();
+                    if (streaksResponse != null && streaksResponse.isSuccess()) {
+                        List<Streak> lstreaks = streaksResponse.getData();
+                        streaksAdapterListe = new StreaksAdapterList(lstreaks);
+                        rvStreaks.setAdapter(streaksAdapterListe);
+                    } else {
+                        Log.d("erreur", "Réponse invalide");
+                    }
+                } else {
+                    Log.d("erreur", "Réponse non réussie: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StreaksReponseServer> call, Throwable t) {
                 Log.d("erreur", "onFailure Erreur");
                 Log.d("erreur", t.getMessage());
             }
@@ -278,4 +295,29 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void getImg(int i, ImageView imageView) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<CompinionReponseServer> call = serveur.getCompinion(i);
+        call.enqueue(new Callback<CompinionReponseServer>() {
+            @Override
+            public void onResponse(Call<CompinionReponseServer> call, Response<CompinionReponseServer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Compinion c = response.body().getCompinion();
+                    if (c != null) {
+                        String imgUrl = c.getImage();
+                        Picasso.get().load(Uri.parse(imgUrl)).into(imageView);
+                    } else {
+                        Log.d("failed", "La réponse est null");
+                    }
+                } else {
+                    Log.d("failed", "La réponse a échoué");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CompinionReponseServer> call, Throwable t) {
+                Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
 }

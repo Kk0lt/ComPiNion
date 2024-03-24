@@ -1,22 +1,22 @@
-package classes;
+package classes.streaks;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import classes.streaks.Streak;
 
-public class StreaksReponseServer {
+public class StreakReponseServer {
 
     @SerializedName("message")
     String message;
     @SerializedName("success")
     boolean success;
     @SerializedName("data")
-    List<Streak> streaks;
+    Streak streak;
 
-    public StreaksReponseServer(String message, boolean success, List<Streak> _streaks) {
+    public StreakReponseServer(String message, boolean success, Streak streak) {
         this.message = message;
         this.success = success;
-        this.streaks = _streaks;
+        this.streak = streak;
     }
 
     public String getMessage() {
@@ -35,12 +35,11 @@ public class StreaksReponseServer {
         this.success = success;
     }
 
-    public List<Streak> getStreaks() {
-        return streaks;
+    public Streak getStreak() {
+        return streak;
     }
 
-    public void setStreaks(List<Streak> streaks) {
-        this.streaks = streaks;
+    public void setStreak(Streak streak) {
+        this.streak = streak;
     }
-
 }

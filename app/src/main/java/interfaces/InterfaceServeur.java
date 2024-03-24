@@ -1,11 +1,11 @@
 package interfaces;
 
 import classes.ReponseServer;
-import classes.Streak;
-import classes.StreakReponseServer;
-import classes.StreaksReponseServer;
-import classes.User;
+import classes.StringReponseServer;
+import classes.streaks.StreakReponseServer;
+import classes.streaks.StreaksReponseServer;
 import classes.UserResponseServer;
+import classes.characters.CompinionReponseServer;
 import classes.characters.CompinionsReponseServer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -38,21 +38,37 @@ public interface InterfaceServeur {
     @GET("users/{id}")
     Call<ReponseServer> getUsers(@Path("id") int id);
 
-    // Tous les usagers
+    // Tous les amis
     @GET("user/{id}/amis")
     Call<ReponseServer> getAmis(@Path("id") int id);
+
+    // Tous les usagers bloqués
+    @GET("user/{id}/blocked")
+    Call<ReponseServer> getBlocked(@Path("id") int id);
 
     // Logout
     @POST("logout")
     Call<Void> logout();
 
-    //Block
-    @POST("user/{id1}/block/{id2}")
-    Call<Void> block(@Path("id1") int id1, @Path("id2") int id2, @Body RequestBody requestBody);
+    //Relations
+        @GET("user/{id1}/relation/{id2}")
+        Call<StringReponseServer> relation(@Path("id1") int id1, @Path("id2") int id2);
 
-    //Unblock
-    @DELETE("user/{id1}/unblock/{id2}")
-    Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
+        //Friend
+        @POST("user/{id1}/friend/{id2}")
+        Call<Void> friend(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Unfriend
+        @DELETE("user/{id1}/unfriend/{id2}")
+        Call<Void> unfriend(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Block
+        @POST("user/{id1}/block/{id2}")
+        Call<Void> block(@Path("id1") int id1, @Path("id2") int id2);
+
+        //Unblock
+        @DELETE("user/{id1}/unblock/{id2}")
+        Call<Void> unblock(@Path("id1") int id1, @Path("id2") int id2);
 
     // Suppression du compte
     @DELETE("user/{id}/delete")
@@ -65,7 +81,7 @@ public interface InterfaceServeur {
     // Afficher l'image du personnage du joueur
 
     @GET("showCharacter/{id}")
-    Call<CompinionsReponseServer> getCompinion(@Path("id") int id);
+    Call<CompinionReponseServer> getCompinion(@Path("id") int id);
 
     // Afficher la/les streaks relative à un utilisateur
     @GET("user/{id}/streaks")
