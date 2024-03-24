@@ -1,8 +1,8 @@
-package classes;
+package classes.streaks;
 
 import com.google.gson.annotations.SerializedName;
 
-import classes.Streak;
+import classes.streaks.Streak;
 
 public class StreakReponseServer {
 

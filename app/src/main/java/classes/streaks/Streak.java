@@ -1,4 +1,4 @@
-package classes;
+package classes.streaks;
 
 import com.google.gson.annotations.SerializedName;
 

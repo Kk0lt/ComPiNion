@@ -20,18 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import classes.RetrofitInstance;
-import classes.Streak;
-import classes.StreakReponseServer;
+import classes.streaks.Streak;
+import classes.streaks.StreakReponseServer;
 import classes.characters.Compinion;
 import classes.characters.CompinionReponseServer;
-import classes.StreaksAdapterList;
-import classes.StreaksReponseServer;
+import classes.streaks.StreaksAdapterList;
+import classes.streaks.StreaksReponseServer;
 import interfaces.InterfaceServeur;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package classes;
+package classes.streaks;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,8 @@ import com.example.cumpinion.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import classes.streaks.Streak;
 
 public class StreaksAdapterList extends RecyclerView.Adapter {
 

@@ -1,8 +1,9 @@
 package interfaces;
 
 import classes.ReponseServer;
-import classes.StreakReponseServer;
-import classes.StreaksReponseServer;
+import classes.StringReponseServer;
+import classes.streaks.StreakReponseServer;
+import classes.streaks.StreaksReponseServer;
 import classes.UserResponseServer;
 import classes.characters.CompinionReponseServer;
 import classes.characters.CompinionsReponseServer;
@@ -51,14 +52,14 @@ public interface InterfaceServeur {
 
     //Relations
         @GET("user/{id1}/relation/{id2}")
-        Call<String> relation(@Path("id1") int id1, @Path("id2") int id2);
+        Call<StringReponseServer> relation(@Path("id1") int id1, @Path("id2") int id2);
 
         //Friend
         @POST("user/{id1}/friend/{id2}")
         Call<Void> friend(@Path("id1") int id1, @Path("id2") int id2);
 
         //Unfriend
-        @DELETE("user/{id1}/unblock/{id2}")
+        @DELETE("user/{id1}/unfriend/{id2}")
         Call<Void> unfriend(@Path("id1") int id1, @Path("id2") int id2);
 
         //Block

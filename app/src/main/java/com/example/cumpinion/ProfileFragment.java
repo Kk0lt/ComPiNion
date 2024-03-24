@@ -23,6 +23,7 @@ import java.util.List;
 
 import classes.ReponseServer;
 import classes.RetrofitInstance;
+import classes.StringReponseServer;
 import classes.User;
 import classes.UserResponseServer;
 import interfaces.InterfaceServeur;
@@ -69,33 +70,21 @@ public class ProfileFragment extends Fragment {
         int idSelectedUser = bundle.getInt("idSelectedUser");
 
         getUser(serveur, idSelectedUser, tvPseudo, nbMerit, nbStreak);
-        getRelationBetweenUsers(serveur, loggedUserViewModel, idSelectedUser);
+        getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
 
-        if(!TextUtils.isEmpty(relation)) {
-            if(relation.equalsIgnoreCase("friend")) {
-                btAdd.setVisibility(View.VISIBLE);
-                btBlock.setVisibility(View.INVISIBLE);
-                btAdd.setText("@string/remove_friend");
-            }
-            else if(relation.equalsIgnoreCase("blocked")) {
-                btAdd.setVisibility(View.INVISIBLE);
-                btBlock.setVisibility(View.VISIBLE);
-                btBlock.setText("@string/unblock");
-            }
-        } else {
-            btAdd.setVisibility(View.VISIBLE);
-            btBlock.setVisibility(View.VISIBLE);
-            btAdd.setText("@string/add_friend");
-            btBlock.setText("@string/block");
-        }
-        
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (relation.equalsIgnoreCase("friend"))
-                    befriend(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
-                else
-                    unfriend(serveur,loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
+                if(relation != null) {
+                    if (relation.equals("friend")) {
+                        unfriend(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
+                        getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
+                    }
+                }
+                else {
+                    befriend(serveur,loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
+                    getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
+                }
             }
         });
 
@@ -115,6 +104,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(getContext(), "Vous avez commencé à suivre " + pseudo.getText(), Toast.LENGTH_LONG).show();
+                getRelationBetweenUsers(serveur, a, i);
             }
 
             @Override
@@ -138,20 +128,21 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void getRelationBetweenUsers(InterfaceServeur serveur, LoggedUserViewModel loggedUserViewModel, int idSelectedUser) {
-        Call<String> call = serveur.relation(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
-        call.enqueue(new Callback<String>() {
+    private void getRelationBetweenUsers(InterfaceServeur serveur, int i, int idSelectedUser) {
+        Call<StringReponseServer> call = serveur.relation(i, idSelectedUser);
+        call.enqueue(new Callback<StringReponseServer>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<StringReponseServer> call, Response<StringReponseServer> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    relation = response.body();
+                    relation = response.body().getData();
                 } else {
                     relation = null;
                 }
+                updateUI();
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<StringReponseServer> call, Throwable t) {
                 Log.d("OnFailure",t.getMessage());
             }
         });
@@ -175,4 +166,29 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    private void updateUI() {
+        String unfriend = getResources().getString(R.string.remove_friend);
+        String friend = getResources().getString(R.string.add_friend);
+        String block = getResources().getString(R.string.block);
+        String unblock = getResources().getString(R.string.unblock);
+
+        if (relation != null) {
+            if (relation == "friend") {
+                btAdd.setVisibility(View.VISIBLE);
+                btBlock.setVisibility(View.INVISIBLE);
+                btAdd.setText(unfriend);
+            } else if (relation == "blocked") {
+                btAdd.setVisibility(View.INVISIBLE);
+                btBlock.setVisibility(View.VISIBLE);
+                btBlock.setText(unblock);
+            }
+        } else {
+            btAdd.setVisibility(View.VISIBLE);
+            btBlock.setVisibility(View.VISIBLE);
+            btAdd.setText(friend);
+            btBlock.setText(block);
+        }
+    }
+
 }

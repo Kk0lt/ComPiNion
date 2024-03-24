@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class StreaksReponseServer {
+public class StringReponseServer {
 
     @SerializedName("message")
     String message;
     @SerializedName("success")
     boolean success;
     @SerializedName("data")
-    List<Streak> data; // Modifier le nom de la propriété et son type pour refléter le changement
+    String data;
 
-    public StreaksReponseServer(boolean success, List<Streak> data, String message) {
+    public StringReponseServer(boolean success, String data, String message) {
         this.success = success;
-        this.data = data; // Modifier l'assignation de la propriété pour refléter le changement
+        this.data = data;
         this.message = message;
     }
 
@@ -27,7 +27,11 @@ public class StreaksReponseServer {
         this.success = success;
     }
 
-    public void setData(List<Streak> data) { // Modifier le nom de cette méthode pour refléter le changement
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -39,7 +43,4 @@ public class StreaksReponseServer {
         this.message = message;
     }
 
-    public List<Streak> getData() { // Modifier le nom de cette méthode pour refléter le changement
-        return data;
-    }
 }
