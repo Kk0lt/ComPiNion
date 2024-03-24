@@ -12,7 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 
@@ -91,7 +95,16 @@ public class ProfileFragment extends Fragment {
         btBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(relation != null) {
+                    if (relation.equals("blocked")) {
+                        unblock(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
+                        getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
+                    }
+                }
+                else {
+                    block(serveur,loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser, tvPseudo);
+                    getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
+                }
             }
         });
 
@@ -99,12 +112,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void befriend(InterfaceServeur serveur, int a, int i, TextView pseudo) {
+        NavController controller = NavHostFragment.findNavController(this);
         Call<Void> call = serveur.friend(a, i);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(getContext(), "Vous avez commencé à suivre " + pseudo.getText(), Toast.LENGTH_LONG).show();
-                getRelationBetweenUsers(serveur, a, i);
+                controller.navigate(R.id.fromProfileToLeaderboard);
             }
 
             @Override
@@ -115,11 +129,46 @@ public class ProfileFragment extends Fragment {
     }
 
     private void unfriend(InterfaceServeur serveur, int a, int i, TextView pseudo) {
+        NavController controller = NavHostFragment.findNavController(this);
         Call<Void> call = serveur.unfriend(a, i);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(getContext(), "Vous avez cessé de suivre " + pseudo.getText(), Toast.LENGTH_LONG).show();
+                controller.navigate(R.id.fromProfileToLeaderboard);
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("OnFailure",t.getMessage());
+            }
+        });
+    }
+
+    private void block(InterfaceServeur serveur, int a, int i, TextView pseudo) {
+        NavController controller = NavHostFragment.findNavController(this);
+        Call<Void> call = serveur.block(a, i);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "Vous avez bloqué " + pseudo.getText(), Toast.LENGTH_LONG).show();
+                controller.navigate(R.id.fromProfileToLeaderboard);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("OnFailure",t.getMessage());
+            }
+        });
+    }
+
+    private void unblock(InterfaceServeur serveur, int a, int i, TextView pseudo) {
+        NavController controller = NavHostFragment.findNavController(this);
+        Call<Void> call = serveur.unblock(a, i);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "Vous avez débloqué " + pseudo.getText(), Toast.LENGTH_LONG).show();
+                controller.navigate(R.id.fromProfileToLeaderboard);
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
@@ -174,11 +223,11 @@ public class ProfileFragment extends Fragment {
         String unblock = getResources().getString(R.string.unblock);
 
         if (relation != null) {
-            if (relation == "friend") {
+            if ("friend".equals(relation)) {
                 btAdd.setVisibility(View.VISIBLE);
                 btBlock.setVisibility(View.INVISIBLE);
                 btAdd.setText(unfriend);
-            } else if (relation == "blocked") {
+            } else if ("blocked".equals(relation)) {
                 btAdd.setVisibility(View.INVISIBLE);
                 btBlock.setVisibility(View.VISIBLE);
                 btBlock.setText(unblock);
