@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
         btSmoke = view.findViewById(R.id.btnSmoked);
-        getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
+        //getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
         getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         //Gestion du RecyclerView des streaks
