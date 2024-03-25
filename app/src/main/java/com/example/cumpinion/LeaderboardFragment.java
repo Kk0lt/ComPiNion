@@ -63,7 +63,6 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("ovCre", "ovCrea");
 
         usersAdapterListe = new UsersAdapterListe(new ArrayList<>(), navController);
         amisAdapterListe = new UsersAdapterListe(new ArrayList<>(), navController);
@@ -72,8 +71,6 @@ public class LeaderboardFragment extends Fragment {
         rvUsers = view.findViewById(R.id.rvUsers);
         rvUsers.setHasFixedSize(true);
         rvUsers.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        Log.d("ovCre", "2");
 
         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);

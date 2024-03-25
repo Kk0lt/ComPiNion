@@ -67,7 +67,6 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             String experience = xp + " jours";
             usersViewHolder.tvXp.setText(experience);
 
-            Picasso.get().setLoggingEnabled(true);
             getImg(user.getId(), usersViewHolder.ivCompanionImage);
         }
     }
@@ -115,7 +114,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
                 if (response.isSuccessful() && response.body() != null) {
                     Compinion c = response.body().getCompinion();
                     if (c != null) {
-                        String imgUrl = c.getImage();
+                        String imgUrl = "http://172.16.87.61/img/" + c.getImage();
                         Picasso.get().load(Uri.parse(imgUrl)).into(imageView);
                     } else {
                         Log.d("failed", "La réponse est null");
