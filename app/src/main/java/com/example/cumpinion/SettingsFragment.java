@@ -157,6 +157,8 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 loggedUserViewModel.setUserPassword(newPassword);
+                                Log.d("failed", "Password update ");
+
                                 alertDialog.dismiss();
                             }
                             @Override
@@ -196,28 +198,39 @@ public class SettingsFragment extends Fragment {
                 View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
                 builder.setView(view);
                 EditText etNewPseudo = view.findViewById(R.id.etNewUsername_DialogBox);
-
-                builder.setPositiveButton(R.string.confirmer, (DialogInterface.OnClickListener) (dialog, which) -> {
-                    String newPseudo = etNewPseudo.getText().toString();
-                    InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-                    Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
-                            loggedUserViewModel.setUserPseudo(newPseudo);
-                            Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
-                        }
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.d("failure!", "failure : " + t.getMessage());
-                        }
-                    });
-                });
-                builder.setNegativeButton(R.string.annuler, (DialogInterface.OnClickListener) (dialog, which) -> {
-                    dialog.cancel();
-                });
+                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogBox);
+                Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
                 AlertDialog alertDialog1 = builder.create();
+
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String newPseudo = etNewPseudo.getText().toString();
+                        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                        Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
+                                loggedUserViewModel.setUserPseudo(newPseudo);
+                                Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+                                alertDialog1.dismiss();
+
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.d("failure!", "failure : " + t.getMessage());
+                            }
+                        });
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog1.dismiss();
+
+                    }
+                });
                 alertDialog1.show();
             }
         });

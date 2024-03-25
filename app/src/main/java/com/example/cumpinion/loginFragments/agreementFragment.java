@@ -85,7 +85,7 @@ public class agreementFragment extends Fragment {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Log.d("Réussi!", "!!!!!!!Compte Crée  : " + createUserViewModel.getUserMutableLiveData().getValue());
                         NavController controller = Navigation.findNavController(view);
-                        controller.navigate(R.id.fromAgreementToHome);
+                        controller.navigate(R.id.fromAgreementToLogin);
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {

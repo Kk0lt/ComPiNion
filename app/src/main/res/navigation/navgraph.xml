@@ -45,6 +45,11 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/agreementFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/fromAgreementToLogin"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/agreementFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/leaderboardFragment"
