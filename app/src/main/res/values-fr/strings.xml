@@ -22,7 +22,7 @@
     <string name="settings_logout">Déconnexion</string>
 
     <!--Login Activity-->
-    <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
+    <string name="connectez_vous">Vous n\'êtes toujours pas membre? Rejoignez-nous!</string>
     <string name="btnConnexion">Connexion</string>
 
     <!--Create Account Fragment-->

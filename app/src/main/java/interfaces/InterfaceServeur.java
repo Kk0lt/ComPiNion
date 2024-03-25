@@ -113,8 +113,11 @@ public interface InterfaceServeur {
     @PATCH("user/{id}/update/limite")
     Call<Void> updateLimite(@Path("id") int id, @Query("limite") int limite);
 
-    @POST("user/{id}/update/endstreak")
+    @PATCH("user/{id}/update/endstreak")
     Call<Void> endStreak(@Path("id") int id);
+
+    @POST("user/{id}/resetstreak")
+    Call<Void> resetStreak(@Path("id") int id);
 
     // Update password endpoint
     @FormUrlEncoded

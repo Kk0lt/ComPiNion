@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
         btSmoke = view.findViewById(R.id.btnSmoked);
-        //getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
+        getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
         getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         //Gestion du RecyclerView des streaks
@@ -88,6 +88,7 @@ public class HomeFragment extends Fragment {
         nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
 
         //Modals pour le bouton fumé
+        int id = loggedUserViewModel.getUserMutableLiveData().getValue().getId();
         btSmoke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +102,6 @@ public class HomeFragment extends Fragment {
                         AlertDialog.Builder bSmoked = new AlertDialog.Builder(getContext());
                         bSmoked.setTitle("Dommage, mais ne te décourage pas!");
                         //Si ma limite est écoulé texte
-
                         if(loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1 < 0) {
                             bSmoked.setMessage("Tu as écoulé ta limite de cigarette pour la journée. " +
                                     "Nous reprenons la série du début, mais continue tes efforts pour battre ton record!");
@@ -119,13 +119,14 @@ public class HomeFragment extends Fragment {
                                 //Si ma limite est écoulée, on choisit une nouvelle limite et on update la streak
                                 if(i < 0) {
                                     updateStreak(loggedUserViewModel, 0);
-                                    resetStreak(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+                                    endStreak(serveur, id);
                                     AlertDialog.Builder bLimite = new AlertDialog.Builder(getContext());
                                     bLimite.setTitle("Choisissez une nouvelle limite de cigarette par jours");
                                     bLimite.setPositiveButton("1", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             updateLimite(loggedUserViewModel, 1);
+                                            resetStreak(serveur, id);
                                             Toast.makeText(getContext(), "Votre nouvelle série est commencée! Bonne chance!", Toast.LENGTH_LONG).show();
                                         }
                                     });
@@ -134,6 +135,7 @@ public class HomeFragment extends Fragment {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             updateLimite(loggedUserViewModel,2);
+                                            resetStreak(serveur, id);
                                             Toast.makeText(getContext(), "Votre nouvelle série est commencée! Bonne chance!", Toast.LENGTH_LONG).show();
                                         }
                                     });
@@ -142,6 +144,7 @@ public class HomeFragment extends Fragment {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             updateLimite(loggedUserViewModel, 3);
+                                            resetStreak(serveur, id);
                                             Toast.makeText(getContext(), "Votre nouvelle série est commencée! Bonne chance!", Toast.LENGTH_LONG).show();
                                         }
                                     });
@@ -234,8 +237,24 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void resetStreak(InterfaceServeur serveur, int i) {
+    private void endStreak(InterfaceServeur serveur, int i) {
         Call<Void> call = serveur.endStreak(i);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+    }
+
+    private void resetStreak(InterfaceServeur serveur, int i) {
+        Call<Void> call = serveur.resetStreak(i);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

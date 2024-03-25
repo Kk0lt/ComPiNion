@@ -22,7 +22,7 @@
     <string name="settings_logout">Log off</string>
 
     <!--Login Activity-->
-    <string name="connectez_vous">Already have an account? Log in!</string>
+    <string name="connectez_vous">Not a member already? Create your account now!</string>
     <string name="btnConnexion">Log in</string>
 
     <!--Create Account Fragment-->
