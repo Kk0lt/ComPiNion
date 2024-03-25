@@ -8,7 +8,7 @@ public class UserResponseServer {
     @SerializedName("success")
     private boolean success;
     @SerializedName("data")
-    private User user; // Change from List<User> to User
+    private User user;
 
     public UserResponseServer(boolean success, User user, String message) {
         this.success = success;

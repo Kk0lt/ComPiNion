@@ -28,7 +28,7 @@ public class User {
     @SerializedName("jours")
     int jours;
 
-
+    String companionImage;
 
     private boolean isExtended;
 
@@ -69,6 +69,19 @@ public class User {
         this.limite = limite;
     }
 
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite, String companionImage) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.pseudo = pseudo;
+        this.merite = merit;
+        this.jours = jours;
+        this.character_id = companion_id;
+        this.limite = limite;
+        this.companionImage = companionImage;
+    }
     public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite, Boolean extension) {
         this.id = id;
         this.nom = nom;
@@ -82,6 +95,7 @@ public class User {
         this.limite = limite;
         this.isExtended = extension;
     }
+
 
     public int getId() { return id; }
 
@@ -170,5 +184,29 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getCharacter_id() {
+        return character_id;
+    }
+
+    public void setCharacter_id(int character_id) {
+        this.character_id = character_id;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public String getCompanionImage() {
+        return "http://172.16.87.61/img/" + companionImage;
+    }
+
+    public void setCompanionImage(String companionImage) {
+        this.companionImage = companionImage;
     }
 }

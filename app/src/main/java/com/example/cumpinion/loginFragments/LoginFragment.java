@@ -140,12 +140,14 @@ public class LoginFragment extends Fragment {
                                     String responseBody = response.body().string();
                                     JSONObject jsonObject = new JSONObject(responseBody);
                                     JSONObject userData = jsonObject.getJSONObject("user");
+                                    JSONObject userCompanion = jsonObject.getJSONObject("companion");
 
                                     // Récupérer les informations de l'utilisateur depuis l'objet JSON
                                     String userName = userData.getString("nom");
                                     String userPrenom = userData.getString("prenom");
                                     String userEmail = userData.getString("email");
                                     String userPseudo = userData.getString("pseudo");
+                                    String companionImage = userCompanion.getString("img");
                                     int imgId = userData.getInt("character_id");
                                     int userId = userData.getInt("id");
                                     int jours = userData.getInt("jours");
@@ -156,7 +158,7 @@ public class LoginFragment extends Fragment {
 
                                     // Créer un nouvel objet User avec les informations récupérées
                                     User loggedUser = new User(userId, userName, userPrenom, userEmail, password, userPseudo,
-                                            merite, jours, imgId, limite);
+                                            merite, jours, imgId, limite, companionImage);
                                     Log.d("Réussi!", "Connected : " + loggedUser);
                                     loggedUserViewModel.addUser(loggedUser);
 

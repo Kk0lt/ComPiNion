@@ -51,6 +51,6 @@ public class Compinion {
     }
 
     public String getImgUrl() {
-        return "https://172.16.87.61/img/" + getImage();
+        return "http://172.16.87.61/img/" + getImage();
     }
 }

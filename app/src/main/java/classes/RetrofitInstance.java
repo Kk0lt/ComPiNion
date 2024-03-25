@@ -22,7 +22,7 @@ public class RetrofitInstance {
 
     
     public static final String BASE_URL = "https://172.16.87.61/api/";
- //public static final String BASE_URL = "http://10.0.2.2/";
+ //public static final String BASE_URL = "http://10.0.2.2/ComPiNion/api/";
 
     private static Retrofit retrofit;
 

@@ -1,6 +1,7 @@
 package com.example.cumpinion;
 
 import android.content.DialogInterface;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -72,7 +73,13 @@ public class HomeFragment extends Fragment {
         nbMerit = view.findViewById(R.id.merit);
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
+        ImageView ivTest = view.findViewById(R.id.ivImageHomeTest);
         btSmoke = view.findViewById(R.id.btnSmoked);
+
+//        Picasso.get().load().into(imgProfile);
+        Picasso.get().load(loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage()).into(imgProfile);
+        Log.d("IMAGE", "IMAGE COMPANION" + loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage());
+
         //getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
         getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
@@ -320,4 +327,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 }
