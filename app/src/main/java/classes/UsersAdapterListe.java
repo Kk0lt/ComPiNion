@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -32,6 +33,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     private List<User> liste;
     private NavController navController;
     int idSelectedUser;
+    Boolean navYes;
 
     public UsersAdapterListe(List<User> liste, NavController navController) {
         this.liste = liste;
@@ -49,14 +51,14 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (liste.isEmpty()) {
-
+            navYes = false;
             UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
             usersViewHolder.tvPseudo.setText("Cette liste est vide.");
             usersViewHolder.tvXp.setText("");
             usersViewHolder.ivCompanionImage.setVisibility(View.GONE);
 
         } else {
-
+            navYes = true;
             UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
             User user = liste.get(position);
 
@@ -93,13 +95,17 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getLayoutPosition();
-                    idSelectedUser = liste.get(position).getId();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("idSelectedUser", idSelectedUser);
+                    if (navYes) {
+                        int position = getLayoutPosition();
+                        idSelectedUser = liste.get(position).getId();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idSelectedUser", idSelectedUser);
 
-                    NavController controller = Navigation.findNavController(v);
-                    controller.navigate(R.id.fromLeaderboardToProfile, bundle);
+                        NavController controller = Navigation.findNavController(v);
+                        controller.navigate(R.id.fromLeaderboardToProfile, bundle);
+                    } else {
+                        Toast.makeText(itemView.getContext(), "Il n'y a pas d'utilisateur dans cette liste", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
