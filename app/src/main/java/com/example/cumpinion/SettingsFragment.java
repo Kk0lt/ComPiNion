@@ -33,9 +33,11 @@ import com.example.cumpinion.loginFragments.limitselectionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import classes.ReponseServer;
 import classes.RetrofitInstance;
@@ -57,6 +59,8 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
     LoggedUserViewModel loggedUserViewModel;
     int newCompinionId;
     int originalCompanionID;
+    Mqtt5Client client;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -64,7 +68,15 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        client = Mqtt5Client.builder()
+                .identifier(UUID.randomUUID().toString())
+                .serverHost("172.16.87.61")
+                .serverPort(1883)
+                .simpleAuth()
+                .username("cedric")
+                .password("q".getBytes())
+                .applySimpleAuth()
+                .build();
     }
 
     @Override
@@ -114,6 +126,151 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
     }
 
+
+    /*========== MQTT ==========*/
+
+    private void confirmPublishDeconnexion() {
+        client.toAsync().connect()
+                .whenComplete((connAck, throwable) -> {
+                    if (throwable != null) {
+                        Log.d("Fail", "ERREUR MQTT ");
+                    } else {
+                        // setup subscribes or start publishing
+                        publishDeconnexion();
+                    }
+                });
+    }
+    private void publishDeconnexion(){
+        client.toAsync().publishWith()
+                .topic("status")
+                .payload("non connecté".getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+    private void confirmPublishConnexion(String _username, String _merites, String _img, String _streak) {
+        client.toAsync().connect()
+                .whenComplete((connAck, throwable) -> {
+                    if (throwable != null) {
+                        Log.d("Fail", "ERREUR MQTT ");
+                    } else {
+                        // setup subscribes or start publishing
+                        publishConnexion();
+                        publishUser(_username);
+                        publishMerites(_merites);
+                        publishImage(_img);
+                        publishStreak(_streak);
+                    }
+                });
+    }
+    private void publishConnexion(){
+        client.toAsync().publishWith()
+                .topic("status")
+                .payload("connecté".getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DU NOM D'UTILISATEUR
+     */
+
+    private void publishUser(String username){
+        client.toAsync().publishWith()
+                .topic("user")
+                .payload(username.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "user published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DE L'IMAGE
+     */
+
+    private void publishImage(String img){
+        client.toAsync().publishWith()
+                .topic("pic")
+                .payload(img.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DES POINTS DE MERITES
+     */
+
+    private void publishMerites(String level){
+        client.toAsync().publishWith()
+                .topic("level")
+                .payload(level.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DES POINTS DE MERITES
+     */
+
+    private void publishStreak(String streak){
+        client.toAsync().publishWith()
+                .topic("streak")
+                .payload(streak.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+    /*========== Méthodes privées ==========*/
+
+    /**
+     * CHANGER COMPANION
+     */
+
     private void changeCompanion(TextView tvChangeCompanion, InterfaceServeur serveur) {
         tvChangeCompanion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,25 +293,29 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                         @Override
                         public void onClick(View v) {
 
-                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
                             Call<Void> call = serveur.updateCompanion(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id());
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
-                                    loggedUserViewModel.setUserCompanion(newCompinionId);
+                                    Log.d("failed", "Companion ID : " + loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id() );
+                                    Toast.makeText(getContext(), "le changement apparaitra à la prochaine connexion ", Toast.LENGTH_SHORT).show();
+
+
+                                    alertDialogCompanion.dismiss();
 
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Log.d("failed", "failed changing companion : "+t.getMessage()+ " : " + newCompinionId );
+                                    alertDialogCompanion.dismiss();
+
                                 }
                             });
-                            alertDialogCompanion.dismiss();
 
                         }
                     });
-                    btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             alertDialogCompanion.dismiss();
@@ -166,7 +327,6 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
         });
     }
-    /*========== Méthodes privées ==========*/
     /**
      * Methode pour changer de Mot de passe
      * */
@@ -332,6 +492,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
                         loggedUserViewModel.addUser(new User());
+                        confirmPublishDeconnexion();
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.loginFragment);
 

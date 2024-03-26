@@ -127,7 +127,7 @@ public interface InterfaceServeur {
 
     // Update companion
     @FormUrlEncoded
-    @PATCH("user/{id}/update/password")
+    @PATCH("user/{id}/update/companion")
     Call<Void> updateCompanion(
             @Path("id") int id,
             @Field("character_id") int character_id

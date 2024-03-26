@@ -206,6 +206,9 @@ public class User {
         return "http://172.16.87.61/img/" + companionImage;
     }
 
+    public String getCompanionPNG() {
+        return  companionImage;
+    }
     public void setCompanionImage(String companionImage) {
         this.companionImage = companionImage;
     }

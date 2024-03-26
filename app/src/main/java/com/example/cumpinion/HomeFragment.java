@@ -25,9 +25,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.UUID;
 
 import classes.RetrofitInstance;
 import classes.streaks.Streak;
@@ -45,10 +47,11 @@ public class HomeFragment extends Fragment {
     TextView tvPseudo, nbMerit, nbStreak;
     ImageView imgProfile;
     String url;
-    Button btSmoke;
+    Button btSmoke, btnTestMQTT;
     RecyclerView rvStreaks;
     StreaksAdapterList streaksAdapterListe;
     Streak streak;
+    Mqtt5Client client;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -57,8 +60,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        client = Mqtt5Client.builder()
+                .identifier(UUID.randomUUID().toString())
+                .serverHost("172.16.87.61")
+                .serverPort(1883)
+                .simpleAuth()
+                .username("cedric")
+                .password("q".getBytes())
+                .applySimpleAuth()
+                .build();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +89,6 @@ public class HomeFragment extends Fragment {
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
         btSmoke = view.findViewById(R.id.btnSmoked);
-
         Picasso.get().load(loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage()).into(imgProfile);
         Log.d("IMAGE", "IMAGE COMPANION: " + loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage());
 
@@ -97,6 +107,49 @@ public class HomeFragment extends Fragment {
         nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
 
         //Modals pour le bouton fumé
+        btnSmoked(serveur, loggedUserViewModel);
+
+
+        return view;
+    }
+    /*======== MQTT ========*/
+    public void souscrire() {
+        client.toAsync().subscribeWith()
+                .topicFilter("status")
+                .callback(publish -> {
+// Process the received message
+                    Log.d("SUCCESS", "SUCCESS MQTT ");
+
+                })
+                .send()
+                .whenComplete((subAck, throwable) -> {
+                    if (throwable != null) {
+// Handle failure to subscribe
+                        Log.d("Fail", "ERREUR MQTT ");
+
+                    } else {
+// Handle successful subscription, e.g. logging or incrementing a metric
+                        Log.d("SUCCESS", "SUCCESS MQTT ");
+                    }
+                });
+    }
+
+    public void publish(){
+        client.toAsync().publishWith()
+                .topic("")
+                .payload("hello world".getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                    }
+                });
+    }
+
+    /*======== METHODES PRIVÉS ========*/
+    private void btnSmoked(InterfaceServeur serveur, LoggedUserViewModel loggedUserViewModel) {
         btSmoke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,8 +248,6 @@ public class HomeFragment extends Fragment {
                 alertDialog.show();
             }
         });
-
-        return view;
     }
 
     private void getStreakEnCours(InterfaceServeur serveur, int i) {
@@ -304,30 +355,34 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void getImg(int i, ImageView imageView) {
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<CompinionReponseServer> call = serveur.getCompinion(i);
-        call.enqueue(new Callback<CompinionReponseServer>() {
-            @Override
-            public void onResponse(Call<CompinionReponseServer> call, Response<CompinionReponseServer> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Compinion c = response.body().getCompinion();
-                    if (c != null) {
-                        String imgUrl = c.getImage();
-                        Picasso.get().load(Uri.parse(imgUrl)).into(imageView);
-                    } else {
-                        Log.d("failed", "La réponse est null");
-                    }
-                } else {
-                    Log.d("failed", "La réponse a échoué");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<CompinionReponseServer> call, Throwable t) {
-                Log.d("failed", "Failed: "+ t.getMessage());
-            }
-        });
-    }
+    /**
+     * methode Obsolete
+     */
+//    private void getImg(int i, ImageView imageView) {
+//        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+//        Call<CompinionReponseServer> call = serveur.getCompinion(i);
+//        call.enqueue(new Callback<CompinionReponseServer>() {
+//            @Override
+//            public void onResponse(Call<CompinionReponseServer> call, Response<CompinionReponseServer> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Compinion c = response.body().getCompinion();
+//                    if (c != null) {
+//                        String imgUrl = c.getImage();
+//                        Picasso.get().load(Uri.parse(imgUrl)).into(imageView);
+//                    } else {
+//                        Log.d("failed", "La réponse est null");
+//                    }
+//                } else {
+//                    Log.d("failed", "La réponse a échoué");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<CompinionReponseServer> call, Throwable t) {
+//                Log.d("failed", "Failed: "+ t.getMessage());
+//            }
+//        });
+//    }
 
 }
