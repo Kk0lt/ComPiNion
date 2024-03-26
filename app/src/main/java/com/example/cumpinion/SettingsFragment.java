@@ -538,7 +538,6 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                     else {
                         changeLangue("eng");
                         getActivity().recreate();
-
                     }
                 } else {
                     changeLangue("fr");

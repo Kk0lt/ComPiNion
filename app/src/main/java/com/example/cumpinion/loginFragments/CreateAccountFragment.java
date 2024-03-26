@@ -75,31 +75,31 @@ public class CreateAccountFragment extends Fragment {
 
                 boolean valide = true;
 
-                if (TextUtils.isEmpty(etPrenom.getText().toString())){
-                    etPrenom.setError("Entrez un prénom");
+                if (TextUtils.isEmpty(etPrenom.getText().toString()) || estNumeric(etPrenom.getText().toString()) || estVide(etPrenom.getText().toString())){
+                    etPrenom.setError("Entrez un prénom valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etNom.getText().toString())){
-                    etNom.setError("Entrez un nom");
+                if (TextUtils.isEmpty(etNom.getText().toString()) || estNumeric(etNom.getText().toString()) || estVide(etNom.getText().toString())){
+                    etNom.setError("Entrez un nom valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etPseudo.getText().toString())){
-                    etPseudo.setError("Entrez un Pseudo");
+                if (TextUtils.isEmpty(etPseudo.getText().toString()) || estNumeric(etPseudo.getText().toString()) || estVide(etPseudo.getText().toString())){
+                    etPseudo.setError("Entrez un Pseudo valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etEmail.getText().toString())){
-                    etEmail.setError("Entrez un email");
+                if (TextUtils.isEmpty(etEmail.getText().toString()) || estNumeric(etEmail.getText().toString()) ||estVide(etEmail.getText().toString()) || estEmailValide(etEmail.getText().toString())){
+                    etEmail.setError("Entrez un email valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etPassword.getText().toString())){
+                if (TextUtils.isEmpty(etPassword.getText().toString()) || estVide(etPassword.getText().toString())){
                     etPassword.setError("Entrez un mot de passe");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etConfirmPassword.getText().toString())){
+                if (TextUtils.isEmpty(etConfirmPassword.getText().toString()) || estVide(etConfirmPassword.getText().toString())){
                     etConfirmPassword.setError("Confirmez votre mot de passe");
                     valide = false;
                 }
-                else if (valide = true) {
+                else if (valide) {
 
                     String prenom = etPrenom.getText().toString();
                     String nom = etNom.getText().toString();
@@ -121,5 +121,36 @@ public class CreateAccountFragment extends Fragment {
 
             }
         });
+    }
+
+    //Cette méthode sert a detecter si la string envoyer est un chiffre. elle est utilisé dans des verifications de formulaire
+    private boolean estNumeric(String string){
+        try {
+            Double.parseDouble(string);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    //Cette méthode que l'addresse courriel contien une arobase . Elle est utilisé dans la vérification de formulaire
+    private boolean estEmailValide(String string){
+        if(string.indexOf("@") >= 0){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    //Cette méthode verifie que les champs ne contiennent pas seulement des espaces. Elle est utilisé dans la validation de formulaire
+    public boolean estVide(String string){
+        if(string.trim().isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
