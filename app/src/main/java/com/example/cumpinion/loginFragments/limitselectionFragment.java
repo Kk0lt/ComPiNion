@@ -163,11 +163,13 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
     private void resetTint(ImageView... imageViews) {
         for (ImageView imageView : imageViews) {
             imageView.clearColorFilter(); // Efface tout filtre de couleur précédent
-            imageView.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN); // Applique la couleur par défaut avec le mode SRC_IN
+            imageView.setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN); // Applique la couleur par défaut
         }
     }
 
-    //Methode pour afficher les companions de la base de donnés
+    /**
+     * Methode pour afficher les companions de la base de donnés
+     * */
     private void showSelectableCompanions(InterfaceServeur serveur) {
         Call<CompinionsReponseServer> call = serveur.getAllCompinions();
         call.enqueue(new Callback<CompinionsReponseServer>() {

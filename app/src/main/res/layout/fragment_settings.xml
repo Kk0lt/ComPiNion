@@ -70,6 +70,20 @@
                 android:text="@string/settings_password"
                 android:textColor="@color/hardBlue"
                 android:textSize="26dp" />
+
+            <TextView
+                android:id="@+id/tvChangeCompanion_Settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/baseline_catching_pokemon_24"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/hardBlue"
+                android:fontFamily="@font/lexend"
+                android:gravity="center_vertical"
+                android:text="@string/settings_companion"
+                android:textColor="@color/hardBlue"
+                android:textSize="26dp" />
         </LinearLayout>
 
         <LinearLayout

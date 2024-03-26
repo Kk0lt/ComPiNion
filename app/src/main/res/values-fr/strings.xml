@@ -12,13 +12,14 @@
 
     <!--Settings Fragment-->
     <string name="settings_themes">Choisir le thème</string>
-        <string name="choosetext">Choisissez la couleur de votre application!</string>
-        <string name="blue">Bleu</string>
-        <string name="red">Rouge</string>
-        <string name="green">Vert</string>
+    <string name="choosetext">Choisissez la couleur de votre application!</string>
+    <string name="blue">Bleu</string>
+    <string name="red">Rouge</string>
+    <string name="green">Vert</string>
     <string name="settings_langue">Choisir la langue</string>
-    <string name="settings_pseudo">Nouveau pseudonyme</string>
-    <string name="settings_password">Nouveau mot de passe</string>
+    <string name="settings_pseudo">Changer de pseudo</string>
+    <string name="settings_password">Changer de mot de passe</string>
+    <string name="settings_companion">Changer de companion</string>
     <string name="settings_logout">Déconnexion</string>
 
     <!--Login Activity-->

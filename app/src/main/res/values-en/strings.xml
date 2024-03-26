@@ -12,13 +12,14 @@
 
     <!--Settings Fragment-->
     <string name="settings_themes">Choose theme</string>
-        <string name="choosetext">Choose your application\'s color theme!</string>
-        <string name="blue">Blue</string>
-        <string name="red">Red</string>
-        <string name="green">Green</string>
+    <string name="choosetext">Choose your application\'s color theme!</string>
+    <string name="blue">Blue</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
     <string name="settings_langue">Switch language</string>
     <string name="settings_pseudo">New username</string>
     <string name="settings_password">New password</string>
+    <string name="settings_companion">Change Companion</string>
     <string name="settings_logout">Log off</string>
 
     <!--Login Activity-->

@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.util.Log;
@@ -25,7 +27,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cumpinion.loginFragments.CreateUserViewModel;
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
+import com.example.cumpinion.loginFragments.limitselectionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,16 +41,22 @@ import classes.ReponseServer;
 import classes.RetrofitInstance;
 import classes.User;
 import classes.characters.Compinion;
+import classes.characters.CompinionsAdapterList;
 import classes.characters.CompinionsReponseServer;
+import classes.characters.InterfaceCompinion;
 import interfaces.InterfaceServeur;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
     private SharedPreferences sharedPreferences;
-
+    RecyclerView rvCharacters;
+    CompinionsAdapterList compinionsAdapterList;
+    LoggedUserViewModel loggedUserViewModel;
+    int newCompinionId;
+    int originalCompanionID;
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -72,8 +82,16 @@ public class SettingsFragment extends Fragment {
         TextView tvChangePwd = view.findViewById(R.id.tvChangePassword_Settings);
         TextView tvChangeApparence = view.findViewById(R.id.tvChangeApparence_Settings);
         TextView tvChangeTheme = view.findViewById(R.id.tvChangeTheme_Settings);
+        TextView tvChangeCompanion = view.findViewById(R.id.tvChangeCompanion_Settings);
         TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
+
+        loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
+
+        originalCompanionID =  loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
+
+
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
         sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
 
@@ -84,19 +102,74 @@ public class SettingsFragment extends Fragment {
             changeLangue("eng");
         }
 
-        LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
 
         //appels des différentes méthodes
-
-        changePassword(tvChangePwd, loggedUserViewModel);
-        changerLangue(tvLanguage);
         changeUsername(tvChangePseudo, loggedUserViewModel);
+        changePassword(tvChangePwd, loggedUserViewModel);
+        changeCompanion(tvChangeCompanion, serveur);
+
+        changerLangue(tvLanguage);
         changerTheme(tvChangeTheme);
         deconnexion(view, tvLogout);
 
     }
-    /*========== Méthodes privées ==========*/
 
+    private void changeCompanion(TextView tvChangeCompanion, InterfaceServeur serveur) {
+        tvChangeCompanion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_image,null);
+                builder.setView(view);
+                AlertDialog alertDialogCompanion = builder.create();
+                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogImg);
+                Button btnCancel = view.findViewById(R.id.btnCancel_dialogImg);
+
+                rvCharacters = view.findViewById(R.id.rvNewCompanion_dialogImg);
+                rvCharacters.setHasFixedSize(true);
+                rvCharacters.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false));
+
+                showSelectableCompanions(serveur);
+               // createUserViewModel.getUserMutableLiveData().getValue().setCompanion_id();
+                    btnConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            Call<Void> call = serveur.updateCompanion(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id());
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    loggedUserViewModel.setUserCompanion(newCompinionId);
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Log.d("failed", "failed changing companion : "+t.getMessage()+ " : " + newCompinionId );
+                                }
+                            });
+                            alertDialogCompanion.dismiss();
+
+                        }
+                    });
+                    btnConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialogCompanion.dismiss();
+                        }
+                    });
+                alertDialogCompanion.show();
+
+            }
+
+        });
+    }
+    /*========== Méthodes privées ==========*/
+    /**
+     * Methode pour changer de Mot de passe
+     * */
     private void changePassword(TextView tvChangePwd, LoggedUserViewModel loggedUserViewModel) {
         tvChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,8 +245,7 @@ public class SettingsFragment extends Fragment {
 
                     }
                 });
-                // Create the Alert dialog
-                // Show the Alert Dialog box
+
                 alertDialog.show();
             }
         });
@@ -289,6 +361,9 @@ public class SettingsFragment extends Fragment {
 
     }
 
+    /**
+     * Methode de changement de langue
+     * */
     private void changerLangue(TextView tvLanguage) {
         tvLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,6 +387,9 @@ public class SettingsFragment extends Fragment {
 
     }
 
+    /**
+     * Methode de changement de Theme
+     * */
     private void changerTheme(TextView tvTheme) {
         tvTheme.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,8 +419,8 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-        /**
-         * Réafficher la barre de navigation : */
+    /**
+     * Réafficher la barre de navigation : */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -371,5 +449,33 @@ public class SettingsFragment extends Fragment {
         getActivity().setTheme(themeId);
         getActivity().recreate();
     }
+    /**
+     * Methode pour afficher les companions de la base de donnés
+     * */
+    private void showSelectableCompanions(InterfaceServeur serveur) {
+        Call<CompinionsReponseServer> call = serveur.getAllCompinions();
+        call.enqueue(new Callback<CompinionsReponseServer>() {
+            @Override
+            public void onResponse(Call<CompinionsReponseServer> call, Response<CompinionsReponseServer> response) {
+                Log.d("on response", "response character list");
+                CompinionsReponseServer reponseServer = response.body();
+                List<Compinion> compinions = reponseServer.getCompinionList();
+                compinionsAdapterList = new CompinionsAdapterList(compinions, SettingsFragment.this);
+                rvCharacters.setAdapter(compinionsAdapterList);
+            }
 
+            @Override
+            public void onFailure(Call<CompinionsReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur character list");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+    }
+    @Override
+    public void gestionClic(Compinion compinion) {
+        newCompinionId = compinion.getId();
+        loggedUserViewModel.setUserCompanion(newCompinionId);
+        Log.d("gestionClic", "new id: "+ loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id());
+
+    }
 }

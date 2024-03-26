@@ -116,7 +116,7 @@ public interface InterfaceServeur {
     @POST("user/{id}/update/endstreak")
     Call<Void> endStreak(@Path("id") int id);
 
-    // Update password endpoint
+    // Update password
     @FormUrlEncoded
     @PATCH("user/{id}/update/password")
     Call<Void> updatePassword(
@@ -125,5 +125,11 @@ public interface InterfaceServeur {
             @Field("new_password") String newPassword
     );
 
-
+    // Update companion
+    @FormUrlEncoded
+    @PATCH("user/{id}/update/password")
+    Call<Void> updateCompanion(
+            @Path("id") int id,
+            @Field("character_id") int character_id
+    );
 }
