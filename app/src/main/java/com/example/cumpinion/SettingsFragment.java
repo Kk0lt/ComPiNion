@@ -529,20 +529,40 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
         tvLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String langue = sharedPreferences.getString("language", null);
-                if (langue != null) {
-                    if (langue.equalsIgnoreCase("eng")) {
-                        changeLangue("fr");
-                        getActivity().recreate();
-                    }
-                    else {
-                        changeLangue("eng");
-                        getActivity().recreate();
+                // Creation d'une boite de dialogue
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
+                // Set message
+                builder.setMessage("Êtes-vous sûr de vouloir changer la langue ? ?");
+
+                // Set  Title
+                builder.setTitle("Changer Langue");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                    String langue = sharedPreferences.getString("language", null);
+                    if (langue != null) {
+                        if (langue.equalsIgnoreCase("eng")) {
+                            changeLangue("fr");
+                            getActivity().recreate();
+                        } else {
+                            changeLangue("eng");
+                            getActivity().recreate();
+
+                        }
+                    } else {
+                        changeLangue("fr");
                     }
-                } else {
-                    changeLangue("fr");
-                }
+                });
+                // Negative button.
+                builder.setNegativeButton("Non", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    // If user click no then dialog box is canceled.
+                    dialog.cancel();
+                });
+                // Create the Alert dialog
+                AlertDialog alertDialog = builder.create();
+                // Show the Alert Dialog box
+                alertDialog.show();
             }
         });
 

@@ -16,7 +16,8 @@
     <string name="blue">Blue</string>
     <string name="red">Red</string>
     <string name="green">Green</string>
-    <string name="settings_langue">Switch language</string>
+    <string name="settings_langue_TEXT">This will restart the app, are you sure ?</string>
+    <string name="settings_langue">Switch to french</string>
     <string name="settings_pseudo">New username</string>
     <string name="settings_password">New password</string>
     <string name="settings_companion">Change Companion</string>

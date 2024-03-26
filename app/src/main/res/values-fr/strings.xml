@@ -16,7 +16,8 @@
     <string name="blue">Bleu</string>
     <string name="red">Rouge</string>
     <string name="green">Vert</string>
-    <string name="settings_langue">Choisir la langue</string>
+    <string name="settings_langue_TEXT">L\'application va être relancé, êtes vous sûr ? </string>
+    <string name="settings_langue">Mettre la langue en anglais</string>
     <string name="settings_pseudo">Changer de pseudo</string>
     <string name="settings_password">Changer de mot de passe</string>
     <string name="settings_companion">Changer de companion</string>
