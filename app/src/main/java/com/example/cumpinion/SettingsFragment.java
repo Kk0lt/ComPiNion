@@ -103,28 +103,21 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(false);
-                View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
+                View view = getLayoutInflater().inflate(R.layout.dialogbox_password,null);
                 builder.setView(view);
-                TextView tvLabel = view.findViewById(R.id.tvLavbel_DialogBox);
+
+                AlertDialog alertDialog = builder.create();
+
+                TextView tvLabel = view.findViewById(R.id.label_passwordDialog);
                 tvLabel.setText(R.string.settings_password);
 
                 //DECLARATION
-                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogBox);
-                Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
+                Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogPwd);
+                Button btnCancel = view.findViewById(R.id.btnCancel_DialogPwd);
 
-                EditText etNewPassword = view.findViewById(R.id.etNewUsername_DialogBox);
-                EditText etConfirmPassword = view.findViewById(R.id.etConfirmPassword_DialogBox);
-                EditText etCurrentPassword = view.findViewById(R.id.etCurrentPassword_Dialog);
-                //CACHER LES LETTRES DU CHAMPS
-                etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                //METTRE LES CHAMPS VISIBLES
-                etCurrentPassword.setVisibility(View.VISIBLE);
-                etConfirmPassword.setVisibility(View.VISIBLE);
-                //METTRE LES PLACEHOLDERS
-                etNewPassword.setHint(R.string.settings_password);
-                etConfirmPassword.setHint(R.string.confirmPasswordHint_createAccount);
-                etCurrentPassword.setHint(R.string.passwordHint_createAccount);
-                AlertDialog alertDialog = builder.create();
+                EditText etNewPassword = view.findViewById(R.id.etNewPassword_DialogPwd);
+                EditText etCurrentPassword = view.findViewById(R.id.etCurrentPassword_DialogPwd);
+                EditText etConfirmPassword = view.findViewById(R.id.etConfirmPassword_DialogPwd);
 
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,9 +125,11 @@ public class SettingsFragment extends Fragment {
                     String newPassword = etNewPassword.getText().toString();
                     String confirmPassword = etConfirmPassword.getText().toString();
                     String currentPassword = etCurrentPassword.getText().toString();
+                    String loggedPassword =loggedUserViewModel.getUserMutableLiveData().getValue().getPassword();
                     boolean mdpValide = true;
 
-                    if (newPassword.equals(loggedUserViewModel.getUserMutableLiveData().getValue().getPassword())){
+
+                    if (newPassword.equals(loggedPassword)){
                         etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
                         etNewPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
                         mdpValide = false;
@@ -157,13 +152,13 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 loggedUserViewModel.setUserPassword(newPassword);
-                                Log.d("failed", "Password update ");
+                                Log.d("failed", "Password update" + newPassword + currentPassword);
 
                                 alertDialog.dismiss();
                             }
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("failed", "Failed: "+ t.getMessage());
+                                Log.d("failed", "Password update failed: "+ t.getMessage());
                             }
                         });
                     }

@@ -118,7 +118,7 @@ public interface InterfaceServeur {
 
     // Update password endpoint
     @FormUrlEncoded
-    @PATCH("compinion/{id}/update/password")
+    @PATCH("user/{id}/update/password")
     Call<Void> updatePassword(
             @Path("id") int id,
             @Field("current_password") String currentPassword,
