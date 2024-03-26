@@ -16,30 +16,27 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cumpinion.loginFragments.CreateUserViewModel;
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
-import com.example.cumpinion.loginFragments.limitselectionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import classes.ReponseServer;
 import classes.RetrofitInstance;
 import classes.User;
 import classes.characters.Compinion;
@@ -352,6 +349,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                 EditText etCurrentPassword = view.findViewById(R.id.etCurrentPassword_DialogPwd);
                 EditText etConfirmPassword = view.findViewById(R.id.etConfirmPassword_DialogPwd);
 
+                TextView tvErr = view.findViewById(R.id.errNewPass);
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -361,6 +359,10 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                     String loggedPassword =loggedUserViewModel.getUserMutableLiveData().getValue().getPassword();
                     boolean mdpValide = true;
 
+                    if(newPassword.trim().isEmpty()){
+                        tvErr.setText("Veuillez entrer un nouveau mot de passe");
+                        mdpValide = false;
+                    }
 
                     if (newPassword.equals(loggedPassword)){
                         etConfirmPassword.setError("le nouveau mot de passe ne doit pas correspondre à l'ancien");
@@ -424,6 +426,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                 builder.setCancelable(false);
                 View view = getLayoutInflater().inflate(R.layout.dialogbox_pseudo,null);
                 builder.setView(view);
+                TextView errModif = view.findViewById(R.id.errNewPass);
                 EditText etNewPseudo = view.findViewById(R.id.etNewUsername_DialogBox);
                 Button btnConfirm = view.findViewById(R.id.btnConfirmer_dialogBox);
                 Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
@@ -432,23 +435,31 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String newPseudo = etNewPseudo.getText().toString();
-                        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-                        Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
-                        call.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
-                                loggedUserViewModel.setUserPseudo(newPseudo);
-                                Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
-                                alertDialog1.dismiss();
+                        String newPseudo = etNewPseudo.getText().toString().trim();
 
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("failure!", "failure : " + t.getMessage());
-                            }
-                        });
+                        if(newPseudo.trim().isEmpty() || estNumeric(newPseudo) || newPseudo.length() > 14){
+                            errModif.setText("Veuillez entrer un pseudo valide");
+                        }
+
+                        else {
+                            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+                            Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
+                                    loggedUserViewModel.setUserPseudo(newPseudo);
+                                    Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+                                    alertDialog1.dismiss();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Log.d("failure!", "failure : " + t.getMessage());
+                                }
+                            });
+                        }
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -658,5 +669,15 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
         loggedUserViewModel.setUserCompanion(newCompinionId);
         Log.d("gestionClic", "new id: "+ loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id());
 
+    }
+
+    private boolean estNumeric(String string){
+        try {
+            Double.parseDouble(string);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
     }
 }
