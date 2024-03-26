@@ -21,6 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

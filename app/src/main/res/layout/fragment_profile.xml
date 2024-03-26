@@ -9,161 +9,173 @@
     android:padding="10dp"
     tools:context=".HomeFragment">
 
-    <LinearLayout
-        android:id="@+id/allStats_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
-        android:weightSum="4">
-
-        <TextView
-            android:id="@+id/tvProfile_ProfileFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:fontFamily="@font/bungee"
-            android:gravity="center"
-            android:text="Nom Du Perso"
-            android:textAlignment="center"
-            android:textColor="@color/hardBlue"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.121" />
-
-        <ImageView
-            android:id="@+id/ivProfile_ProfileFragment"
-            android:layout_width="match_parent"
-            android:layout_height="258dp"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/bordercircle"
-            android:elevation="3dp"
-            android:foregroundGravity="center"
-            android:padding="50dp"
-            android:stateListAnimator="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvProfile"
-            app:layout_constraintVertical_bias="0.131"
-            app:srcCompat="@drawable/ch_rabbit" />
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/allStats_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/tvProfile_ProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/bungee"
+                android:gravity="center"
+                android:text="Nom Du Perso"
+                android:textAlignment="center"
+                android:textColor="@color/hardBlue"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.478"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.121" />
+
+            <ImageView
+                android:id="@+id/ivProfile_ProfileFragment"
+                android:layout_width="match_parent"
+                android:layout_height="258dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bordercircle"
+                android:elevation="3dp"
+                android:foregroundGravity="center"
+                android:padding="50dp"
+                android:stateListAnimator="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvProfile"
+                app:layout_constraintVertical_bias="0.131"
+                app:srcCompat="@drawable/ch_rabbit" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/tvSerie_ProfileFragment"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSerie_ProfileFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:gravity="center_vertical"
+                        android:text="@string/serie"
+                        android:textColor="@color/hardBlue"
+                        android:textSize="28dp" />
+
+                    <TextView
+                        android:id="@+id/serie_profileFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/hardBlue"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textColor="@color/white"
+                        android:textSize="96sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvMerit_ProfileFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:gravity="center"
+                        android:text="@string/merite"
+                        android:textColor="@color/hardBlue"
+                        android:textSize="28dp" />
+
+                    <TextView
+                        android:id="@+id/merit_profileFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/hardBlue"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textColor="@color/white"
+                        android:textSize="96sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btFriend_ProfileFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:gravity="center_vertical"
-                    android:text="@string/serie"
-                    android:textColor="@color/hardBlue"
-                    android:textSize="28dp" />
-
-                <TextView
-                    android:id="@+id/serie_profileFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
+                    android:layout_marginHorizontal="20dp"
                     android:backgroundTint="@color/hardBlue"
-                    android:fontFamily="@font/amaranth"
-                    android:gravity="center_horizontal"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="96sp" />
+                    android:text="@string/add_friend"
+                    android:textSize="20sp"
+                    android:visibility="visible"
+                    app:icon="@drawable/ic_friend"
+                    app:iconGravity="textStart"
+                    app:iconSize="24sp" />
 
+                <Button
+                    android:id="@+id/btBlock_ProfileFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:backgroundTint="@color/hardBlue"
+                    android:text="@string/block"
+                    android:textSize="20sp"
+                    android:visibility="visible"
+                    app:icon="@drawable/ic_block"
+                    app:iconGravity="textStart"
+                    app:iconSize="24sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvStreaksProf"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvMerit_ProfileFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:gravity="center"
-                    android:text="@string/merite"
-                    android:textColor="@color/hardBlue"
-                    android:textSize="28dp" />
-
-                <TextView
-                    android:id="@+id/merit_profileFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hardBlue"
-                    android:fontFamily="@font/amaranth"
-                    android:gravity="center_horizontal"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="96sp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btFriend_ProfileFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:backgroundTint="@color/hardBlue"
-                android:text="@string/add_friend"
-                android:textSize="20sp"
-                android:visibility="visible"
-                app:icon="@drawable/ic_friend"
-                app:iconGravity="textStart"
-                app:iconSize="24sp" />
-
-            <Button
-                android:id="@+id/btBlock_ProfileFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:backgroundTint="@color/hardBlue"
-                android:text="@string/block"
-                android:textSize="20sp"
-                android:visibility="visible"
-                app:icon="@drawable/ic_block"
-                app:iconGravity="textStart"
-                app:iconSize="24sp" />
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

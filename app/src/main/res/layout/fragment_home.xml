@@ -10,156 +10,162 @@
     android:padding="10dp"
     tools:context=".HomeFragment">
 
-    <LinearLayout
-        android:id="@+id/allStats_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
-        android:weightSum="4">
-
-        <TextView
-            android:id="@+id/tvHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:fontFamily="@font/bungee"
-            android:gravity="center"
-            android:text="Nom Du Perso"
-            android:textAlignment="center"
-            android:textColor="@color/hardBlue"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.121" />
-
-        <ImageView
-            android:id="@+id/ivHome"
-            android:layout_width="259dp"
-            android:layout_height="258dp"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:background="@drawable/bordercircle"
-            android:elevation="3dp"
-            android:foregroundGravity="center"
-            android:padding="50dp"
-            android:stateListAnimator="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHome"
-            app:layout_constraintVertical_bias="0.131" />
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/allStats_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/tvHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/bungee"
+                android:gravity="center"
+                android:text="Nom Du Perso"
+                android:textAlignment="center"
+                android:textColor="@color/hardBlue"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.478"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.121" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="259dp"
+                android:layout_height="258dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@drawable/bordercircle"
+                android:elevation="3dp"
+                android:foregroundGravity="center"
+                android:padding="50dp"
+                android:stateListAnimator="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvHome"
+                app:layout_constraintVertical_bias="0.131" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/tvSerie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:gravity="center_vertical"
-                    android:text="@string/serie"
-                    android:textColor="@color/hardBlue"
-                    android:textSize="28dp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/serie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    <TextView
+                        android:id="@+id/tvSerie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:gravity="center_vertical"
+                        android:text="@string/serie"
+                        android:textColor="@color/hardBlue"
+                        android:textSize="28dp" />
+
+                    <TextView
+                        android:id="@+id/serie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/hardBlue"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textColor="@color/white"
+                        android:textSize="96sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/hardBlue"
-                    android:fontFamily="@font/amaranth"
-                    android:gravity="center_horizontal"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="96sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvMerit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/alfa_slab_one"
+                        android:gravity="center"
+                        android:text="@string/merite"
+                        android:textColor="@color/hardBlue"
+                        android:textSize="28dp" />
+
+                    <TextView
+                        android:id="@+id/merit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/hardBlue"
+                        android:fontFamily="@font/amaranth"
+                        android:gravity="center_horizontal"
+                        android:text="X"
+                        android:textColor="@color/white"
+                        android:textSize="96sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/btnSmoked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/hardBlue"
+                android:elevation="3dp"
+                android:fontFamily="@font/lexend"
+                android:foregroundGravity="center"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:stateListAnimator="@null"
+                android:textSize="16sp"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/ic_clope"
+                app:iconPadding="0dp"
+                app:iconSize="50dp"
+                app:iconTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:strokeColor="@color/white"
+                app:strokeWidth="4dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvStreaks"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvMerit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/alfa_slab_one"
-                    android:gravity="center"
-                    android:text="@string/merite"
-                    android:textColor="@color/hardBlue"
-                    android:textSize="28dp" />
-
-                <TextView
-                    android:id="@+id/merit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hardBlue"
-                    android:fontFamily="@font/amaranth"
-                    android:gravity="center_horizontal"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="96sp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnSmoked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/hardBlue"
-            android:elevation="3dp"
-            android:fontFamily="@font/lexend"
-            android:foregroundGravity="center"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:stateListAnimator="@null"
-            android:textSize="16sp"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_clope"
-            app:iconPadding="0dp"
-            app:iconSize="50dp"
-            app:iconTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:strokeColor="@color/white"
-            app:strokeWidth="4dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvStreaks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
