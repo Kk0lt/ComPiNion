@@ -28,6 +28,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        resources {
+            exclude ("META-INF/INDEX.LIST")
+            exclude ( "META-INF/io.netty.versions.properties")
+        }
+    }
 
 }
 dependencies {
@@ -48,6 +54,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.3.0-alpha03")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.8.8")
+    implementation(("com.hivemq:hivemq-mqtt-client:1.3.3"))
 
 }

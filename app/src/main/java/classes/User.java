@@ -16,8 +16,8 @@ public class User {
     String password;
     @SerializedName("pseudo")
     String pseudo;
-    @SerializedName("character_url")
-    String character_url;
+    @SerializedName("character_id")
+    int character_id;
     @SerializedName("limite")
     int limite;
     private String token;
@@ -28,7 +28,7 @@ public class User {
     @SerializedName("jours")
     int jours;
 
-
+    String companionImage;
 
     private boolean isExtended;
 
@@ -36,27 +36,27 @@ public class User {
 
     }
 
-    public User( String nom, String prenom, String email, String password, String pseudo, String companion_url, int limite) {
+    public User( String nom, String prenom, String email, String password, String pseudo, int companion_id, int limite) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.pseudo = pseudo;
-        this.character_url = companion_url;
+        this.character_id = companion_id;
         this.limite = limite;
     }
 
-    public User(int id, String nom, String prenom, String email, String password, String pseudo, String companion_url, int limite) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int companion_id, int limite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.pseudo = pseudo;
-        this.character_url = companion_url;
+        this.character_id = companion_id;
         this.limite = limite;
     }
-    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, String companion_url, int limite) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -65,11 +65,11 @@ public class User {
         this.pseudo = pseudo;
         this.merite = merit;
         this.jours = jours;
-        this.character_url = companion_url;
+        this.character_id = companion_id;
         this.limite = limite;
     }
 
-    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, String companion_url, int limite, Boolean extension) {
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite, String companionImage) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -78,10 +78,24 @@ public class User {
         this.pseudo = pseudo;
         this.merite = merit;
         this.jours = jours;
-        this.character_url = companion_url;
+        this.character_id = companion_id;
+        this.limite = limite;
+        this.companionImage = companionImage;
+    }
+    public User(int id, String nom, String prenom, String email, String password, String pseudo, int merit, int jours, int companion_id, int limite, Boolean extension) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.password = password;
+        this.pseudo = pseudo;
+        this.merite = merit;
+        this.jours = jours;
+        this.character_id = companion_id;
         this.limite = limite;
         this.isExtended = extension;
     }
+
 
     public int getId() { return id; }
 
@@ -148,12 +162,12 @@ public class User {
     public void setExtended(boolean extended) {
         isExtended = extended;
     }
-    public String getCompanion_url() {
-        return character_url;
+    public int getCompanion_id() {
+        return character_id;
     }
 
-    public void setCompanion_url(String companionUrl) {
-        this.character_url = companionUrl;
+    public void setCompanion_id(int companionId) {
+        this.character_id = companionId;
     }
 
     public int getLimite() {
@@ -170,5 +184,32 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getCharacter_id() {
+        return character_id;
+    }
+
+    public void setCharacter_id(int character_id) {
+        this.character_id = character_id;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public String getCompanionImage() {
+        return "http://172.16.87.61/img/" + companionImage;
+    }
+
+    public String getCompanionPNG() {
+        return  companionImage;
+    }
+    public void setCompanionImage(String companionImage) {
+        this.companionImage = companionImage;
     }
 }

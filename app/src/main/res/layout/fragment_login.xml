@@ -111,7 +111,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend"
-            android:text="@string/connectez_vous"
+            android:text="@string/creation"
             android:textAlignment="center"
             android:textColor="@color/hardBlue"
             android:textSize="18sp"

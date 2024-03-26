@@ -1,32 +1,28 @@
 package classes;
 
-import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.cumpinion.LeaderboardFragment;
 import com.example.cumpinion.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import classes.characters.Compinion;
-import classes.characters.CompinionsReponseServer;
+import classes.characters.CompinionReponseServer;
 import interfaces.InterfaceServeur;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +33,7 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
     private List<User> liste;
     private NavController navController;
     int idSelectedUser;
+    Boolean navYes;
 
     public UsersAdapterListe(List<User> liste, NavController navController) {
         this.liste = liste;
@@ -53,22 +50,36 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
-        User user = liste.get(position);
+        if (liste.isEmpty()) {
+            navYes = false;
+            UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
+            usersViewHolder.tvPseudo.setText("Cette liste est vide.");
+            usersViewHolder.tvXp.setText("");
+            usersViewHolder.ivCompanionImage.setVisibility(View.GONE);
 
-        String pseudo = "@" + user.getPseudo();
-        usersViewHolder.tvPseudo.setText(pseudo);
+        } else {
+            navYes = true;
+            UsersViewHolder usersViewHolder = (UsersViewHolder) holder;
+            User user = liste.get(position);
 
-        int xp = user.getJours();
-        String experience = xp + " jours";
-        usersViewHolder.tvXp.setText(experience);
+            String pseudo = "@" + user.getPseudo();
+            usersViewHolder.tvPseudo.setText(pseudo);
 
-        Picasso.get().load(user.character_url).into(usersViewHolder.ivCompanionImage);
+            int xp = user.getJours();
+            String experience = xp + " jours";
+            usersViewHolder.tvXp.setText(experience);
+
+            getImg(user.getId(), usersViewHolder.ivCompanionImage);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return liste.size();
+        if (liste.isEmpty()) {
+            return 1;
+        } else {
+            return liste.size();
+        }
     }
 
     public class UsersViewHolder extends RecyclerView.ViewHolder {
@@ -84,19 +95,45 @@ public class UsersAdapterListe extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getLayoutPosition();
-                    idSelectedUser = liste.get(position).getId();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("idSelectedUser", idSelectedUser);
+                    if (navYes) {
+                        int position = getLayoutPosition();
+                        idSelectedUser = liste.get(position).getId();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("idSelectedUser", idSelectedUser);
 
-                    NavController controller = Navigation.findNavController(v);
-                    controller.navigate(R.id.fromLeaderboardToProfile, bundle);
+                        NavController controller = Navigation.findNavController(v);
+                        controller.navigate(R.id.fromLeaderboardToProfile, bundle);
+                    } else {
+                        Toast.makeText(itemView.getContext(), "Il n'y a pas d'utilisateur dans cette liste", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
-
-
-
     }
 
+    private void getImg(int i, ImageView imageView) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<CompinionReponseServer> call = serveur.getCompinion(i);
+        call.enqueue(new Callback<CompinionReponseServer>() {
+            @Override
+            public void onResponse(Call<CompinionReponseServer> call, Response<CompinionReponseServer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Compinion c = response.body().getCompinion();
+                    if (c != null) {
+                        String imgUrl = "http://172.16.87.61/img/" + c.getImage();
+                        Picasso.get().load(Uri.parse(imgUrl)).into(imageView);
+                    } else {
+                        Log.d("failed", "La réponse est null");
+                    }
+                } else {
+                    Log.d("failed", "La réponse a échoué");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CompinionReponseServer> call, Throwable t) {
+                Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
 }

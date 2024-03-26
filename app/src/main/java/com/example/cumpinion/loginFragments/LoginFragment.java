@@ -26,13 +26,14 @@ import android.widget.Toast;
 
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.UUID;
 
 import classes.RetrofitInstance;
 import classes.User;
@@ -49,6 +50,7 @@ public class LoginFragment extends Fragment {
 
     private RadioGroup languageRadio;
     private SharedPreferences sharedPreferences;
+    Mqtt5Client client;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -56,7 +58,15 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        client = Mqtt5Client.builder()
+                .identifier(UUID.randomUUID().toString())
+                .serverHost("172.16.87.61")
+                .serverPort(1883)
+                .simpleAuth()
+                .username("cedric")
+                .password("q".getBytes())
+                .applySimpleAuth()
+                .build();
     }
 
     @Override
@@ -140,13 +150,15 @@ public class LoginFragment extends Fragment {
                                     String responseBody = response.body().string();
                                     JSONObject jsonObject = new JSONObject(responseBody);
                                     JSONObject userData = jsonObject.getJSONObject("user");
+                                    JSONObject userCompanion = jsonObject.getJSONObject("companion");
 
                                     // Récupérer les informations de l'utilisateur depuis l'objet JSON
                                     String userName = userData.getString("nom");
                                     String userPrenom = userData.getString("prenom");
                                     String userEmail = userData.getString("email");
                                     String userPseudo = userData.getString("pseudo");
-                                    String imgUrl = jsonObject.getString("nom");
+                                    String companionImage = userCompanion.getString("img");
+                                    int imgId = userData.getInt("character_id");
                                     int userId = userData.getInt("id");
                                     int jours = userData.getInt("jours");
                                     int merite = userData.getInt("merite");
@@ -156,9 +168,13 @@ public class LoginFragment extends Fragment {
 
                                     // Créer un nouvel objet User avec les informations récupérées
                                     User loggedUser = new User(userId, userName, userPrenom, userEmail, password, userPseudo,
-                                            merite, jours, imgUrl, limite);
+                                            merite, jours, imgId, limite, companionImage);
                                     Log.d("Réussi!", "Connected : " + loggedUser);
                                     loggedUserViewModel.addUser(loggedUser);
+
+
+                                    confirmPublishConnexion(userPseudo, String.valueOf(merite), companionImage, String.valueOf(jours));
+
 
                                     // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
                                     NavController controller = Navigation.findNavController(view);
@@ -202,6 +218,8 @@ public class LoginFragment extends Fragment {
         });
     }
 
+
+
     private void changeLangue(String selectedLanguage) {
         Locale locale = new Locale(selectedLanguage);
         Locale.setDefault(locale);
@@ -211,6 +229,117 @@ public class LoginFragment extends Fragment {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
+    /*===== MQTT ===== */
+    private void confirmPublishConnexion(String _username, String _merites, String _img, String _streak) {
+        client.toAsync().connect()
+                .whenComplete((connAck, throwable) -> {
+                    if (throwable != null) {
+                        Log.d("Fail", "ERREUR MQTT ");
+                    } else {
+                        // setup subscribes or start publishing
+                        publishConnexion();
+                        publishUser(_username);
+                        publishMerites(_merites);
+                        publishImage(_img);
+                        publishStreak(_streak);
+                    }
+                });
+    }
+    private void publishConnexion(){
+        client.toAsync().publishWith()
+                .topic("status")
+                .payload("connecté".getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DU NOM D'UTILISATEUR
+     */
+
+    private void publishUser(String username){
+        client.toAsync().publishWith()
+                .topic("user")
+                .payload(username.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "user published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DE L'IMAGE
+     */
+
+    private void publishImage(String img){
+        client.toAsync().publishWith()
+                .topic("pic")
+                .payload(img.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DES POINTS DE MERITES
+     */
+
+    private void publishMerites(String level){
+        client.toAsync().publishWith()
+                .topic("level")
+                .payload(level.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DES POINTS DE MERITES
+     */
+
+    private void publishStreak(String streak){
+        client.toAsync().publishWith()
+                .topic("streak")
+                .payload(streak.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
     /*   Pour réafficher la barre de navigation utiliser ce code: */
     @Override
     public void onDestroyView() {

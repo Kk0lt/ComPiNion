@@ -8,15 +8,12 @@ public class UserResponseServer {
     @SerializedName("success")
     private boolean success;
     @SerializedName("data")
-    private User user; // Change from List<User> to User
-    @SerializedName("nom")
-    private String imgurl;
+    private User user;
 
-    public UserResponseServer(boolean success, User user, String message, String url) {
+    public UserResponseServer(boolean success, User user, String message) {
         this.success = success;
         this.user = user;
         this.message = message;
-        this.imgurl = url;
     }
 
     public boolean isSuccess() {

@@ -12,18 +12,20 @@
 
     <!--Settings Fragment-->
     <string name="settings_themes">Choisir le thème</string>
-        <string name="choosetext">Choisissez la couleur de votre application!</string>
-        <string name="blue">Bleu</string>
-        <string name="red">Rouge</string>
-        <string name="green">Vert</string>
+    <string name="choosetext">Choisissez la couleur de votre application!</string>
+    <string name="blue">Bleu</string>
+    <string name="red">Rouge</string>
+    <string name="green">Vert</string>
     <string name="settings_langue">Choisir la langue</string>
-    <string name="settings_pseudo">Nouveau pseudonyme</string>
-    <string name="settings_password">Nouveau mot de passe</string>
+    <string name="settings_pseudo">Changer de pseudo</string>
+    <string name="settings_password">Changer de mot de passe</string>
+    <string name="settings_companion">Changer de companion</string>
     <string name="settings_logout">Déconnexion</string>
 
     <!--Login Activity-->
     <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
     <string name="btnConnexion">Connexion</string>
+    <string name="creation">Vous n\'êtes pas membre? Rejoignez-nous!</string>
 
     <!--Create Account Fragment-->
     <string name="titre_createAccount">Créez un nouveau compte!</string>
@@ -61,9 +63,13 @@
     <!--Autre-->
     <string name="past_streak">Séries précédentes :</string>
     <string name="add_friend">Suivre</string>
+    <string name="remove_friend">Retirer</string>
     <string name="block">Bloquer</string>
     <string name="unblock">Débloquer</string>
     <string name="confirmer">Confirmer</string>
     <string name="annuler">Annuler</string>
+    <string name="all">Tous</string>
+    <string name="friend">Amis</string>
+    <string name="blocked">Indésirables</string>
 
 </resources>
