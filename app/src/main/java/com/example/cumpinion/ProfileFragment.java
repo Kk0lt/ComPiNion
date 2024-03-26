@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
 
@@ -30,6 +32,9 @@ import classes.RetrofitInstance;
 import classes.StringReponseServer;
 import classes.User;
 import classes.UserResponseServer;
+import classes.streaks.Streak;
+import classes.streaks.StreaksAdapterList;
+import classes.streaks.StreaksReponseServer;
 import interfaces.InterfaceServeur;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -41,6 +46,8 @@ public class ProfileFragment extends Fragment {
 
     Button btAdd, btBlock;
     String relation;
+    RecyclerView rvStreaks;
+    StreaksAdapterList streaksAdapterListe;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -62,6 +69,7 @@ public class ProfileFragment extends Fragment {
         TextView tvPseudo, nbMerit, nbStreak;
         ImageView imgProfile;
 
+        rvStreaks = view.findViewById(R.id.rvStreaksProf);
         tvPseudo = view.findViewById(R.id.tvProfile_ProfileFragment);
         nbMerit = view.findViewById(R.id.merit_profileFragment);
         nbStreak = view.findViewById(R.id.serie_profileFragment);
@@ -70,10 +78,15 @@ public class ProfileFragment extends Fragment {
         btBlock = view.findViewById(R.id.btBlock_ProfileFragment);
 //      Pour l'image, le bundle va renvoyer l'url présente dans la carte.
 
+        //Gestion du RecyclerView des streaks
+        rvStreaks.setHasFixedSize(true);
+        rvStreaks.setLayoutManager(new LinearLayoutManager(getContext()));
+
         Bundle bundle = getArguments();
         int idSelectedUser = bundle.getInt("idSelectedUser");
 
         getUser(serveur, idSelectedUser, tvPseudo, nbMerit, nbStreak);
+        getStreaks(serveur, idSelectedUser);
         getRelationBetweenUsers(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId(), idSelectedUser);
 
         btAdd.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +251,33 @@ public class ProfileFragment extends Fragment {
             btAdd.setText(friend);
             btBlock.setText(block);
         }
+    }
+
+    private void getStreaks(InterfaceServeur serveur, int i) {
+        Call<StreaksReponseServer> call = serveur.getStreaks(i);
+        call.enqueue(new Callback<StreaksReponseServer>() {
+            @Override
+            public void onResponse(Call<StreaksReponseServer> call, Response<StreaksReponseServer> response) {
+                if (response.isSuccessful()) {
+                    StreaksReponseServer streaksResponse = response.body();
+                    if (streaksResponse != null && streaksResponse.isSuccess()) {
+                        List<Streak> lstreaks = streaksResponse.getData();
+                        streaksAdapterListe = new StreaksAdapterList(lstreaks);
+                        rvStreaks.setAdapter(streaksAdapterListe);
+                    } else {
+                        Log.d("erreur", "Réponse invalide");
+                    }
+                } else {
+                    Log.d("erreur", "Réponse non réussie: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StreaksReponseServer> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
     }
 
 }
