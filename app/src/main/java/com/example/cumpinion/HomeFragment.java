@@ -128,7 +128,9 @@ public class HomeFragment extends Fragment {
                                 //Si ma limite est écoulée, on choisit une nouvelle limite et on update la streak
                                 if(i < 0) {
                                     updateStreak(loggedUserViewModel, 0);
-                                    resetStreak(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+                                    resetStreak(serveur, loggedUserViewModel);
+                                    updateJours(loggedUserViewModel, 0);
+                                    nbStreak.setText(String.valueOf(0));
                                     AlertDialog.Builder bLimite = new AlertDialog.Builder(getContext());
                                     bLimite.setTitle("Choisissez une nouvelle limite de cigarette par jours");
                                     bLimite.setPositiveButton("1", new DialogInterface.OnClickListener() {
@@ -180,7 +182,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(), "Bravo! Une journée de plus à votre série!", Toast.LENGTH_LONG).show();
+                        int i = loggedUserViewModel.getUserMutableLiveData().getValue().getJours();
                         updateStreak(loggedUserViewModel, loggedUserViewModel.getUserMutableLiveData().getValue().getJours()+1);
+                        nbStreak.setText(String.valueOf(i+1));
                     }
                 });
                 builder.setNeutralButton("J'y pense!", new DialogInterface.OnClickListener() {
@@ -189,6 +193,7 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getContext(), "Ne lâche pas!", Toast.LENGTH_LONG).show();
                         int i = loggedUserViewModel.getUserMutableLiveData().getValue().getMerite();
                         updateMerite(loggedUserViewModel, i+1);
+                        nbMerit.setText(String.valueOf(i+1));
                     }
                 });
                 AlertDialog alertDialog = builder.create();
@@ -243,22 +248,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void resetStreak(InterfaceServeur serveur, int i) {
-        Call<Void> call = serveur.endStreak(i);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
-            }
-        });
-    }
-
     private static void updateMerite(LoggedUserViewModel loggedUserViewModel, int i) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.updateMerite(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), i);
@@ -266,6 +255,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 loggedUserViewModel.setUserMerit(i);
+
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
@@ -276,7 +266,7 @@ public class HomeFragment extends Fragment {
 
     private static void updateStreak(LoggedUserViewModel loggedUserViewModel, int i) {
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<Void> call = serveur.updateJours(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), i);
+        Call<Void> call = serveur.endStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -300,6 +290,38 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
+
+    private static void updateJours(LoggedUserViewModel loggedUserViewModel, int i) {
+        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        Call<Void> call = serveur.updateJours(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                loggedUserViewModel.setUserStreak(i);
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("failed", "Failed: "+ t.getMessage());
+            }
+        });
+    }
+
+    private void resetStreak(InterfaceServeur serveur, LoggedUserViewModel loggedUserViewModel) {
+        Call<Void> call = serveur.resetStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
+                loggedUserViewModel.setUserStreak(0);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
             }
         });
     }

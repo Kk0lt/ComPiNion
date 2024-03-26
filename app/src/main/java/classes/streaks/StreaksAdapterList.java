@@ -33,11 +33,11 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         StreaksViewHolder streaksViewHolder = (StreaksViewHolder) holder;
         Streak streak = liste.get(position);
 
         if (streak.getStartDate() != null && streak.getEndDate() != null) {
-
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String startDate = sdf.format(streak.getStartDate());
             String endDate = sdf.format(streak.getEndDate());
@@ -46,7 +46,6 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
             streaksViewHolder.tvJours.setText(String.valueOf(days));
             streaksViewHolder.tvStart.setText(startDate);
             streaksViewHolder.tvEnd.setText(endDate);
-
         } else {
             streaksViewHolder.tvJours.setText("0");
             streaksViewHolder.tvStart.setText("Erreur");
@@ -70,4 +69,5 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
             tvEnd = itemView.findViewById(R.id.tvEnd);
         }
     }
+
 }

@@ -108,13 +108,16 @@ public interface InterfaceServeur {
     Call<Void> updateMerite(@Path("id") int id, @Query("merite") int merite);
 
     @PATCH("user/{id}/update/jours")
-    Call<Void> updateJours(@Path("id") int id, @Query("jours") int jours);
+    Call<Void> updateJours(@Path("id") int id);
 
     @PATCH("user/{id}/update/limite")
     Call<Void> updateLimite(@Path("id") int id, @Query("limite") int limite);
 
-    @POST("user/{id}/update/endstreak")
+    @PATCH("user/{id}/update/endstreak")
     Call<Void> endStreak(@Path("id") int id);
+
+    @POST("user/{id}/resetstreak")
+    Call<Void> resetStreak(@Path("id") int id);
 
     // Update password
     @FormUrlEncoded
