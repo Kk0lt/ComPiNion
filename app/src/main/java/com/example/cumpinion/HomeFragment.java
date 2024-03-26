@@ -115,6 +115,32 @@ public class HomeFragment extends Fragment {
         return view;
     }
     /*======== MQTT ========*/
+    private void confirmPublishDeconnexion(String s) {
+        client.toAsync().connect()
+                .whenComplete((connAck, throwable) -> {
+                    if (throwable != null) {
+                        Log.d("Fail", "ERREUR MQTT ");
+                    } else {
+                        // setup subscribes or start publishing
+                        publishStreak(s);
+                    }
+                });
+    }
+    private void publishStreak(String streak){
+        client.toAsync().publishWith()
+                .topic("streak")
+                .payload(streak.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
+                    }
+                });
+    }
     public void souscrire() {
         client.toAsync().subscribeWith()
                 .topicFilter("status")
@@ -256,7 +282,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        return view;
     }
 
     private void getStreakEnCours(InterfaceServeur serveur, int i) {
