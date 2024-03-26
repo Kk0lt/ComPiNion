@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.cumpinion.R;
 
@@ -37,7 +38,7 @@ import retrofit2.Response;
 
 
 public class limitselectionFragment extends Fragment implements InterfaceCompinion {
-    int selectedLimit = 0;
+    int selectedLimit = -1;
 
     RecyclerView rvCharacters;
     CompinionsAdapterList compinionsAdapterList;
@@ -69,6 +70,7 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
         NavController controller = Navigation.findNavController(view);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+        TextView tvErr = view.findViewById(R.id.errLimit);
 
 
         ic_0 = view.findViewById(R.id.ivIcon0);
@@ -100,11 +102,16 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
-                createUserViewModel.setUserLimit(selectedLimit);
+                if(selectedLimit >=0) {
+                    CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+                    createUserViewModel.setUserLimit(selectedLimit);
 
-                NavController controller = Navigation.findNavController(view);
-                controller.navigate(R.id.fromLimitSelectToAgreement);
+                    NavController controller = Navigation.findNavController(view);
+                    controller.navigate(R.id.fromLimitSelectToAgreement);
+                }
+                else{
+                    tvErr.setText("Veuillez choisir une limite");
+                }
             }
         });
 
@@ -192,9 +199,9 @@ public class limitselectionFragment extends Fragment implements InterfaceCompini
 
     @Override
     public void gestionClic(Compinion compinion) {
-        CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
+            CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
-        createUserViewModel.getUserMutableLiveData().getValue().setCompanion_id(compinion.getId());
+            createUserViewModel.getUserMutableLiveData().getValue().setCompanion_id(compinion.getId());
     }
 
 }
