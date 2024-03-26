@@ -45,6 +45,7 @@
     <!--Agreement Activity-->
     <string name="iAgree">J\'accepte</string>
     <string name="suivant">Suivant</string>
+    <string name="errAgree">Veuillez accepter les termes et conditions</string>
 
     <string name="agreement_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
         risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.

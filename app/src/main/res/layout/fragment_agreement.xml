@@ -33,8 +33,17 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/tvErrAgree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="6dp"
+            android:textColor="#CD4444"
+            android:textSize="16sp" />
+
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/chkAgree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/iAgree"
