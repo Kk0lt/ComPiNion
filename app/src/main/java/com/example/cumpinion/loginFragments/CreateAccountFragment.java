@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.regex.Pattern;
 
 import classes.RetrofitInstance;
 import classes.User;
@@ -75,31 +78,31 @@ public class CreateAccountFragment extends Fragment {
 
                 boolean valide = true;
 
-                if (TextUtils.isEmpty(etPrenom.getText().toString())){
-                    etPrenom.setError("Entrez un prénom");
+                if (TextUtils.isEmpty(etPrenom.getText().toString()) || estNumeric(etPrenom.getText().toString()) || estVide(etPrenom.getText().toString())){
+                    etPrenom.setError("Entrez un prénom valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etNom.getText().toString())){
+                if (TextUtils.isEmpty(etNom.getText().toString()) || estNumeric(etNom.getText().toString()) || estVide(etNom.getText().toString())){
                     etNom.setError("Entrez un nom");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etPseudo.getText().toString())){
-                    etPseudo.setError("Entrez un Pseudo");
+                if (TextUtils.isEmpty(etPseudo.getText().toString().trim()) || estNumeric(etPseudo.getText().toString().trim()) || estVide(etPseudo.getText().toString())){
+                    etPseudo.setError("Entrez un pseudo valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etEmail.getText().toString())){
-                    etEmail.setError("Entrez un email");
+                if (TextUtils.isEmpty(etEmail.getText().toString().trim()) || estNumeric(etEmail.getText().toString().trim()) || estEmailValide(etEmail.getText().toString().trim()) || estVide(etEmail.getText().toString())){
+                    etEmail.setError("Entrez un email valide");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etPassword.getText().toString())){
+                if (TextUtils.isEmpty(etPassword.getText().toString().trim()) || estVide(etPassword.getText().toString())){
                     etPassword.setError("Entrez un mot de passe");
                     valide = false;
                 }
-                if (TextUtils.isEmpty(etConfirmPassword.getText().toString())){
+                if (TextUtils.isEmpty(etConfirmPassword.getText().toString().trim()) || estVide(etConfirmPassword.getText().toString())){
                     etConfirmPassword.setError("Confirmez votre mot de passe");
                     valide = false;
                 }
-                else if (valide = true) {
+                else if (valide) {
 
                     String prenom = etPrenom.getText().toString();
                     String nom = etNom.getText().toString();
@@ -121,5 +124,36 @@ public class CreateAccountFragment extends Fragment {
 
             }
         });
+    }
+
+    //Cette méthode sert a detecter si la string envoyer est un chiffre. elle est utilisé dans des verifications de formulaire
+    private boolean estNumeric(String string){
+        try {
+            Double.parseDouble(string);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    //Cette méthode que l'addresse courriel contien une arobase . Elle est utilisé dans la vérification de formulaire
+    private boolean estEmailValide(String string){
+        if(string.indexOf("@") >= 0){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    //Cette méthode verifie que les champs ne contiennent pas seulement des espaces. Elle est utilisé dans la validation de formulaire
+    public boolean estVide(String string){
+        if(string.trim().isEmpty()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

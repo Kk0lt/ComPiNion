@@ -419,6 +419,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
         tvChangePseudo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean estBon = true;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(false);
@@ -429,11 +430,13 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                 Button btnCancel = view.findViewById(R.id.btnCancel_DialogBox);
                 AlertDialog alertDialog1 = builder.create();
 
+
                 btnConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String newPseudo = etNewPseudo.getText().toString();
                         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+
                         Call<Void> call = serveur.updatePseudo(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), newPseudo);
                         call.enqueue(new Callback<Void>() {
                             @Override
@@ -441,13 +444,16 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                                 Snackbar.make(view, "Done ! ", BaseTransientBottomBar.LENGTH_LONG).show();
                                 loggedUserViewModel.setUserPseudo(newPseudo);
                                 Log.d("Réussi!", "Pseudo viewmodel : " + loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
+
                                 alertDialog1.dismiss();
 
                             }
+
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 Log.d("failure!", "failure : " + t.getMessage());
                             }
+
                         });
                     }
                 });
@@ -637,6 +643,17 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
         newCompinionId = compinion.getId();
         loggedUserViewModel.setUserCompanion(newCompinionId);
         Log.d("gestionClic", "new id: "+ loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id());
-
     }
+
+    //Cette méthode sert a detecter si la string envoyer est un chiffre. elle est utilisé dans des verifications de formulaire
+    private boolean estNumeric(String string){
+        try {
+            Double.parseDouble(string);
+            return true;
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+    }
+
 }

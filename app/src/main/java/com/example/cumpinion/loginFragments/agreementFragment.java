@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,6 +52,8 @@ public class agreementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button btNext = view.findViewById(R.id.btNext_agreementFragment);
+        CheckBox chkAgree = view.findViewById(R.id.chkAgree);
+        TextView tvError = view.findViewById(R.id.tvErrAgree);
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         CreateUserViewModel createUserViewModel = new ViewModelProvider(getActivity()).get(CreateUserViewModel.class);
 
@@ -64,6 +68,11 @@ public class agreementFragment extends Fragment {
                 int limite = createUserViewModel.getUserMutableLiveData().getValue().getLimite();
                 int id = createUserViewModel.getUserMutableLiveData().getValue().getCompanion_id();
 
+
+
+                //Vérification du cochage
+                if(chkAgree.isChecked()) {
+    
                 // Créer un objet JSON contenant les informations d'identification
                 JSONObject jsonObject = new JSONObject();
                 try {
@@ -90,8 +99,29 @@ public class agreementFragment extends Fragment {
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.d("Réussi!", t.getMessage());
+
                     }
-                });
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+                    Call<Void> call = serveur.register(requestBody);
+
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.d("Réussi!", "!!!!!!!Compte Crée  : " + createUserViewModel.getUserMutableLiveData().getValue());
+                            NavController controller = Navigation.findNavController(view);
+                            controller.navigate(R.id.fromAgreementToHome);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("Réussi!", t.getMessage());
+                        }
+                    });
+                }
+                else{
+                    String erreur = getResources().getString(R.string.errAgree);
+                    tvError.setText(erreur);
+                }
 
 
             }
