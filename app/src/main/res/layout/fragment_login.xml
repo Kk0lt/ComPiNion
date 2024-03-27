@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/lightBlue"
     android:orientation="vertical"
+    android:screenOrientation="portrait"
     android:paddingHorizontal="20dp"
     android:paddingVertical="50dp"
     tools:context=".loginFragments.LoginFragment">

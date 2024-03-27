@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
+    android:screenOrientation="portrait"
     android:padding="10dp"
     app:layout_anchorGravity="center">
 

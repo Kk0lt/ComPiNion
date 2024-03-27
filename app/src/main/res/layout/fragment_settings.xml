@@ -53,6 +53,7 @@
                 android:drawableTint="@color/hardBlue"
                 android:fontFamily="@font/lexend"
                 android:gravity="center_vertical"
+                android:screenOrientation="portrait"
                 android:text="@string/settings_pseudo"
                 android:textColor="@color/hardBlue"
                 android:textSize="26dp" />

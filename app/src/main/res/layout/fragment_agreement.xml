@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#CDE0F4"
     android:orientation="vertical"
+    android:screenOrientation="portrait"
     tools:context=".loginFragments.agreementFragment">
 
     <ImageView
