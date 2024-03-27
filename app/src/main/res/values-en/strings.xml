@@ -27,6 +27,7 @@
     <string name="connectez_vous">Already have an account? Log in!</string>
     <string name="btnConnexion">Log in</string>
     <string name="creation">Not a member? Register now!</string>
+    <string name="keeplogged">Stay logged in</string>
 
     <!--Create Account Fragment-->
     <string name="titre_createAccount">Create new account !</string>

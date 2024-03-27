@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.cumpinion.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 
 import org.json.JSONException;
@@ -49,6 +51,7 @@ import retrofit2.Response;
 public class LoginFragment extends Fragment {
 
     private RadioGroup languageRadio;
+    private CheckBox checkLog;
     private SharedPreferences sharedPreferences;
     Mqtt5Client client;
 
@@ -83,6 +86,18 @@ public class LoginFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("Prefs", getActivity().MODE_PRIVATE);
 
+        String l = sharedPreferences.getString("loggedUser", null);
+        if(l != null) {
+            LoggedUserViewModel loggedUserViewModel =
+                    new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
+            Gson gson = new Gson();
+            User user = gson.fromJson(l, User.class);
+            loggedUserViewModel.addUser(user);
+            confirmPublishConnexion(user.getPseudo(), String.valueOf(user.getMerite()), user.getCompanionPNG(), String.valueOf(user.getJours()));
+            NavController controller = Navigation.findNavController(view);
+            controller.navigate(R.id.fromLoginToHome);
+        }
+
         String langue = sharedPreferences.getString("language", null);
         if (langue != null) {
             changeLangue(langue);
@@ -97,6 +112,7 @@ public class LoginFragment extends Fragment {
         EditText etPassword = view.findViewById(R.id.etPassword_loginFragment);
         TextView tvCreateAccount_loginFragment = view.findViewById(R.id.tvCreateAccount_loginFragment);
         languageRadio = view.findViewById(R.id.toggleLanguage);
+        checkLog = view.findViewById(R.id.checkLogged);
         tvCreateAccount_loginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,9 +188,22 @@ public class LoginFragment extends Fragment {
                                     Log.d("Réussi!", "Connected : " + loggedUser);
                                     loggedUserViewModel.addUser(loggedUser);
 
-
                                     confirmPublishConnexion(userPseudo, String.valueOf(merite), companionImage, String.valueOf(jours));
 
+                                    if(checkLog.isChecked()) {
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        Gson gson = new Gson();
+                                        String jsonUser = gson.toJson(loggedUser);
+                                        editor.putString("loggedUser", jsonUser);
+                                        editor.apply();
+                                    } else {
+                                        String l = sharedPreferences.getString("loggedUser", null);
+                                        if(l != null) {
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.remove("loggedUser");
+                                            editor.apply();
+                                        }
+                                    }
 
                                     // Vous pouvez maintenant naviguer vers l'écran suivant ou effectuer d'autres actions
                                     NavController controller = Navigation.findNavController(view);
@@ -188,7 +217,6 @@ public class LoginFragment extends Fragment {
                                 Toast.makeText(getContext(), "Vérifiez vos informations de connexion", Toast.LENGTH_SHORT).show();
                             }
                         }
-
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
@@ -211,7 +239,7 @@ public class LoginFragment extends Fragment {
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("language", selectedLanguage);
-                editor.apply();
+                editor.commit();
 
                 getActivity().recreate();
             }

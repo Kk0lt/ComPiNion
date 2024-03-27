@@ -102,7 +102,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
 
-        sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("Prefs", getActivity().MODE_PRIVATE);
 
         String langue = sharedPreferences.getString("language", null);
         if (langue != null) {
@@ -498,6 +498,12 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         LoggedUserViewModel loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
                         loggedUserViewModel.addUser(new User());
+                        String l = sharedPreferences.getString("loggedUser", null);
+                        if(l != null) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove("loggedUser");
+                            editor.apply();
+                        }
                         confirmPublishDeconnexion();
                         NavController controller = Navigation.findNavController(view);
                         controller.navigate(R.id.loginFragment);

@@ -27,6 +27,7 @@
     <string name="connectez_vous">Déjà membre? Connectez-vous!</string>
     <string name="btnConnexion">Connexion</string>
     <string name="creation">Vous n\'êtes pas membre? Rejoignez-nous!</string>
+    <string name="keeplogged">Resté connecté</string>
 
     <!--Create Account Fragment-->
     <string name="titre_createAccount">Créez un nouveau compte!</string>
