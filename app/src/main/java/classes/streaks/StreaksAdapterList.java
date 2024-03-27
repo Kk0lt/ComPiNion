@@ -70,4 +70,9 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
         }
     }
 
+    public void setStreaks(List<Streak> lstreaks) {
+        this.liste = lstreaks;
+        notifyItemInserted(liste.size()-1);
+    }
+
 }

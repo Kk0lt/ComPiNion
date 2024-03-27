@@ -258,7 +258,6 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                     } else {
                         // handle successful publish, e.g. logging or incrementing a metric
                         Log.d("publishConnexion", "connexion published" );
-
                     }
                 });
     }
@@ -296,17 +295,13 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     Log.d("failed", "Companion ID : " + loggedUserViewModel.getUserMutableLiveData().getValue().getCompanion_id() );
                                     Toast.makeText(getContext(), "le changement apparaitra à la prochaine connexion ", Toast.LENGTH_SHORT).show();
-
-
                                     alertDialogCompanion.dismiss();
-
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Log.d("failed", "failed changing companion : "+t.getMessage()+ " : " + newCompinionId );
                                     alertDialogCompanion.dismiss();
-
                                 }
                             });
 

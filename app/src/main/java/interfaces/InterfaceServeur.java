@@ -107,11 +107,11 @@ public interface InterfaceServeur {
     @PATCH("user/{id}/update/merite")
     Call<Void> updateMerite(@Path("id") int id, @Query("merite") int merite);
 
-    @PATCH("user/{id}/update/jours")
-    Call<Void> updateJours(@Path("id") int id);
-
     @PATCH("user/{id}/update/limite")
     Call<Void> updateLimite(@Path("id") int id, @Query("limite") int limite);
+
+    @GET("user/{id}/jours")
+    Call<Integer> getJours(@Path("id") int id);
 
     @PATCH("user/{id}/update/endstreak")
     Call<Void> endStreak(@Path("id") int id);

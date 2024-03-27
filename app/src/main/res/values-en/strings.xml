@@ -47,16 +47,10 @@
     <string name="suivant">Next</string>
     <string name="errAgree">Please agree to the terms and conditions</string>
 
-    <string name="agreement_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-        risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.
-        Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non,
-        mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl
-        sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim.
-        Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue.
-        Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue
-        blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas
-        adipiscing ante non diam sodales hendrerit.</string>
+    <string name="agreement_text">ComPiNion is a social media against addiction and aims to help people with substance abuse
+        problems. This application is supposed to be used with honesty towards oneself and respect towards others. I will not use
+        the informations collected on this application to harass and intimidate others. I will be honest in my usage of the
+        application to maximize my chances of success.</string>
 
     <!--Autre-->
 

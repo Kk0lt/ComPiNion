@@ -81,7 +81,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedPreferences = getActivity().getSharedPreferences("LanguagePrefs", getActivity().MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("Prefs", getActivity().MODE_PRIVATE);
 
         String langue = sharedPreferences.getString("language", null);
         if (langue != null) {
@@ -218,15 +218,14 @@ public class LoginFragment extends Fragment {
         });
     }
 
-
-
     private void changeLangue(String selectedLanguage) {
         Locale locale = new Locale(selectedLanguage);
         Locale.setDefault(locale);
-        Resources resources = getResources();
+        Resources resources = getActivity().getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        //resources.updateConfiguration(config, resources.getDisplayMetrics());
+        getActivity().getApplicationContext().createConfigurationContext(config);
     }
 
     /*===== MQTT ===== */

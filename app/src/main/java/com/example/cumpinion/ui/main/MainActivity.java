@@ -18,12 +18,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         NavHostFragment host =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.FragmentContainer);
         NavController navController = host.getNavController();
         navController.navigate(R.id.loginFragment);
 
         bottomNavigationBar(navController);
-
 
     }
 

@@ -1,7 +1,6 @@
 package com.example.cumpinion;
 
 import android.content.DialogInterface;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cumpinion.loginFragments.LoggedUserViewModel;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import classes.RetrofitInstance;
 import classes.streaks.Streak;
-import classes.streaks.StreakReponseServer;
 import classes.characters.Compinion;
 import classes.characters.CompinionReponseServer;
 import classes.streaks.StreaksAdapterList;
@@ -44,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
+    private static final long MINUIT = 86400000;
     TextView tvPseudo, nbMerit, nbStreak;
     ImageView imgProfile;
     String url;
@@ -52,6 +49,7 @@ public class HomeFragment extends Fragment {
     StreaksAdapterList streaksAdapterListe;
     Streak streak;
     Mqtt5Client client;
+    Handler handler;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,18 +88,22 @@ public class HomeFragment extends Fragment {
         nbStreak = view.findViewById(R.id.serie);
         imgProfile = view.findViewById(R.id.ivHome);
         btSmoke = view.findViewById(R.id.btnSmoked);
-
         Picasso.get().load(loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage()).into(imgProfile);
         Log.d("IMAGE", "IMAGE COMPANION: " + loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionImage());
-
         //getImg(loggedUserViewModel.getUserMutableLiveData().getValue().getId(), imgProfile);
-        getStreakEnCours(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
         //Gestion du RecyclerView des streaks
         rvStreaks = view.findViewById(R.id.rvStreaks);
         rvStreaks.setHasFixedSize(true);
         rvStreaks.setLayoutManager(new LinearLayoutManager(getContext()));
         getStreaks(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+
+        handler = new Handler();
+        Calendar curTime = Calendar.getInstance();
+        long now = curTime.getTimeInMillis();
+        long minuit = curTime.getTimeInMillis();
+        minuit += MINUIT - (now % MINUIT);
+        handler.post(new UpdateTask(loggedUserViewModel));
 
         //Connexion des éléments du xml avec les données de l'utilisateur
         tvPseudo.setText(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
@@ -145,18 +147,18 @@ public class HomeFragment extends Fragment {
         client.toAsync().subscribeWith()
                 .topicFilter("status")
                 .callback(publish -> {
-// Process the received message
+                // Process the received message
                     Log.d("SUCCESS", "SUCCESS MQTT ");
 
                 })
                 .send()
                 .whenComplete((subAck, throwable) -> {
                     if (throwable != null) {
-// Handle failure to subscribe
+                    // Handle failure to subscribe
                         Log.d("Fail", "ERREUR MQTT ");
 
                     } else {
-// Handle successful subscription, e.g. logging or incrementing a metric
+                    // Handle successful subscription, e.g. logging or incrementing a metric
                         Log.d("SUCCESS", "SUCCESS MQTT ");
                     }
                 });
@@ -208,10 +210,9 @@ public class HomeFragment extends Fragment {
                                 int i = loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1;
                                 //Si ma limite est écoulée, on choisit une nouvelle limite et on update la streak
                                 if(i < 0) {
-                                    updateStreak(loggedUserViewModel, 0);
+                                    endStreak(loggedUserViewModel, 0);
                                     resetStreak(serveur, loggedUserViewModel);
-                                    updateJours(loggedUserViewModel, 0);
-                                    nbStreak.setText(String.valueOf(0));
+                                    nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
                                     AlertDialog.Builder bLimite = new AlertDialog.Builder(getContext());
                                     bLimite.setTitle("Choisissez une nouvelle limite de cigarette par jours");
                                     bLimite.setPositiveButton("1", new DialogInterface.OnClickListener() {
@@ -262,10 +263,7 @@ public class HomeFragment extends Fragment {
                 builder.setNegativeButton("Je n'ai pas fumé!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "Bravo! Une journée de plus à votre série!", Toast.LENGTH_LONG).show();
-                        int i = loggedUserViewModel.getUserMutableLiveData().getValue().getJours();
-                        updateStreak(loggedUserViewModel, loggedUserViewModel.getUserMutableLiveData().getValue().getJours()+1);
-                        nbStreak.setText(String.valueOf(i+1));
+                        Toast.makeText(getContext(), "Bravo!!", Toast.LENGTH_LONG).show();
                     }
                 });
                 builder.setNeutralButton("J'y pense!", new DialogInterface.OnClickListener() {
@@ -284,23 +282,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void getStreakEnCours(InterfaceServeur serveur, int i) {
-        Call<StreakReponseServer> call = serveur.getStreak(i);
-        call.enqueue(new Callback<StreakReponseServer>() {
-            @Override
-            public void onResponse(Call<StreakReponseServer> call, Response<StreakReponseServer> response) {
-                StreakReponseServer reponseServer = response.body();
-                streak = reponseServer.getStreak();
-            }
-
-            @Override
-            public void onFailure(Call<StreakReponseServer> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
-            }
-        });
-    }
-
     private void getStreaks(InterfaceServeur serveur, int i) {
         Call<StreaksReponseServer> call = serveur.getStreaks(i);
         call.enqueue(new Callback<StreaksReponseServer>() {
@@ -310,8 +291,12 @@ public class HomeFragment extends Fragment {
                     StreaksReponseServer streaksResponse = response.body();
                     if (streaksResponse != null && streaksResponse.isSuccess()) {
                         List<Streak> lstreaks = streaksResponse.getData();
-                        streaksAdapterListe = new StreaksAdapterList(lstreaks);
-                        rvStreaks.setAdapter(streaksAdapterListe);
+                        if (streaksAdapterListe == null) {
+                            streaksAdapterListe = new StreaksAdapterList(lstreaks);
+                            rvStreaks.setAdapter(streaksAdapterListe);
+                        } else {
+                            streaksAdapterListe.setStreaks(lstreaks);
+                            streaksAdapterListe.notifyDataSetChanged(); }
                     } else {
                         Log.d("erreur", "Réponse invalide");
                     }
@@ -344,9 +329,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private static void updateStreak(LoggedUserViewModel loggedUserViewModel, int i) {
+    private static void endStreak(LoggedUserViewModel loggedUserViewModel, int i) {
+
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.endStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -357,6 +344,26 @@ public class HomeFragment extends Fragment {
                 Log.d("failed", "Failed: "+ t.getMessage());
             }
         });
+
+    }
+
+    private void resetStreak(InterfaceServeur serveur, LoggedUserViewModel loggedUserViewModel) {
+
+        Call<Void> call = serveur.resetStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
+                loggedUserViewModel.setUserStreak(0);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("erreur", "onFailure Erreur");
+                Log.d("erreur", t.getMessage());
+            }
+        });
+
     }
 
     private static void updateLimite(LoggedUserViewModel loggedUserViewModel, int i) {
@@ -370,38 +377,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d("failed", "Failed: "+ t.getMessage());
-            }
-        });
-    }
-
-    private static void updateJours(LoggedUserViewModel loggedUserViewModel, int i) {
-        InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
-        Call<Void> call = serveur.updateJours(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                loggedUserViewModel.setUserStreak(i);
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("failed", "Failed: "+ t.getMessage());
-            }
-        });
-    }
-
-    private void resetStreak(InterfaceServeur serveur, LoggedUserViewModel loggedUserViewModel) {
-        Call<Void> call = serveur.resetStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
-                loggedUserViewModel.setUserStreak(0);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.d("erreur", "onFailure Erreur");
-                Log.d("erreur", t.getMessage());
             }
         });
     }
@@ -432,4 +407,38 @@ public class HomeFragment extends Fragment {
         });
     }
 
-}
+    //Update des streaks à minuit + envoie des données à l'objet
+    private class UpdateTask implements Runnable {
+        LoggedUserViewModel logged;
+
+        // Constructeur personnalisé pour passer les paramètres
+        public UpdateTask(LoggedUserViewModel logged) {
+            this.logged = logged;
+        }
+
+        @Override
+        public void run() {
+            Log.d("allo", "allo");
+            InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
+            Call<Integer> call = serveur.getJours(logged.getUserMutableLiveData().getValue().getId());
+            call.enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String s = response.body().toString();
+                        nbStreak.setText(s);
+                        publishStreak(s);
+                    } else {
+                        Log.d("failed", "La réponse est null");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
+                    Log.d("failed", t.getMessage());
+                }
+            });
+            handler.postDelayed(this, MINUIT);
+            }
+        };
+    }
