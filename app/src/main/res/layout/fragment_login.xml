@@ -70,7 +70,7 @@
             android:fontFamily="@font/lexend"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:text="ok@hotmail.com"
+            android:text="cleaobelzile@hotmail.com"
             android:textColor="@color/hardBlue"
             android:textColorHint="@color/black"
             android:textSize="20sp" />

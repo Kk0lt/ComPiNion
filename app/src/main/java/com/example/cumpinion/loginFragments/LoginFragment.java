@@ -50,7 +50,6 @@ import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
-    private RadioGroup languageRadio;
     private CheckBox checkLog;
     private SharedPreferences sharedPreferences;
     Mqtt5Client client;
@@ -98,20 +97,10 @@ public class LoginFragment extends Fragment {
             controller.navigate(R.id.fromLoginToHome);
         }
 
-        String langue = sharedPreferences.getString("language", null);
-        if (langue != null) {
-            changeLangue(langue);
-            RadioButton radioButton = view.findViewWithTag(langue);
-            if (radioButton != null) {
-                radioButton.setChecked(true);
-            }
-        }
-
         Button btConnexion = view.findViewById(R.id.btLogin);
         EditText etEmail = view.findViewById(R.id.etEmail_loginFragment);
         EditText etPassword = view.findViewById(R.id.etPassword_loginFragment);
         TextView tvCreateAccount_loginFragment = view.findViewById(R.id.tvCreateAccount_loginFragment);
-        languageRadio = view.findViewById(R.id.toggleLanguage);
         checkLog = view.findViewById(R.id.checkLogged);
         tvCreateAccount_loginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,31 +216,6 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-
-        languageRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                RadioButton selectedRadioButton = view.findViewById(checkedId);
-                String selectedLanguage = selectedRadioButton.getTag().toString();
-                changeLangue(selectedLanguage);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("language", selectedLanguage);
-                editor.commit();
-
-                getActivity().recreate();
-            }
-        });
-    }
-
-    private void changeLangue(String selectedLanguage) {
-        Locale locale = new Locale(selectedLanguage);
-        Locale.setDefault(locale);
-        Resources resources = getActivity().getApplicationContext().getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     /*===== MQTT ===== */
@@ -267,9 +231,11 @@ public class LoginFragment extends Fragment {
                         publishMerites(_merites);
                         publishImage(_img);
                         publishStreak(_streak);
+                        client.toAsync().disconnect();
                     }
                 });
     }
+
     private void publishConnexion(){
         client.toAsync().publishWith()
                 .topic("status")

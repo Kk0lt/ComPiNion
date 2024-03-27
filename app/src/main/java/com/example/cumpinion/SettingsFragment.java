@@ -89,10 +89,7 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
         TextView tvChangePseudo = view.findViewById(R.id.tvChangePseudo_Settings);
         TextView tvChangePwd = view.findViewById(R.id.tvChangePassword_Settings);
-        TextView tvChangeApparence = view.findViewById(R.id.tvChangeApparence_Settings);
-        TextView tvChangeTheme = view.findViewById(R.id.tvChangeTheme_Settings);
         TextView tvChangeCompanion = view.findViewById(R.id.tvChangeCompanion_Settings);
-        TextView tvLanguage = view.findViewById(R.id.tvLanguage_Settings);
         TextView tvLogout = view.findViewById(R.id.tvLogout_Settings);
 
         loggedUserViewModel = new ViewModelProvider(getActivity()).get(LoggedUserViewModel.class);
@@ -104,21 +101,11 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
         sharedPreferences = getActivity().getSharedPreferences("Prefs", getActivity().MODE_PRIVATE);
 
-        String langue = sharedPreferences.getString("language", null);
-        if (langue != null) {
-            if (langue == "eng")
-                changeLangue("fr");
-            else
-                changeLangue("eng");
-        }
-
         //appels des différentes méthodes
         changeUsername(tvChangePseudo, loggedUserViewModel);
         changePassword(tvChangePwd, loggedUserViewModel);
         changeCompanion(tvChangeCompanion, serveur);
 
-        changerLangue(tvLanguage);
-        changerTheme(tvChangeTheme);
         deconnexion(view, tvLogout);
 
     }
@@ -535,84 +522,6 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
     }
 
     /**
-     * Methode de changement de langue
-     * */
-    private void changerLangue(TextView tvLanguage) {
-        tvLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Creation d'une boite de dialogue
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                // Set message
-                builder.setMessage("Êtes-vous sûr de vouloir changer la langue ? ?");
-
-                // Set  Title
-                builder.setTitle("Changer Langue");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Oui", (DialogInterface.OnClickListener) (dialog, which) -> {
-
-                    String langue = sharedPreferences.getString("language", null);
-                    if (langue != null) {
-                        if (langue.equalsIgnoreCase("eng")) {
-                            changeLangue("fr");
-                            getActivity().recreate();
-                        } else {
-                            changeLangue("eng");
-                            getActivity().recreate();
-
-                        }
-                    } else {
-                        changeLangue("fr");
-                    }
-                });
-                // Negative button.
-                builder.setNegativeButton("Non", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    // If user click no then dialog box is canceled.
-                    dialog.cancel();
-                });
-                // Create the Alert dialog
-                AlertDialog alertDialog = builder.create();
-                // Show the Alert Dialog box
-                alertDialog.show();
-            }
-        });
-
-    }
-
-    /**
-     * Methode de changement de Theme
-     * */
-    private void changerTheme(TextView tvTheme) {
-        tvTheme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("@string/settings_themes");
-                builder.setMessage("@string/choosetext");
-                builder.setCancelable(false);
-
-                // Bleu
-                builder.setPositiveButton("@string/blue", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    changeTheme(R.style.AppTheme_Blue);
-                });
-                // Rouge
-                builder.setNegativeButton("@string/red", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    changeTheme(R.style.AppTheme_Red);
-                });
-                // Vert
-                builder.setNeutralButton("@string/green", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    changeTheme(R.style.AppTheme_Green);
-                });
-
-                AlertDialog alertTheme = builder.create();
-                alertTheme.show();
-            }
-        });
-    }
-
-    /**
      * Réafficher la barre de navigation : */
     @Override
     public void onDestroyView() {
@@ -620,28 +529,6 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
     }
 
-    /**
-     * Changer la langue */
-    private void changeLangue(String selectedLanguage) {
-        Locale locale = new Locale(selectedLanguage);
-        Locale.setDefault(locale);
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("language", selectedLanguage);
-        editor.apply();
-
-    }
-
-    /**
-     * Changer le thème */
-    private void changeTheme(int themeId) {
-        getActivity().setTheme(themeId);
-        getActivity().recreate();
-    }
     /**
      * Methode pour afficher les companions de la base de donnés
      * */

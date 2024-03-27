@@ -87,52 +87,6 @@
                 android:textSize="26dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lv_apparence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvChangeApparence_Settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lexend"
-                android:text="Apparence"
-                android:textColor="@color/hardBlue"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvChangeTheme_Settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableLeft="@drawable/ic_color"
-                android:drawablePadding="20dp"
-                android:drawableTint="@color/hardBlue"
-                android:fontFamily="@font/lexend"
-                android:gravity="center_vertical"
-                android:text="@string/settings_themes"
-                android:textColor="@color/hardBlue"
-                android:textSize="26dp" />
-
-            <TextView
-                android:id="@+id/tvLanguage_Settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableLeft="@drawable/ic_language"
-                android:drawablePadding="20dp"
-                android:drawableTint="@color/hardBlue"
-                android:fontFamily="@font/lexend"
-                android:gravity="center_vertical"
-                android:text="@string/settings_langue"
-                android:textColor="@color/hardBlue"
-                android:textSize="26dp" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/tvLogout_Settings"
             android:layout_width="match_parent"

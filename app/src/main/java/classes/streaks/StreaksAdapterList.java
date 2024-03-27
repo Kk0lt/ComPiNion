@@ -69,10 +69,4 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
             tvEnd = itemView.findViewById(R.id.tvEnd);
         }
     }
-
-    public void setStreaks(List<Streak> lstreaks) {
-        this.liste = lstreaks;
-        notifyItemInserted(liste.size()-1);
-    }
-
 }

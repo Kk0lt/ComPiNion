@@ -40,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    private static final long MINUIT = 86400000;
+    private static final long MINUIT = 60000; //86400000;
     TextView tvPseudo, nbMerit, nbStreak;
     ImageView imgProfile;
     String url;
@@ -98,12 +98,13 @@ public class HomeFragment extends Fragment {
         rvStreaks.setLayoutManager(new LinearLayoutManager(getContext()));
         getStreaks(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
 
+        //Handler pour l'update à minuit
         handler = new Handler();
         Calendar curTime = Calendar.getInstance();
         long now = curTime.getTimeInMillis();
         long minuit = curTime.getTimeInMillis();
         minuit += MINUIT - (now % MINUIT);
-        handler.post(new UpdateTask(loggedUserViewModel));
+        //handler.post(new UpdateTask(loggedUserViewModel));
 
         //Connexion des éléments du xml avec les données de l'utilisateur
         tvPseudo.setText(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo());
@@ -113,25 +114,71 @@ public class HomeFragment extends Fragment {
         //Modals pour le bouton fumé
         btnSmoked(serveur, loggedUserViewModel);
 
-
         return view;
     }
     /*======== MQTT ========*/
-    private void confirmPublishDeconnexion(String s) {
+    public void connexion(String _username, String _merites, String _img, String _streak) {
         client.toAsync().connect()
                 .whenComplete((connAck, throwable) -> {
                     if (throwable != null) {
                         Log.d("Fail", "ERREUR MQTT ");
                     } else {
                         // setup subscribes or start publishing
-                        publishStreak(s);
+                        publishUser(_username);
+                        publishMerites(_merites);
+                        publishImage(_img);
+                        publishStreak(_streak);
+                        client.toAsync().disconnect();
                     }
                 });
     }
+
+    /**
+     * METHODE DE PUBLISH DES STREAKS
+     */
+
     private void publishStreak(String streak){
         client.toAsync().publishWith()
                 .topic("streak")
                 .payload(streak.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        Log.d("Erreur", throwable.toString());
+                    } else {
+                        Log.d("Youpi!", streak.getBytes().toString() );
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DU NOM D'UTILISATEUR
+     */
+
+    private void publishUser(String username){
+        client.toAsync().publishWith()
+                .topic("user")
+                .payload(username.getBytes())
+                .send()
+                .whenComplete((publish, throwable) -> {
+                    if (throwable != null) {
+                        // handle failure to publish
+                    } else {
+                        // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "user published" );
+
+                    }
+                });
+    }
+
+    /**
+     * METHODE DE PUBLISH DE L'IMAGE
+     */
+
+    private void publishImage(String img){
+        client.toAsync().publishWith()
+                .topic("pic")
+                .payload(img.getBytes())
                 .send()
                 .whenComplete((publish, throwable) -> {
                     if (throwable != null) {
@@ -143,37 +190,23 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
-    public void souscrire() {
-        client.toAsync().subscribeWith()
-                .topicFilter("status")
-                .callback(publish -> {
-                // Process the received message
-                    Log.d("SUCCESS", "SUCCESS MQTT ");
 
-                })
-                .send()
-                .whenComplete((subAck, throwable) -> {
-                    if (throwable != null) {
-                    // Handle failure to subscribe
-                        Log.d("Fail", "ERREUR MQTT ");
+    /**
+     * METHODE DE PUBLISH DES POINTS DE MERITES
+     */
 
-                    } else {
-                    // Handle successful subscription, e.g. logging or incrementing a metric
-                        Log.d("SUCCESS", "SUCCESS MQTT ");
-                    }
-                });
-    }
-
-    public void publish(){
+    private void publishMerites(String level){
         client.toAsync().publishWith()
-                .topic("")
-                .payload("hello world".getBytes())
+                .topic("level")
+                .payload(level.getBytes())
                 .send()
                 .whenComplete((publish, throwable) -> {
                     if (throwable != null) {
                         // handle failure to publish
                     } else {
                         // handle successful publish, e.g. logging or incrementing a metric
+                        Log.d("publishConnexion", "connexion published" );
+
                     }
                 });
     }
@@ -210,6 +243,10 @@ public class HomeFragment extends Fragment {
                                 int i = loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1;
                                 //Si ma limite est écoulée, on choisit une nouvelle limite et on update la streak
                                 if(i < 0) {
+                                    connexion(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo(),
+                                            String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getMerite()),
+                                            loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionPNG(),
+                                            String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
                                     endStreak(loggedUserViewModel);
                                     resetStreak(serveur, loggedUserViewModel);
                                     nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
@@ -269,9 +306,14 @@ public class HomeFragment extends Fragment {
                 builder.setNeutralButton("J'y pense!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        connexion(loggedUserViewModel.getUserMutableLiveData().getValue().getPseudo(),
+                                String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getMerite()),
+                                loggedUserViewModel.getUserMutableLiveData().getValue().getCompanionPNG(),
+                                String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
                         Toast.makeText(getContext(), "Ne lâche pas!", Toast.LENGTH_LONG).show();
                         int i = loggedUserViewModel.getUserMutableLiveData().getValue().getMerite();
                         updateMerite(loggedUserViewModel, i+1);
+                        publishMerites(String.valueOf(i+1));
                         nbMerit.setText(String.valueOf(i+1));
                     }
                 });
@@ -316,7 +358,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 loggedUserViewModel.setUserMerit(i);
-
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
@@ -325,7 +366,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private static void endStreak(LoggedUserViewModel loggedUserViewModel) {
+    private void endStreak(LoggedUserViewModel loggedUserViewModel) {
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.endStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
@@ -334,6 +375,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 loggedUserViewModel.setUserStreak(0);
+                String s = String.valueOf(0);
+                publishStreak(s);
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
@@ -403,7 +446,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    //Update des streaks à minuit + envoie des données à l'objet
+/*   Update des données à l'objet
+
     private class UpdateTask implements Runnable {
         LoggedUserViewModel logged;
 
@@ -414,6 +458,10 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void run() {
+            String pseudo = logged.getUserMutableLiveData().getValue().getPseudo();
+            int merit = logged.getUserMutableLiveData().getValue().getMerite();
+            int streak = logged.getUserMutableLiveData().getValue().getJours();
+            String urlimg = logged.getUserMutableLiveData().getValue().getCompanionPNG();
             Log.d("allo", "allo");
             InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
             Call<Integer> call = serveur.getJours(logged.getUserMutableLiveData().getValue().getId());
@@ -423,7 +471,8 @@ public class HomeFragment extends Fragment {
                     if (response.isSuccessful() && response.body() != null) {
                         String s = response.body().toString();
                         nbStreak.setText(s);
-                        publishStreak(s);
+                        connexion(pseudo, String.valueOf(merit), urlimg, String.valueOf(streak));
+                        client.toAsync().disconnect();
                     } else {
                         Log.d("failed", "La réponse est null");
                     }
@@ -433,8 +482,7 @@ public class HomeFragment extends Fragment {
                 public void onFailure(Call<Integer> call, Throwable t) {
                     Log.d("failed", t.getMessage());
                 }
-            });
-            handler.postDelayed(this, MINUIT);
+                });
             }
-        };
+        };*/
     }
