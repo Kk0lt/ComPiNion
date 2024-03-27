@@ -33,25 +33,25 @@ public class StreaksAdapterList extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(!liste.isEmpty()) {
+            StreaksViewHolder streaksViewHolder = (StreaksViewHolder) holder;
+            Streak streak = liste.get(position);
 
-        StreaksViewHolder streaksViewHolder = (StreaksViewHolder) holder;
-        Streak streak = liste.get(position);
+            if (streak.getStartDate() != null && streak.getEndDate() != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String startDate = sdf.format(streak.getStartDate());
+                String endDate = sdf.format(streak.getEndDate());
+                long days = Math.abs((streak.getEndDate().getTime() - streak.getStartDate().getTime()) / (1000 * 60 * 60 * 24));
 
-        if (streak.getStartDate() != null && streak.getEndDate() != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String startDate = sdf.format(streak.getStartDate());
-            String endDate = sdf.format(streak.getEndDate());
-            long days = Math.abs((streak.getEndDate().getTime() - streak.getStartDate().getTime()) / (1000 * 60 * 60 * 24));
-
-            streaksViewHolder.tvJours.setText(String.valueOf(days));
-            streaksViewHolder.tvStart.setText(startDate);
-            streaksViewHolder.tvEnd.setText(endDate);
-        } else {
-            streaksViewHolder.tvJours.setText("0");
-            streaksViewHolder.tvStart.setText("Erreur");
-            streaksViewHolder.tvEnd.setText("En cours");
+                streaksViewHolder.tvJours.setText(String.valueOf(days));
+                streaksViewHolder.tvStart.setText(startDate);
+                streaksViewHolder.tvEnd.setText(endDate);
+            } else {
+                streaksViewHolder.tvJours.setText("0");
+                streaksViewHolder.tvStart.setText("Erreur");
+                streaksViewHolder.tvEnd.setText("En cours");
+            }
         }
-
     }
 
     @Override

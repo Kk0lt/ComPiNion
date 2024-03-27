@@ -210,7 +210,7 @@ public class HomeFragment extends Fragment {
                                 int i = loggedUserViewModel.getUserMutableLiveData().getValue().getLimite()-1;
                                 //Si ma limite est écoulée, on choisit une nouvelle limite et on update la streak
                                 if(i < 0) {
-                                    endStreak(loggedUserViewModel, 0);
+                                    endStreak(loggedUserViewModel);
                                     resetStreak(serveur, loggedUserViewModel);
                                     nbStreak.setText(String.valueOf(loggedUserViewModel.getUserMutableLiveData().getValue().getJours()));
                                     AlertDialog.Builder bLimite = new AlertDialog.Builder(getContext());
@@ -291,12 +291,8 @@ public class HomeFragment extends Fragment {
                     StreaksReponseServer streaksResponse = response.body();
                     if (streaksResponse != null && streaksResponse.isSuccess()) {
                         List<Streak> lstreaks = streaksResponse.getData();
-                        if (streaksAdapterListe == null) {
-                            streaksAdapterListe = new StreaksAdapterList(lstreaks);
-                            rvStreaks.setAdapter(streaksAdapterListe);
-                        } else {
-                            streaksAdapterListe.setStreaks(lstreaks);
-                            streaksAdapterListe.notifyDataSetChanged(); }
+                        streaksAdapterListe = new StreaksAdapterList(lstreaks);
+                        rvStreaks.setAdapter(streaksAdapterListe);
                     } else {
                         Log.d("erreur", "Réponse invalide");
                     }
@@ -329,7 +325,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private static void endStreak(LoggedUserViewModel loggedUserViewModel, int i) {
+    private static void endStreak(LoggedUserViewModel loggedUserViewModel) {
 
         InterfaceServeur serveur = RetrofitInstance.getInstance().create(InterfaceServeur.class);
         Call<Void> call = serveur.endStreak(loggedUserViewModel.getUserMutableLiveData().getValue().getId());
@@ -337,7 +333,7 @@ public class HomeFragment extends Fragment {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                loggedUserViewModel.setUserStreak(i);
+                loggedUserViewModel.setUserStreak(0);
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
@@ -354,7 +350,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(getContext(), "La mise à jour a été effectuée avec succès.", Toast.LENGTH_LONG).show();
-                loggedUserViewModel.setUserStreak(0);
+                getStreaks(serveur, loggedUserViewModel.getUserMutableLiveData().getValue().getId());
             }
 
             @Override

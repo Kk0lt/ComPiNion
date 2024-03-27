@@ -106,11 +106,11 @@ public class SettingsFragment extends Fragment implements InterfaceCompinion {
 
         String langue = sharedPreferences.getString("language", null);
         if (langue != null) {
-            changeLangue(langue);
-        } else {
-            changeLangue("eng");
+            if (langue == "eng")
+                changeLangue("fr");
+            else
+                changeLangue("eng");
         }
-
 
         //appels des différentes méthodes
         changeUsername(tvChangePseudo, loggedUserViewModel);

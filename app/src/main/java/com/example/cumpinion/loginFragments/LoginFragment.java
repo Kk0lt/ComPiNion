@@ -234,7 +234,6 @@ public class LoginFragment extends Fragment {
 
                 RadioButton selectedRadioButton = view.findViewById(checkedId);
                 String selectedLanguage = selectedRadioButton.getTag().toString();
-
                 changeLangue(selectedLanguage);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -252,8 +251,7 @@ public class LoginFragment extends Fragment {
         Resources resources = getActivity().getApplicationContext().getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
-        //resources.updateConfiguration(config, resources.getDisplayMetrics());
-        getActivity().getApplicationContext().createConfigurationContext(config);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     /*===== MQTT ===== */
